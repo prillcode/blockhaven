@@ -1,0 +1,146 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server:latest
+    container_name: blockhaven-mc
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+
+    ports:
+      - "25565:25565"      # Java Edition
+      - "19132:19132/udp"  # Bedrock Edition (Geyser)
+      - "8100:8100"        # BlueMap web interface
+      - "8804:8804"        # Plan analytics
+
+    environment:
+      # Server Type
+      TYPE: PAPER
+      VERSION: "1.21.11"
+      EULA: "TRUE"
+
+      # Memory Settings (6GB for 8GB VPS, leave headroom)
+      MEMORY: "6G"
+      JVM_XX_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1"
+
+      # Server Properties
+      SERVER_NAME: "BlockHaven"
+      MOTD: "§a§lBlockHaven §7- §fFamily-Friendly Anti-Griefer Survival & Creative!"
+      MAX_PLAYERS: 100
+      DIFFICULTY: normal
+      MODE: survival
+      PVP: "false"
+      ONLINE_MODE: "true"
+      SPAWN_PROTECTION: 0
+      VIEW_DISTANCE: 10
+      SIMULATION_DISTANCE: 8
+      MAX_WORLD_SIZE: 10000
+
+      # Whitelist (disable for public server)
+      ENABLE_WHITELIST: "false"
+
+      # RCON for remote management
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+      RCON_PORT: 25575
+
+      # Ops
+      OPS: "${SERVER_OPS}"
+
+      # Plugin Downloads (auto-download on startup)
+      SPIGET_RESOURCES: >-
+        1884,
+        9089,
+        100125,
+        4441,
+        81534,
+        21925,
+        19254
+
+      # Modrinth plugins
+      MODRINTH_PROJECTS: >-
+        luckperms,
+        multiverse-core,
+        multiverse-portals,
+        multiverse-inventories,
+        worldedit,
+        worldguard,
+        plotsquared,
+        grim,
+        bluemap,
+        plan,
+        skript
+
+      # Additional downloads
+      MODS_FILE: /extras/plugins.txt
+
+      # Timezone
+      TZ: "America/New_York"
+
+    volumes:
+      - ./data:/data
+      - ./plugins/configs:/plugins-config:ro
+      - ./scripts:/scripts:ro
+      - ./extras:/extras:ro
+      - ./backups:/backups
+
+    healthcheck:
+      test: mc-health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
+  # Backup service - runs every 2 hours
+  backup:
+    image: itzg/mc-backup
+    container_name: blockhaven-backup
+    restart: unless-stopped
+    environment:
+      BACKUP_INTERVAL: "2h"
+      RCON_HOST: minecraft
+      RCON_PORT: 25575
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+      BACKUP_METHOD: tar
+      PRUNE_BACKUPS_DAYS: 7
+      INITIAL_DELAY: 5m
+      TAR_COMPRESS_METHOD: gzip
+      EXCLUDES: "*.jar,cache,BlueMap/web"
+      TZ: "America/New_York"
+      # S3 Backup Configuration (optional - enable for cloud backups)
+      # DEST_DIR: /backups                    # Local backup location
+      # SRC_DIR: /data                        # What to backup
+      # Uncomment below for S3 sync after local backup:
+      # BACKUP_ON_STARTUP: "false"
+      # PRE_BACKUP_SCRIPT: |
+      #   echo "Starting backup..."
+      # POST_BACKUP_SCRIPT: |
+      #   aws s3 sync /backups s3://${S3_BUCKET}/blockhaven-backups/ --delete
+    volumes:
+      - ./data:/data:ro
+      - ./backups:/backups
+    depends_on:
+      minecraft:
+        condition: service_healthy
+
+  # Optional: S3 sync service (weekly full backup to S3)
+  # Uncomment if you want dedicated S3 backup service
+  # s3-backup:
+  #   image: amazon/aws-cli
+  #   container_name: blockhaven-s3-backup
+  #   environment:
+  #     AWS_ACCESS_KEY_ID: "${S3_ACCESS_KEY}"
+  #     AWS_SECRET_ACCESS_KEY: "${S3_SECRET_KEY}"
+  #     AWS_DEFAULT_REGION: "${S3_REGION:-us-east-1}"
+  #   volumes:
+  #     - ./backups:/backups:ro
+  #   entrypoint: >
+  #     /bin/sh -c "aws s3 sync /backups s3://${S3_BUCKET}/blockhaven-backups/ --delete"
+  #   profiles:
+  #     - backup
+
+volumes:
+  data:
+  backups:

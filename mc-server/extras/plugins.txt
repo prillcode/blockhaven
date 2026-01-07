@@ -1,0 +1,26 @@
+# Geyser and Floodgate (direct downloads)
+https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+
+# EssentialsX Suite (GitHub releases) - v2.21.2
+https://github.com/EssentialsX/Essentials/releases/latest/download/EssentialsX.jar
+https://github.com/EssentialsX/Essentials/releases/latest/download/EssentialsXChat.jar
+https://github.com/EssentialsX/Essentials/releases/latest/download/EssentialsXSpawn.jar
+
+# Vault
+https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
+
+# Harbor (sleep voting)
+https://github.com/nkomarn/Harbor/releases/latest/download/Harbor.jar
+
+# PlaceholderAPI
+https://github.com/PlaceholderAPI/PlaceholderAPI/releases/latest/download/PlaceholderAPI-2.11.6.jar
+
+# DiscordSRV
+https://github.com/DiscordSRV/DiscordSRV/releases/latest/download/DiscordSRV-Build-1.28.0.jar
+
+# ZNPCs Plus
+https://github.com/Pyrbu/ZNPCsPlus/releases/latest/download/ZNPCsPlus.jar
+
+# ChatSentry
+https://github.com/GhastCraftHD/ChatSentry/releases/latest/download/ChatSentry.jar
