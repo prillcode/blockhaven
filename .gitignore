@@ -1,0 +1,76 @@
+# BlockHaven .gitignore
+
+# Environment variables (contains sensitive data)
+.env
+mc-server/.env
+
+# Server data (too large, generated at runtime)
+mc-server/data/
+!mc-server/data/.gitkeep
+
+# Backups (large files, stored elsewhere)
+mc-server/backups/
+!mc-server/backups/.gitkeep
+
+# Logs
+*.log
+mc-server/logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker volumes (managed by Docker)
+mc-server/volumes/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Node modules (if web/ uses npm)
+node_modules/
+web/node_modules/
+web/dist/
+web/build/
+web/.next/
+
+# Python (if using Python scripts)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+
+# Plugin JARs (downloaded automatically)
+# Note: We gitignore data/ which contains plugins, but keep configs/
+mc-server/plugins/*.jar
+
+# Secrets
+*.pem
+*.key
+*.crt
+secrets/
+credentials.json
+
+# Build artifacts
+*.class
+*.jar
+target/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Private/local configs (override templates)
+mc-server/config/local/
