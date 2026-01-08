@@ -15,7 +15,7 @@ services:
     environment:
       # Server Type
       TYPE: PAPER
-      VERSION: "1.21.1"  # Using 1.21.1 for plugin compatibility (1.21.11 clients can still connect)
+      VERSION: "1.21.11"  # Latest stable Paper version (Jan 2026)
       EULA: "TRUE"
 
       # Memory Settings (6GB for 8GB VPS, leave headroom)

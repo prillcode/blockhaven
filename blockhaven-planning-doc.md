@@ -407,7 +407,7 @@ The numbers in `SPIGET_RESOURCES` correspond to SpigotMC resource IDs:
 - [x] Plugin auto-download setup
 - [x] Directory structure
 - [x] Backup automation
-- [ ] Test deployment on local Docker
+- [x] Test deployment on local Docker
 - [ ] Deploy to Hetzner VPS
 
 ### Phase 2: LuckPerms Configuration
