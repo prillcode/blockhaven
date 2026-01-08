@@ -22,5 +22,23 @@ https://github.com/DiscordSRV/DiscordSRV/releases/latest/download/DiscordSRV-Bui
 # ZNPCs Plus
 https://github.com/Pyrbu/ZNPCsPlus/releases/latest/download/ZNPCsPlus.jar
 
-# ChatSentry
-https://github.com/GhastCraftHD/ChatSentry/releases/latest/download/ChatSentry.jar
+# Chat Filter Plugin - DISABLED FOR NOW
+# ChatSentinel doesn't have pre-built releases available
+# Alternative: Download manually from SpigotMC or use EssentialsXChat built-in filters
+# Future: Consider ChatFilter from https://www.spigotmc.org/resources/chatfilter.38085/
+# https://github.com/arkflame/ChatSentinel/releases/latest/download/ChatSentinel.jar
+
+# GriefPrevention (manual download - Spiget API unreliable)
+https://dev.bukkit.org/projects/grief-prevention/files/latest
+
+# Jobs Reborn (Spiget 9089 - moved from SPIGET_RESOURCES)
+https://github.com/Zrips/Jobs/releases/latest/download/Jobs.jar
+
+# QuickShop-Hikari (Spiget 100125 - moved from SPIGET_RESOURCES)
+https://github.com/Ghost-chu/QuickShop-Hikari/releases/latest/download/QuickShop-Hikari.jar
+
+# CoreProtect (Spiget 81534 - moved from SPIGET_RESOURCES)
+https://github.com/PlayPro/CoreProtect/releases/latest/download/CoreProtect.jar
+
+# WorldGuard Extra Flags (Spiget 19254 - moved from SPIGET_RESOURCES)
+https://github.com/aromaa/WorldGuardExtraFlags/releases/download/v4.2.4/WorldGuardExtraFlags.jar

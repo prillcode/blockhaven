@@ -15,7 +15,7 @@ services:
     environment:
       # Server Type
       TYPE: PAPER
-      VERSION: "1.21.11"
+      VERSION: "1.21.1"  # Using 1.21.1 for plugin compatibility (1.21.11 clients can still connect)
       EULA: "TRUE"
 
       # Memory Settings (6GB for 8GB VPS, leave headroom)
@@ -46,32 +46,14 @@ services:
       # Ops
       OPS: "${SERVER_OPS}"
 
-      # Plugin Downloads (auto-download on startup)
-      SPIGET_RESOURCES: >-
-        1884,
-        9089,
-        100125,
-        4441,
-        81534,
-        21925,
-        19254
+      # Auto-downloaded plugins (matching original minecraft-crossplatform-docker repo)
+      PLUGINS: |
+        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+        https://hangar.papermc.io/api/v1/projects/ViaVersion/versions/5.7.0/PAPER/download
 
-      # Modrinth plugins
-      MODRINTH_PROJECTS: >-
-        luckperms,
-        multiverse-core,
-        multiverse-portals,
-        multiverse-inventories,
-        worldedit,
-        worldguard,
-        plotsquared,
-        grim,
-        bluemap,
-        plan,
-        skript
-
-      # Additional downloads
-      MODS_FILE: /extras/plugins.txt
+      # All other plugins must be manually downloaded to data/plugins/
+      # See README.md for download instructions
 
       # Timezone
       TZ: "America/New_York"

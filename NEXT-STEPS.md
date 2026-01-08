@@ -26,10 +26,10 @@ cp .env.example .env
 nano .env  # Set RCON_PASSWORD and SERVER_OPS=PRLLAGER207
 
 # Start server
-docker-compose up -d
+docker compose up -d
 
 # Monitor startup (wait for "Done! For help, type help")
-docker-compose logs -f minecraft
+docker compose logs -f minecraft
 ```
 
 **What to verify:**
