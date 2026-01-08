@@ -397,7 +397,7 @@ lp user {username} permission unset privateworld.create.*
 ### In-Game Promotion
 ```bash
 # Broadcast every 30 minutes
-/broadcast §6Support BlockHaven! Get perks at §bhttps://store.blockhaven.gg
+/broadcast §6Support BlockHaven! Get perks at §bhttps://store.bhsmp.com
 
 # Join message
 /lp user <player> permission set blockhaven.joinmessage.donor
@@ -410,7 +410,7 @@ lp user {username} permission unset privateworld.create.*
 - Donor-only events (building contests, etc.)
 
 ### Website Integration
-- Tebex store embedded on blockhaven.gg
+- Tebex store embedded on bhsmp.com
 - Showcase donor perks with screenshots/videos
 - Testimonials from current donors
 
@@ -451,7 +451,7 @@ BlockHaven Refund Policy:
    - Ban due to rule violation
    - Server shutdown (rank will transfer if we migrate)
 
-To request refund: Email support@blockhaven.gg with order ID
+To request refund: Email support@bhsmp.com with order ID
 ```
 
 ---
@@ -465,7 +465,7 @@ To request refund: Email support@blockhaven.gg with order ID
 5. ✅ Configure LuckPerms permission nodes
 6. ✅ Test purchases with dummy account
 7. ✅ Write Terms of Service & Privacy Policy
-8. ✅ Embed Tebex store on blockhaven.gg
+8. ✅ Embed Tebex store on bhsmp.com
 9. ✅ Promote store in-game and Discord
 
 **See:** Phase 7 in [blockhaven-planning-doc.md](../../blockhaven-planning-doc.md) for detailed implementation.

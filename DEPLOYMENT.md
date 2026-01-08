@@ -84,16 +84,16 @@ Before deploying, ensure DNS is configured:
 #### A Records
 | Subdomain | Type | Value |
 |-----------|------|-------|
-| `play.blockhaven.gg` | A | `<your-vps-ip>` |
-| `map.blockhaven.gg` | A | `<your-vps-ip>` |
-| `stats.blockhaven.gg` | A | `<your-vps-ip>` |
+| `play.bhsmp.com` | A | `<your-vps-ip>` |
+| `map.bhsmp.com` | A | `<your-vps-ip>` |
+| `stats.bhsmp.com` | A | `<your-vps-ip>` |
 
-#### SRV Record (Optional - allows players to use `blockhaven.gg` without port)
+#### SRV Record (Optional - allows players to use `bhsmp.com` without port)
 | Name | Type | Priority | Weight | Port | Target |
 |------|------|----------|--------|------|--------|
-| `_minecraft._tcp.blockhaven.gg` | SRV | 0 | 5 | 25565 | `play.blockhaven.gg` |
+| `_minecraft._tcp.bhsmp.com` | SRV | 0 | 5 | 25565 | `play.bhsmp.com` |
 
-**Note:** SRV records don't work for Bedrock Edition. Bedrock players must use `play.blockhaven.gg:19132`.
+**Note:** SRV records don't work for Bedrock Edition. Bedrock players must use `play.bhsmp.com:19132`.
 
 ---
 
@@ -173,12 +173,12 @@ docker exec -i blockhaven-mc rcon-cli
 
 **Java Edition:**
 ```
-Server Address: play.blockhaven.gg:25565
+Server Address: play.bhsmp.com:25565
 ```
 
 **Bedrock Edition:**
 ```
-Server Address: play.blockhaven.gg
+Server Address: play.bhsmp.com
 Port: 19132
 ```
 
@@ -260,12 +260,12 @@ ufw status
 Use Dokploy's built-in reverse proxy or nginx to expose BlueMap and Plan with proper domains:
 
 #### BlueMap
-- URL: `https://map.blockhaven.gg`
+- URL: `https://map.bhsmp.com`
 - Internal Port: `8100`
 - Add authentication (basic auth or Cloudflare Access)
 
 #### Plan Analytics
-- URL: `https://stats.blockhaven.gg`
+- URL: `https://stats.bhsmp.com`
 - Internal Port: `8804`
 - Add authentication
 
@@ -343,14 +343,14 @@ docker stats blockhaven-mc
 
 Set up UptimeRobot (free tier):
 1. Create account at https://uptimerobot.com
-2. Add monitor: `play.blockhaven.gg:25565` (port monitoring)
+2. Add monitor: `play.bhsmp.com:25565` (port monitoring)
 3. Get alerts on downtime
 
 ### Performance Monitoring
 
 Use **Plan** (already installed):
 - Access: `http://your-vps-ip:8804`
-- Or via reverse proxy: `https://stats.blockhaven.gg`
+- Or via reverse proxy: `https://stats.bhsmp.com`
 - Monitor player count, TPS, resource usage
 
 ### Log Rotation
@@ -438,7 +438,7 @@ docker logs blockhaven-mc --tail 100
 
 ### Can't Connect (Java Edition)
 - Verify firewall: `ufw status`
-- Check port forwarding: `telnet play.blockhaven.gg 25565`
+- Check port forwarding: `telnet play.bhsmp.com 25565`
 - Verify online-mode in server.properties
 
 ### Can't Connect (Bedrock Edition)

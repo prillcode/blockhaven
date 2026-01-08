@@ -102,8 +102,8 @@ Port: 19132
 ```
 
 **Future (with domain):**
-- Java: `play.blockhaven.gg:25565`
-- Bedrock: `play.blockhaven.gg:19132`
+- Java: `play.bhsmp.com:25565`
+- Bedrock: `play.bhsmp.com:19132`
 
 ## Next Steps
 

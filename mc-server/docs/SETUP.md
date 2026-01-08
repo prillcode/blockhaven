@@ -70,7 +70,7 @@ DokPloy provides automated deployment from your GitHub repository.
 #### Prerequisites
 1. GitHub repository with BlockHaven code
 2. Hetzner VPS (CPX31 or higher) with DokPloy installed
-3. Domain: `play.blockhaven.gg` pointed to VPS IP
+3. Domain: `play.bhsmp.com` pointed to VPS IP
 
 #### Deployment Steps
 
@@ -97,7 +97,7 @@ DokPloy provides automated deployment from your GitHub repository.
 
 4. **Configure DNS:**
    ```
-   play.blockhaven.gg → <VPS IP>
+   play.bhsmp.com → <VPS IP>
    ```
 
 5. **Verify deployment:**
@@ -180,7 +180,7 @@ DokPloy provides automated deployment from your GitHub repository.
 ### Monitoring Setup
 
 1. **UptimeRobot:**
-   - Monitor: `play.blockhaven.gg:25565`
+   - Monitor: `play.bhsmp.com:25565`
    - Alert on downtime via Discord webhook
 
 2. **Discord Alerts:**

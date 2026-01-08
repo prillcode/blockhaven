@@ -231,7 +231,7 @@ default                      default
 
 #### **Plan (Player Analytics)**
 - **Purpose:** Server analytics dashboard
-- **Web Interface:** http://play.blockhaven.gg:8804
+- **Web Interface:** http://play.bhsmp.com:8804
 - **Tracks:**
   - Player activity
   - Peak times
@@ -247,7 +247,7 @@ default                      default
 
 #### **BlueMap**
 - **Purpose:** 3D web-based live map
-- **Web Interface:** http://play.blockhaven.gg:8100
+- **Web Interface:** http://play.bhsmp.com:8100
 - **Access:** Staff-only initially, public with rate limiting later
 - **Performance:** Much better than Dynmap (async rendering, WebGL)
 

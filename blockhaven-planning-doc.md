@@ -4,7 +4,7 @@
 
 **Server Name:** BlockHaven (possibly branded as "BlockHaven SMP" in listings/marketing)
 
-**Domains:** blockhaven.gg (marketing website) / play.blockhaven.gg (server deployment location)
+**Domains:** bhsmp.com (marketing website) / play.bhsmp.com (server deployment location)
 
 **Tagline:** Family-Friendly Anti-Griefer Survival & Creative!
 

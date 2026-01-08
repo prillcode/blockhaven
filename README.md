@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://blockhaven.gg">🌐 Website</a> •
+  <a href="https://bhsmp.com">🌐 Website</a> •
   <a href="mc-server/docs/SETUP.md">📖 Setup Guide</a> •
   <a href="mc-server/docs/PLUGINS.md">🔌 Plugins</a> •
   <a href="mc-server/docs/WORLDS.md">🌍 Worlds</a>
@@ -163,7 +163,7 @@ blockhaven/
 ## Support
 
 - **Discord:** [Coming soon]
-- **Email:** support@blockhaven.gg
+- **Email:** support@bhsmp.com
 - **Issues:** GitHub Issues (private repository)
 
 ---

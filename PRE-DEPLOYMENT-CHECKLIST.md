@@ -105,30 +105,30 @@ Example output: `8kJ2nP9xL4mQ6rT1vZ3sC5hW7yB0oE4iF8gD2aK6uM=`
 
 | Record Type | Name/Host | Value | TTL |
 |-------------|-----------|-------|-----|
-| **A** | `play.blockhaven.gg` | `<your-vps-ip>` | 300 |
-| **A** | `map.blockhaven.gg` | `<your-vps-ip>` | 300 |
-| **A** | `stats.blockhaven.gg` | `<your-vps-ip>` | 300 |
-| **SRV** | `_minecraft._tcp.blockhaven.gg` | `0 5 25565 play.blockhaven.gg` | 300 |
+| **A** | `play.bhsmp.com` | `<your-vps-ip>` | 300 |
+| **A** | `map.bhsmp.com` | `<your-vps-ip>` | 300 |
+| **A** | `stats.bhsmp.com` | `<your-vps-ip>` | 300 |
+| **SRV** | `_minecraft._tcp.bhsmp.com` | `0 5 25565 play.bhsmp.com` | 300 |
 
 ### Where to Set DNS:
 
-If `blockhaven.gg` is registered:
+If `bhsmp.com` is registered:
 - Go to your domain registrar (Namecheap, GoDaddy, etc.)
 - Navigate to DNS management
 - Add the A records above
 
-**Note:** SRV record allows Java players to connect with just `blockhaven.gg` (no port). Bedrock players still need port `19132`.
+**Note:** SRV record allows Java players to connect with just `bhsmp.com` (no port). Bedrock players still need port `19132`.
 
 ### Verify DNS Propagation
 
 ```bash
 # After setting DNS, verify:
-dig play.blockhaven.gg +short
+dig play.bhsmp.com +short
 # Should return your VPS IP
 
 # Check SRV record:
-dig _minecraft._tcp.blockhaven.gg SRV +short
-# Should return: 0 5 25565 play.blockhaven.gg.
+dig _minecraft._tcp.bhsmp.com SRV +short
+# Should return: 0 5 25565 play.bhsmp.com.
 ```
 
 ---
@@ -249,13 +249,13 @@ docker exec -i blockhaven-mc rcon-cli
 
 **Java Edition:**
 ```
-Server: play.blockhaven.gg
+Server: play.bhsmp.com
 Port: (leave default or use 25565)
 ```
 
 **Bedrock Edition:**
 ```
-Server: play.blockhaven.gg
+Server: play.bhsmp.com
 Port: 19132
 ```
 
@@ -408,7 +408,7 @@ ls -lh mc-server/backups/
 1. Create free account: https://uptimerobot.com
 2. Add monitor:
    - **Type:** Port Monitoring
-   - **Host:** play.blockhaven.gg
+   - **Host:** play.bhsmp.com
    - **Port:** 25565
    - **Interval:** 5 minutes
 3. Add alert contact (email)
@@ -428,7 +428,7 @@ Before moving to Phase 2 (LuckPerms), verify:
 - [ ] Backups running every 2 hours
 - [ ] Uptime monitoring configured
 - [ ] DNS records pointing to VPS
-- [ ] Can access server via `play.blockhaven.gg`
+- [ ] Can access server via `play.bhsmp.com`
 
 ---
 

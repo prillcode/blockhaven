@@ -27,30 +27,35 @@ echo "Creating survival_easy..."
 docker exec -i blockhaven-mc rcon-cli "mv create survival_easy normal -s $SEED_SURVIVAL_EASY"
 docker exec -i blockhaven-mc rcon-cli "mv modify set difficulty normal survival_easy"
 docker exec -i blockhaven-mc rcon-cli "mv modify set gamemode survival survival_easy"
+docker exec -i blockhaven-mc rcon-cli "mv modify set alias 'SMP Smokey Plains' survival_easy"
 
 # Survival Hard - More Mountains
 echo "Creating survival_hard..."
 docker exec -i blockhaven-mc rcon-cli "mv create survival_hard normal -s $SEED_SURVIVAL_HARD"
 docker exec -i blockhaven-mc rcon-cli "mv modify set difficulty hard survival_hard"
 docker exec -i blockhaven-mc rcon-cli "mv modify set gamemode survival survival_hard"
+docker exec -i blockhaven-mc rcon-cli "mv modify set alias 'SMP Forest Cliffs' survival_hard"
 
 # Creative Flat - Superflat for plots
 echo "Creating creative_flat..."
 docker exec -i blockhaven-mc rcon-cli "mv create creative_flat normal -t FLAT"
 docker exec -i blockhaven-mc rcon-cli "mv modify set difficulty peaceful creative_flat"
 docker exec -i blockhaven-mc rcon-cli "mv modify set gamemode creative creative_flat"
+docker exec -i blockhaven-mc rcon-cli "mv modify set alias 'Creative Plots' creative_flat"
 
 # Creative Terrain - Normal generation
 echo "Creating creative_terrain..."
 docker exec -i blockhaven-mc rcon-cli "mv create creative_terrain normal -s $SEED_CREATIVE_TERRAIN"
 docker exec -i blockhaven-mc rcon-cli "mv modify set difficulty peaceful creative_terrain"
 docker exec -i blockhaven-mc rcon-cli "mv modify set gamemode creative creative_terrain"
+docker exec -i blockhaven-mc rcon-cli "mv modify set alias 'Creative Hills' creative_terrain"
 
 # Resource World - Normal, will be reset monthly
 echo "Creating resource..."
 docker exec -i blockhaven-mc rcon-cli "mv create resource normal -s $SEED_RESOURCE"
 docker exec -i blockhaven-mc rcon-cli "mv modify set difficulty normal resource"
 docker exec -i blockhaven-mc rcon-cli "mv modify set gamemode survival resource"
+docker exec -i blockhaven-mc rcon-cli "mv modify set alias 'Resource Ravine' resource"
 docker exec -i blockhaven-mc rcon-cli "gamerule keepInventory true"
 
 # Spawn Hub - Void world
@@ -58,6 +63,7 @@ echo "Creating spawn (void world)..."
 docker exec -i blockhaven-mc rcon-cli "mv create spawn normal -g VoidGen"
 docker exec -i blockhaven-mc rcon-cli "mv modify set difficulty peaceful spawn"
 docker exec -i blockhaven-mc rcon-cli "mv modify set gamemode adventure spawn"
+docker exec -i blockhaven-mc rcon-cli "mv modify set alias 'Spawn Hub' spawn"
 
 # Set world borders
 echo ""
@@ -80,12 +86,12 @@ echo "✅ All worlds created successfully!"
 echo "========================================="
 echo ""
 echo "Worlds created:"
-echo "  ✓ survival_easy (Normal, seed: $SEED_SURVIVAL_EASY)"
-echo "  ✓ survival_hard (Amplified, seed: $SEED_SURVIVAL_HARD)"
-echo "  ✓ creative_flat (Superflat)"
-echo "  ✓ creative_terrain (Normal, seed: $SEED_CREATIVE_TERRAIN)"
-echo "  ✓ resource (Normal, seed: $SEED_RESOURCE)"
-echo "  ✓ spawn (Void)"
+echo "  ✓ SMP Smokey Plains (survival_easy, seed: $SEED_SURVIVAL_EASY)"
+echo "  ✓ SMP Forest Cliffs (survival_hard, seed: $SEED_SURVIVAL_HARD)"
+echo "  ✓ Creative Plots (creative_flat)"
+echo "  ✓ Creative Hills (creative_terrain, seed: $SEED_CREATIVE_TERRAIN)"
+echo "  ✓ Resource Ravine (resource, seed: $SEED_RESOURCE)"
+echo "  ✓ Spawn Hub (spawn)"
 echo ""
 echo "Next steps:"
 echo "  1. The spawn world is now the default (LEVEL=spawn in docker-compose.yml)"

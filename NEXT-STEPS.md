@@ -45,7 +45,7 @@
 
 ### 2. Domain & DNS Setup (Do After World Creation)
 
-**Goal:** Configure `blockhaven.gg` domain with Cloudflare DNS
+**Goal:** Configure `bhsmp.com` domain with Cloudflare DNS
 
 #### DNS Records (Cloudflare)
 
@@ -71,7 +71,7 @@ TTL: Auto
 - ✅ Website traffic CAN use Cloudflare proxy (HTTP/HTTPS)
 - ❌ Minecraft traffic CANNOT use Cloudflare proxy (ports 25565, 19132)
 - The `play` subdomain MUST be "DNS Only" for Minecraft to work
-- Your VPS IP will be visible via `play.blockhaven.gg` (this is normal)
+- Your VPS IP will be visible via `play.bhsmp.com` (this is normal)
 
 #### DDoS Protection Strategy
 
@@ -84,22 +84,22 @@ TTL: Auto
 - Add TCPShield (free tier): https://tcpshield.com/
 - Provides Minecraft-specific DDoS protection
 - Hides your real VPS IP from players
-- Update DNS: `play.blockhaven.gg` → TCPShield IP → Your VPS
+- Update DNS: `play.bhsmp.com` → TCPShield IP → Your VPS
 
 #### Player Connection Info
 
 After DNS setup, players connect with:
-- **Java Edition:** `play.blockhaven.gg`
-- **Bedrock Edition:** `play.blockhaven.gg` port `19132`
+- **Java Edition:** `play.bhsmp.com`
+- **Bedrock Edition:** `play.bhsmp.com` port `19132`
 
 **Deliverables:**
-- [ ] Purchase/register `blockhaven.gg` domain
+- [ ] Purchase/register `bhsmp.com` domain
 - [ ] Add domain to Cloudflare
 - [ ] Create `A` record for `@` (proxied)
 - [ ] Create `A` record for `play` (DNS only)
 - [ ] Wait for DNS propagation (5-30 minutes)
-- [ ] Test connection: `play.blockhaven.gg`
-- [ ] Update MOTD in docker-compose.yml to show `play.blockhaven.gg`
+- [ ] Test connection: `play.bhsmp.com`
+- [ ] Update MOTD in docker-compose.yml to show `play.bhsmp.com`
 
 ### 3. Choose World Seeds (Before Running World Creation)
 
@@ -316,8 +316,8 @@ See sections in [blockhaven-planning-doc.md](blockhaven-planning-doc.md):
 - Bedrock: `5.161.69.191:19132`
 
 **After DNS setup:**
-- Java: `play.blockhaven.gg`
-- Bedrock: `play.blockhaven.gg` port `19132`
+- Java: `play.bhsmp.com`
+- Bedrock: `play.bhsmp.com` port `19132`
 
 ### VPS Access
 
