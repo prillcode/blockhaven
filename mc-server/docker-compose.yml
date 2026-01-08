@@ -24,7 +24,9 @@ services:
 
       # Server Properties
       SERVER_NAME: "BlockHaven"
-      MOTD: "§a§lBlockHaven §7- §fFamily-Friendly Anti-Griefer Survival & Creative!"
+      MOTD: "§a§lBlockHaven.gg §7|| §bMinecraft & Chill!\n§aSurvival Multiplayer (SMP) §7| §aCreative §7| §aEconomy §7| §aLand Claims §7| §aNo Griefing §b☻"
+      OVERRIDE_ICON: "TRUE"
+      ICON: "/extras/server-icon.png"
       MAX_PLAYERS: 100
       DIFFICULTY: normal
       MODE: survival
