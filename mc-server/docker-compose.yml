@@ -27,6 +27,7 @@ services:
       MOTD: "§a§lBlockHaven.gg §7|| §bMinecraft & Chill!\n§aSMP & Creative §7| §aEconomy §7| §aLand Claims §7| §aNo Griefing §b☻"
       OVERRIDE_ICON: "TRUE"
       ICON: "/extras/server-icon.png"
+      LEVEL: "spawn"  # Set spawn world as default (after you create it with Multiverse)
       MAX_PLAYERS: 100
       DIFFICULTY: normal
       MODE: survival

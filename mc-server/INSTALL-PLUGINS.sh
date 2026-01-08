@@ -45,6 +45,30 @@ wget -q --show-progress -O data/plugins/LuckPerms-Bukkit.jar \
   "https://ci.lucko.me/job/LuckPerms/lastSuccessfulBuild/artifact/bukkit/loader/build/libs/LuckPerms-Bukkit-5.5.22.jar" \
   && echo "✓ LuckPerms v5.5.22" || echo "✗ LuckPerms download failed"
 
+# Multiverse-Core v4.4.0 (Multi-world management - required for world creation)
+echo "Downloading Multiverse-Core..."
+wget -q --show-progress -O data/plugins/Multiverse-Core.jar \
+  "https://github.com/Multiverse/Multiverse-Core/releases/download/4.4.0/multiverse-core-4.4.0.jar" \
+  && echo "✓ Multiverse-Core v4.4.0" || echo "✗ Multiverse-Core download failed"
+
+# Multiverse-Portals v4.2.4 (Portal creation between worlds)
+echo "Downloading Multiverse-Portals..."
+wget -q --show-progress -O data/plugins/Multiverse-Portals.jar \
+  "https://github.com/Multiverse/Multiverse-Portals/releases/download/4.2.4/multiverse-portals-4.2.4.jar" \
+  && echo "✓ Multiverse-Portals v4.2.4" || echo "✗ Multiverse-Portals download failed"
+
+# Multiverse-Inventories v4.2.6 (Separate inventories per world group)
+echo "Downloading Multiverse-Inventories..."
+wget -q --show-progress -O data/plugins/Multiverse-Inventories.jar \
+  "https://github.com/Multiverse/Multiverse-Inventories/releases/download/4.2.6/multiverse-inventories-4.2.6.jar" \
+  && echo "✓ Multiverse-Inventories v4.2.6" || echo "✗ Multiverse-Inventories download failed"
+
+# VoidGen v2.1.3 (Void world generator for spawn hub)
+echo "Downloading VoidGen..."
+wget -q --show-progress -O data/plugins/VoidGen.jar \
+  "https://github.com/Rooouge/VoidGen/releases/download/2.1.3/VoidGen-2.1.3.jar" \
+  && echo "✓ VoidGen v2.1.3" || echo "✗ VoidGen download failed"
+
 echo ""
 echo "========================================="
 echo "Phase 1 plugins installed!"
@@ -56,6 +80,10 @@ echo "  ✓ Vault v1.7.3"
 echo "  ✓ CMILib v1.5.8.1 (Jobs dependency)"
 echo "  ✓ Jobs Reborn v5.2.6.3"
 echo "  ✓ LuckPerms v5.5.22"
+echo "  ✓ Multiverse-Core v4.4.0"
+echo "  ✓ Multiverse-Portals v4.2.4"
+echo "  ✓ Multiverse-Inventories v4.2.6"
+echo "  ✓ VoidGen v2.1.3"
 echo ""
 echo "Already auto-installed via docker-compose (Modrinth):"
 echo "  ✓ Geyser (Bedrock support)"
