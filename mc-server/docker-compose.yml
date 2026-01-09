@@ -50,21 +50,11 @@ services:
       OPS: "${SERVER_OPS}"
 
       # Auto-downloaded plugins
+      MODRINTH_PROJECTS: multiverse-core,multiverse-portals,multiverse-netherportals,voidgen
       PLUGINS: |
         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
         https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
         https://hangar.papermc.io/api/v1/projects/ViaVersion/versions/5.7.0/PAPER/download
-        https://github.com/Multiverse/Multiverse-Core/releases/download/4.3.13/multiverse-core-4.3.13.jar
-        https://dev.bukkit.org/projects/multiverse-portals/files/latest
-        https://dev.bukkit.org/projects/multiverse-netherportals/files/latest
-        https://github.com/TownyAdvanced/Towny/releases/download/0.100.4.0/Towny-0.100.4.0.jar
-        https://hangarcdn.papermc.io/plugins/EssentialsX/EssentialsX/versions/2.21.0-dev+124-1891563/PAPER/EssentialsX-2.21.0-dev+124-1891563.jar
-        https://hangarcdn.papermc.io/plugins/LuckPerms/LuckPerms/versions/5.4.145/BUKKIT/LuckPerms-Bukkit-5.4.145.jar
-        https://hangarcdn.papermc.io/plugins/GriefPrevention/GriefPrevention/versions/16.18.4/PAPER/GriefPrevention-16.18.4.jar
-        https://hangarcdn.papermc.io/plugins/TheNewEconomy/TheNewEconomy/versions/0.1.3.4/PAPER/TheNewEconomy-0.1.3.4.jar
-        https://github.com/BlueMap-Minecraft/BlueMap/releases/download/v5.5/BlueMap-5.5-paper.jar
-        https://github.com/plan-player-analytics/Plan/releases/download/5.6.3297/Plan-5.6-build-3297.jar
-        https://github.com/VoidGenerator/VoidGenerator/releases/download/v1.8.3/VoidGenerator-v1.8.3.jar
 
       # Timezone
       TZ: "America/New_York"
