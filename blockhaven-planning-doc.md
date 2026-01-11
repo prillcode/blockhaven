@@ -30,15 +30,17 @@
 - All plugins verified compatible with 1.21.11
 
 **Plugin Changes:**
-- ✅ **Added:** PlotSquared v7 for creative world plot management (64x64 and 128x128 plots)
-- ✅ **Added:** Skript for custom features (private worlds system)
-- ✅ **Replaced:** ChestShop → QuickShop-Hikari (better maintained, improved performance)
-- ✅ **Added to core:** WorldGuard (was in additional plugins)
+- ✅ **Added:** UltimateLandClaim for land protection (FREE mode with golden shovel)
+- ✅ **Added:** VoidGen for void world generation
+- ✅ **Added to core:** WorldGuard for spawn/portal protection
+- ❌ **Not Added:** PlotSquared - Creative worlds are open creative, not plot-based
+- ❌ **Not Added:** Skript - Postponed for future private worlds system
+- ⏳ **Postponed:** Shop plugin (ChestShop/QuickShop-Hikari)
 
 **Finalized Decisions:**
-- **Private Worlds:** Multiverse-Core + custom Skript (vs PhantomWorlds/WorldSystem)
-- **Creative Plots:** PlotSquared v7 with per-world configurations
-- **Shop Plugin:** QuickShop-Hikari for better 1.21+ support
+- **Land Claims:** UltimateLandClaim in FREE mode (GriefPrevention-style)
+- **Creative Worlds:** Open creative mode, not plot-based
+- **World Protection:** WorldGuard for spawn/portals, UltimateLandClaim for player claims
 - **BlueMap Access:** Staff-only initially, public with rate limiting later
 - **Discord Integration:** Moderate features at launch (chat bridge, notifications, staff console) with advanced features planned (economy commands, tickets)
 
@@ -52,28 +54,28 @@
 
 ### Worlds (6 Total)
 
-| World ID | Display Name | Type | Description | Special Settings |
-|----------|--------------|------|-------------|------------------|
-| `survival_easy` | *TBD* | Survival | Easier progression, village-heavy flat terrain | 2x claim block earn rate, normal job payouts |
-| `survival_hard` | *TBD* | Survival | Hard difficulty, mountainous terrain | 0.5x claim blocks, 1.5x job payouts |
-| `creative_flat` | *TBD* | Creative | 64x64 plots, weekly building competitions | No claims, plot-based |
-| `creative_terrain` | *TBD* | Creative | Natural landscape, 128x128 plots | No claims, plot-based |
-| `resource` | Resource World | Survival | Monthly reset mining world | No claims, keep inventory ON (family-friendly) |
-| `spawn` | Spawn Hub | Adventure | Central hub with portals to all worlds | Protected, no building |
+| World ID | Display Name | Type | Description | Seed | Special Settings |
+|----------|--------------|------|-------------|------|------------------|
+| `survival_easy` | SMP_Plains | Survival | Easy difficulty, plains biome | 8377987092687320925 | Standard claim blocks, normal job payouts |
+| `survival_normal` | SMP_Ravine | Survival | Normal difficulty, ravine terrain | -3821186818266249955 | Standard claim blocks, normal job payouts |
+| `survival_hard` | SMP_Cliffs | Survival | Hard difficulty, mountainous cliffs | -8913466909937400889 | Standard claim blocks, higher challenge |
+| `creative_flat` | Creative_Plots | Creative | Superflat for creative building | Default FLAT | No claims, frozen time/weather |
+| `creative_terrain` | Creative_Hills | Creative | Natural landscape creative building | 3017885471480990383 | No claims, frozen time/weather |
+| `spawn` | Spawn_Hub | Adventure | Central hub with portals to all worlds | VoidGen | Protected with WorldGuard, no building |
 
-> **Note:** `survival_easy` and `survival_hard` are placeholder internal names. Display names will be configured separately in plugins.
+> **Note:** All worlds created and configured. Creative worlds have `advance_time` and `advance_weather` set to false.
 
 ### Inventory Grouping (Multiverse-Inventories)
 
-Worlds are grouped to share inventories within groups but remain isolated between groups:
+**Status:** Plugin installed but not yet configured. Planned grouping:
 
 | Group | Worlds | Shares | Rationale |
 |-------|--------|--------|-----------|
-| **survival** | `survival_easy`, `survival_hard`, `resource`, `spawn` | Inventory + Ender Chest only | Mine in resource → build in survival; XP/health/hunger stay per-world |
+| **survival** | `survival_easy`, `survival_normal`, `survival_hard`, `spawn` | Inventory + Ender Chest only | Share items across all survival worlds; XP/health/hunger stay per-world |
 | **creative_flat** | `creative_flat` | All | Isolated to prevent creative items leaking to survival |
 | **creative_terrain** | `creative_terrain` | All | Isolated to prevent creative items leaking to survival |
 
-> **Design Note:** Survival worlds share inventory but NOT XP, health, or hunger. This prevents exploits (grind XP in easy world, use in hard world) while still allowing resource gathering to benefit all survival gameplay.
+> **Design Note:** Survival worlds will share inventory but NOT XP, health, or hunger. This prevents exploits (grind XP in easy world, use in hard world) while allowing resource gathering to benefit all survival gameplay. Configuration pending.
 
 ### Private Worlds (Premium Feature)
 
@@ -86,50 +88,50 @@ World naming convention: `pw_<player_uuid_short>_<worldname>`
 
 ---
 
-## Updated Plugin Stack
+## Currently Installed Plugin Stack
 
-### Core Plugins (Required)
+### Active Plugins (15 Total)
 
-| Plugin | Purpose | Download Source |
-|--------|---------|-----------------|
-| Geyser-Spigot | Bedrock player support | https://geysermc.org/download |
-| Floodgate-Spigot | Bedrock authentication | https://geysermc.org/download |
-| GriefPrevention | Land claims (survival only) | SpigotMC |
-| EssentialsX | Core server features | https://essentialsx.net/downloads.html |
-| EssentialsXChat | Chat formatting | https://essentialsx.net/downloads.html |
-| EssentialsXSpawn | Spawn management | https://essentialsx.net/downloads.html |
-| Vault | Economy/permissions API | SpigotMC/GitHub |
-| Jobs Reborn | Job/economy system | SpigotMC |
-| QuickShop-Hikari | Player shops | SpigotMC |
-| Multiverse-Core | World management | GitHub |
-| Multiverse-Portals | Portal creation | GitHub |
-| Multiverse-Inventories | Per-world inventories | GitHub |
-| LuckPerms | Permissions/ranks | https://luckperms.net/download |
-| Plan | Analytics dashboard | GitHub |
-| CoreProtect | Block logging/rollback | SpigotMC |
-| DiscordSRV | Discord integration | SpigotMC |
-| WorldEdit | Building tools (staff) | https://enginehub.org/worldedit |
-| PlotSquared | Plot management (creative worlds) | GitHub |
-| WorldGuard | Region protection (spawn) | EngineHub |
+| Plugin | Purpose | Status |
+|--------|---------|--------|
+| Geyser-Spigot | Bedrock player support | ✅ Installed |
+| Floodgate | Bedrock authentication | ✅ Installed |
+| UltimateLandClaim | Land claims (survival worlds) | ✅ Installed, needs configuration |
+| EssentialsX | Core server features | ✅ Installed |
+| Vault | Economy/permissions API | ✅ Installed |
+| Jobs Reborn | Job/economy system | ✅ Installed, needs configuration |
+| Multiverse-Core | World management | ✅ Installed, worlds created |
+| Multiverse-Portals | Portal creation | ✅ Installed |
+| Multiverse-NetherPortals | Nether portal linking | ✅ Installed |
+| Multiverse-Inventories | Per-world inventories | ✅ Installed, needs configuration |
+| LuckPerms | Permissions/ranks | ✅ Installed, portal perms configured |
+| WorldEdit | Building tools (staff) | ✅ Installed |
+| WorldGuard | Region protection (spawn) | ✅ Installed, needs region setup |
+| ViaVersion | Protocol support for older clients | ✅ Installed |
+| VoidGen | Void world generation | ✅ Installed |
 
-### Alternative Plugins (Updated Recommendations)
+### Planned But Not Yet Installed
 
-| Plugin | Purpose | Why This Choice |
-|--------|---------|-----------------|
-| **Grim** | Anti-cheat | Free, actively maintained, excellent Geyser compatibility |
-| **ChatSentry** | Chat filtering | Free, good filtering, simpler than ChatControl Pro |
-| **ZNPCs** | Tutorial NPCs | Lighter weight, better performance than Citizens |
-| **BlueMap** | Live web map | Better performance than Dynmap, modern WebGL, gorgeous renders |
-| **Harbor** | Sleep voting | Per-world configurable via `excluded-worlds` |
+| Plugin | Purpose | Priority |
+|--------|---------|----------|
+| CoreProtect | Block logging/rollback | High - anti-grief |
+| EssentialsXChat | Chat formatting | Medium |
+| EssentialsXSpawn | Spawn management | Medium |
+| Plan | Analytics dashboard | Medium |
+| DiscordSRV | Discord integration | Medium |
+| BlueMap | Live web map | Low - resource intensive |
+| Harbor | Sleep voting | Low - quality of life |
+| PlaceholderAPI | Variable placeholders | Low - dependency for future plugins |
+| Shop Plugin | Player shops (ChestShop or QuickShop) | Medium - economy feature |
 
-### Additional Plugins
+### Not Using
 
-| Plugin | Purpose |
-|--------|---------|
-| Multiverse-Core + custom Skript | Private world management (player-owned worlds) |
-| Tebex (BuyCraft) | Donation processing |
-| PlaceholderAPI | Variable placeholders |
-| Skript | Scripting engine for custom features |
+- **PlotSquared** - Creative worlds are open creative, not plot-based
+- **GriefPrevention** - Using UltimateLandClaim instead
+- **Skript** - Not needed yet, may add for private worlds later
+- **ChatSentry/ChatFilter** - Postponed
+- **Grim** - Anti-cheat postponed
+- **ZNPCs** - Tutorial system postponed
 
 ---
 
@@ -155,17 +157,14 @@ blockhaven/
 │   ├── plugins/
 │   │   ├── .gitkeep
 │   │   └── configs/           # Plugin config templates
-│   │       ├── GriefPrevention/
+│   │       ├── UltimateLandClaim/
 │   │       ├── Jobs/
 │   │       ├── EssentialsX/
 │   │       ├── Multiverse-Core/
 │   │       ├── Multiverse-Inventories/
 │   │       ├── LuckPerms/
-│   │       ├── Harbor/
-│   │       ├── Geyser-Spigot/
-│   │       ├── PlotSquared/
-│   │       ├── QuickShop-Hikari/
-│   │       └── Skript/
+│   │       ├── WorldGuard/
+│   │       └── Geyser-Spigot/
 │   ├── data/
 │   │   └── .gitkeep
 │   ├── backups/
@@ -402,16 +401,25 @@ The numbers in `SPIGET_RESOURCES` correspond to SpigotMC resource IDs:
 
 ## Implementation Phases
 
-### Phase 1: Docker Foundation (This Document)
+### Phase 1: Docker Foundation ✅ COMPLETE
 - [x] Docker Compose configuration
 - [x] Plugin auto-download setup
 - [x] Directory structure
 - [x] Backup automation
 - [x] Test deployment on local Docker
-- [ ] Deploy to Hetzner VPS
+- [x] Deploy to Hetzner VPS
+- [x] Fix data persistence with named volumes
+- [x] Disable Dokploy auto-deployment
 
-### Phase 2: LuckPerms Configuration
+### Phase 2: LuckPerms Configuration 🚧 IN PROGRESS
 **Goal:** Full rank hierarchy with inheritance, donation perks, and world-specific contexts
+
+**Current Status:**
+- [x] LuckPerms installed
+- [x] Basic portal permissions configured for default group
+- [ ] Full rank hierarchy
+- [ ] Donation rank permissions
+- [ ] World-specific contexts
 
 **Rank Hierarchy:**
 ```
@@ -455,9 +463,7 @@ default
 - Starting balance: 500 coins
 - Max balance: 10,000,000 coins
 - Currency name: "coins" (singular: "coin")
-- Job payout multipliers:
-  - `survival_easy`: 1.0x base rate
-  - `survival_hard`: 1.5x base rate
+- Job payout multipliers: 1.0x base rate (same across all worlds)
 
 **Files to Create:**
 - `plugins/configs/Jobs/config.yml`
@@ -465,44 +471,23 @@ default
 - `plugins/configs/EssentialsX/config.yml` (economy section)
 - `docs/ECONOMY.md` - Economy reference
 
-### Phase 4: World Generation & Plot Setup
-**Goal:** Create all 6 worlds with proper settings and configure PlotSquared for creative worlds
+### Phase 4: World Generation ✅ COMPLETE
+**Goal:** Create all 6 worlds with proper settings
 
-**Commands Sequence:**
-```bash
-# Create worlds (run in-game or via RCON after first boot)
+**Current Status:**
+- [x] All 6 worlds created with specific seeds
+- [x] World difficulties configured
+- [x] World aliases set (display names)
+- [x] Creative worlds have frozen time/weather
+- [ ] Multiverse-Inventories groups configured
 
-# Survival Easy - Flat villages
-/mv create survival_easy normal -g VoidGen -t FLAT
-/mv modify set difficulty normal survival_easy
-/mv modify set gamemode survival survival_easy
-
-# Survival Hard - Amplified/mountainous  
-/mv create survival_hard normal -t AMPLIFIED
-/mv modify set difficulty hard survival_hard
-/mv modify set gamemode survival survival_hard
-
-# Creative Flat - Superflat for plots
-/mv create creative_flat normal -t FLAT
-/mv modify set difficulty peaceful creative_flat
-/mv modify set gamemode creative creative_flat
-
-# Creative Terrain - Normal generation
-/mv create creative_terrain normal
-/mv modify set difficulty peaceful creative_terrain
-/mv modify set gamemode creative creative_terrain
-
-# Resource World - Normal, will be reset monthly
-/mv create resource normal
-/mv modify set difficulty normal resource
-/mv modify set gamemode survival resource
-/mvm set gamerule keepInventory true resource
-
-# Spawn Hub - Void world, custom built
-/mv create spawn normal -g VoidGen
-/mv modify set difficulty peaceful spawn
-/mv modify set gamemode adventure spawn
-```
+**Worlds Created:**
+1. **spawn** (Spawn_Hub) - VoidGen, adventure mode, peaceful
+2. **survival_easy** (SMP_Plains) - Seed: 8377987092687320925, easy difficulty
+3. **survival_normal** (SMP_Ravine) - Seed: -3821186818266249955, normal difficulty
+4. **survival_hard** (SMP_Cliffs) - Seed: -8913466909937400889, hard difficulty
+5. **creative_flat** (Creative_Plots) - FLAT type, creative mode, peaceful
+6. **creative_terrain** (Creative_Hills) - Seed: 3017885471480990383, creative mode, peaceful
 
 **Files to Create:**
 - `plugins/configs/Multiverse-Core/worlds.yml`
@@ -541,56 +526,30 @@ groups:
 
 > **Survival Group Behavior:** Players carry items between survival worlds, but health, hunger, and XP are per-world. This means dying in `survival_hard` doesn't affect your `survival_easy` health, and XP grinding in `resource` stays in that world.
 
-**PlotSquared Setup for Creative Worlds:**
+### Phase 5: UltimateLandClaim Configuration 🚧 NEXT
+**Goal:** Configure land claiming system for survival worlds
 
-After creating creative worlds, configure PlotSquared plots:
-
-```bash
-# Creative Flat - 64x64 plots
-/plot area create creative_flat
-# Follow prompts:
-# - Plot size: 64
-# - Path width: 7
-# - Ground height: 64
-
-# Creative Terrain - 128x128 plots
-/plot area create creative_terrain
-# Follow prompts:
-# - Plot size: 128
-# - Path width: 10
-# - Ground height: varies (terrain-based)
-```
-
-**PlotSquared Configuration:**
-- Auto-claim enabled for new players
-- Max plots per player: 3 (default), 5 (Friend), 10 (Family), 20 (VIP), unlimited (Lifetime VIP)
-- Plot permissions: Build, container access, entity interaction
-- Weekly building competitions (manual judging)
-- Plot clear/reset commands for staff
-
-**Files to Create:**
-- `plugins/configs/PlotSquared/settings.yml` (per-world plot sizes)
-- `plugins/configs/PlotSquared/worlds.yml` (world-specific settings)
-- `docs/PLOTS.md` - Plot usage guide
-
-### Phase 5: GriefPrevention Multi-World Config
-**Goal:** Different claim rates per survival world
+**Current Status:**
+- [x] UltimateLandClaim installed
+- [ ] Basic configuration (FREE mode with golden shovel)
+- [ ] WorldGuard integration enabled
+- [ ] Test claims in survival worlds
 
 **Configuration:**
-- `survival_easy`: 100 blocks/hour earn rate, 2x multiplier = 200 blocks/hour
-- `survival_hard`: 100 blocks/hour earn rate, 0.5x multiplier = 50 blocks/hour
-- `creative_*`: Claims disabled (plot-based system instead)
-- `resource`: Claims disabled
-- `spawn`: Claims disabled (WorldGuard protected)
-
-**Claim Settings:**
+- Mode: FREE (GriefPrevention-style golden shovel claiming)
 - Initial claim blocks: 100
-- Max accrued blocks: 50,000
-- Claim expiration: 60 days inactive
+- Blocks earned: Per minute of playtime
+- Creative worlds: Claims disabled (open creative mode)
+- Spawn: Claims disabled (WorldGuard protected)
+- WorldGuard integration: Prevent claiming in protected regions
 
-**Files to Create:**
-- `plugins/configs/GriefPrevention/config.yml`
-- `plugins/configs/GriefPrevention/worlds.yml` (per-world overrides)
+**Files to Configure:**
+- `plugins/configs/UltimateLandClaim/config.yml`
+- Enable WorldGuard integration
+- Set claim block rates
+- Configure golden shovel as claim tool
+
+**See:** [mc-server/docs/IN-GAME-PROTECTION-SETUP.md](mc-server/docs/IN-GAME-PROTECTION-SETUP.md) for step-by-step testing guide
 
 ### Phase 6: Private Worlds System
 **Goal:** Premium players can create/manage invite-only worlds
@@ -874,12 +833,11 @@ When continuing this project:
 **Key Design Decisions:**
 - Using YAML storage for LuckPerms (not MySQL) - simpler for single-server setup
 - Multiverse-Core for world management - well-documented, stable
-- **Multiverse-Core + custom Skript** for private worlds - lightweight, fully customizable
-- **PlotSquared v7** for creative plot management - active development, 1.21.11 compatible
-- **QuickShop-Hikari** over ChestShop - better maintained, improved performance
-- **BlueMap** over Dynmap - significantly better performance, modern WebGL rendering
-- **Grim** over Vulcan - free, open-source, excellent Geyser/Bedrock compatibility
-- **Skript** for custom features - easier to maintain than Java plugins for simple logic
+- **UltimateLandClaim** over GriefPrevention - all-in-one solution with FREE mode
+- **Open creative worlds** (not plot-based) - simplified building experience
+- VoidGen for void world generation - built-in with Multiverse
+- **Docker named volumes** over bind mounts - prevents data loss on redeployment
+- Disabled Dokploy auto-deployment - manual control for production Minecraft server
 
 **Resource Constraints:**
 - 8GB RAM VPS (6GB to JVM)
