@@ -60,7 +60,7 @@ services:
       TZ: "America/New_York"
 
     volumes:
-      - ./data:/data
+      - minecraft-data:/data
       - ./plugins/configs:/plugins-config:ro
       - ./scripts:/scripts:ro
       - ./extras:/extras:ro
@@ -102,7 +102,7 @@ services:
       # POST_BACKUP_SCRIPT: |
       #   aws s3 sync /backups s3://${S3_BUCKET}/blockhaven-backups/ --delete
     volumes:
-      - ./data:/data:ro
+      - minecraft-data:/data:ro
       - ./backups:/backups
     depends_on:
       minecraft:
@@ -125,5 +125,5 @@ services:
   #     - backup
 
 volumes:
-  data:
-  backups:
+  minecraft-data:
+    driver: local
