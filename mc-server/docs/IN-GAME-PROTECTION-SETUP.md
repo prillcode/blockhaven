@@ -5,7 +5,42 @@
 
 ---
 
-## Phase 1: WorldGuard Basics
+## Phase 1: Configure LuckPerms Portal Permissions
+
+**IMPORTANT: Do this first so all players can use portals!**
+
+### [ ] Task 1: Enable Portal Access for All Players
+
+Run these commands in-game:
+```
+/lp group default permission set multiverse.portal.access.* true
+/lp group default permission set multiverse.access.* true
+```
+
+### [ ] Task 2: Verify Permissions Were Set
+```
+/lp group default info
+```
+- Should see the two multiverse permissions listed
+
+### [ ] Task 3: Configure Creative World Settings
+
+Set time to day and freeze time/weather in creative worlds:
+```
+/mvtp Creative_Plots
+/time set day
+/gamerule advance_time false
+/gamerule advance_weather false
+
+/mvtp Creative_Hills
+/time set day
+/gamerule advance_time false
+/gamerule advance_weather false
+```
+
+---
+
+## Phase 2: WorldGuard Basics
 
 ### Get Your WorldEdit Wand
 ```
@@ -27,7 +62,7 @@
 
 ---
 
-## Phase 2: Protect Spawn Hub World
+## Phase 3: Protect Spawn Hub World
 
 **World:** `Spawn_Hub` (spawn)
 
@@ -57,11 +92,11 @@ For each portal (6 total), repeat:
    ```
 
 **Portal names to protect:**
-- [ ] `portal_to_survival_easy` (Portal to SMP Smokey Plains)
-- [ ] `portal_to_survival_hard` (Portal to SMP Forest Cliffs)
-- [ ] `portal_to_resource` (Portal to Resource Ravine)
-- [ ] `portal_to_creative_flat` (Portal to Creative Plots)
-- [ ] `portal_to_creative_terrain` (Portal to Creative Hills)
+- [ ] `portal_to_survival_easy` (Portal to SMP_Plains)
+- [ ] `portal_to_survival_normal` (Portal to SMP_Ravine)
+- [ ] `portal_to_survival_hard` (Portal to SMP_Cliffs)
+- [ ] `portal_to_creative_flat` (Portal to Creative_Plots)
+- [ ] `portal_to_creative_terrain` (Portal to Creative_Hills)
 
 ### [ ] Task 3: Verify Spawn Hub Regions
 ```
@@ -71,11 +106,11 @@ For each portal (6 total), repeat:
 
 ---
 
-## Phase 3: Protect Return Portals in Each World
+## Phase 4: Protect Return Portals in Each World
 
-### [ ] World: SMP Smokey Plains (survival_easy)
+### [ ] World: SMP_Plains (survival_easy)
 
-1. **Teleport:** `/mvtp SMP_Smokey_Plains`
+1. **Teleport:** `/mvtp SMP_Plains`
 2. **Protect return portal:**
    ```
    // Use //wand to select portal area
@@ -91,9 +126,9 @@ For each portal (6 total), repeat:
    // Note: Don't deny build here so players can claim nearby
    ```
 
-### [ ] World: SMP Forest Cliffs (survival_hard)
+### [ ] World: SMP_Cliffs (survival_hard)
 
-1. **Teleport:** `/mvtp SMP_Forest_Cliffs`
+1. **Teleport:** `/mvtp SMP_Cliffs`
 2. **Protect return portal:**
    ```
    // Use //wand to select portal area
@@ -107,20 +142,20 @@ For each portal (6 total), repeat:
    /rg flag survival_hard_spawn pvp deny
    ```
 
-### [ ] World: Resource Ravine (resource)
+### [ ] World: SMP_Ravine (survival_normal)
 
-1. **Teleport:** `/mvtp Resource_Ravine`
+1. **Teleport:** `/mvtp SMP_Ravine`
 2. **Protect return portal:**
    ```
    // Use //wand to select portal area
-   /rg define resource_return_portal
-   /rg flag resource_return_portal build deny
-   /rg flag resource_return_portal pvp deny
+   /rg define survival_normal_return_portal
+   /rg flag survival_normal_return_portal build deny
+   /rg flag survival_normal_return_portal pvp deny
    ```
 3. **Optional: Protect spawn area**
    ```
-   /rg define resource_spawn
-   /rg flag resource_spawn pvp deny
+   /rg define survival_normal_spawn
+   /rg flag survival_normal_spawn pvp deny
    ```
 
 ### [ ] World: Creative Plots (creative_flat)
@@ -145,7 +180,7 @@ For each portal (6 total), repeat:
 
 ---
 
-## Phase 4: Test UltimateLandClaim
+## Phase 5: Test UltimateLandClaim
 
 ### [ ] Task 1: Get Claiming Tools
 
@@ -227,7 +262,7 @@ UltimateLandClaim uses vanilla items:
 
 ---
 
-## Phase 5: Final Verification
+## Phase 6: Final Verification
 
 ### [ ] Check All Regions Created
 
@@ -236,13 +271,13 @@ Run in each world:
 /mvtp Spawn_Hub
 /rg list
 
-/mvtp SMP_Smokey_Plains
+/mvtp SMP_Plains
 /rg list
 
-/mvtp SMP_Forest_Cliffs
+/mvtp SMP_Ravine
 /rg list
 
-/mvtp Resource_Ravine
+/mvtp SMP_Cliffs
 /rg list
 
 /mvtp Creative_Plots
@@ -254,7 +289,7 @@ Run in each world:
 
 **Expected totals:**
 - Spawn Hub: 6 regions (1 spawn + 5 portals)
-- Each survival/resource world: 1-2 regions (return portal + optional spawn)
+- Each survival world (Plains, Ravine, Cliffs): 1-2 regions (return portal + optional spawn)
 - Each creative world: 1 region (return portal)
 
 ### [ ] Test Non-OP Player Access
