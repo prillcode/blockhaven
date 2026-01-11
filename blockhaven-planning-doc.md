@@ -810,16 +810,16 @@ Direct SSH deployment (steps below)
 ### Docker Commands
 ```bash
 # Start server
-docker-compose up -d
+docker compose up -d
 
 # View logs
-docker-compose logs -f minecraft
+docker compose logs -f minecraft
 
 # Stop server
-docker-compose down
+docker compose down
 
 # Restart server
-docker-compose restart minecraft
+docker compose restart minecraft
 
 # RCON access
 docker exec -i blockhaven-mc rcon-cli

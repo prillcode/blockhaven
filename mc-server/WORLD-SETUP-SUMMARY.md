@@ -105,9 +105,9 @@ See [CREATE-WORLDS-GUIDE.md](CREATE-WORLDS-GUIDE.md) for full command list.
 | World | Type | Purpose |
 |-------|------|---------|
 | survival_easy | Normal | Flatter terrain, village-heavy |
-| survival_hard | Amplified | Mountainous, challenging |
+| survival_hard | Normal | Mountainous, challenging |
 | creative_terrain | Normal | Natural landscape for plots |
-| resource | Normal | Any seed (resets monthly) |
+| resource | Normal | Any seed | An easy survival world |
 | creative_flat | Superflat | No seed needed |
 | spawn | Void | No seed needed |
 
