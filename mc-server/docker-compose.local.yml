@@ -1,0 +1,78 @@
+# Local Development / Family LAN Server
+# Usage: docker compose -f docker-compose.local.yml up -d
+#
+# This is a simplified version for local play with family.
+# Uses a named volume for data persistence (same as VPS).
+#
+# To import data from VPS, see: docs/LOCAL-SETUP.md
+
+services:
+  minecraft:
+    image: itzg/minecraft-server:latest
+    container_name: blockhaven-local
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+
+    ports:
+      - "25565:25565"      # Java Edition
+      - "19132:19132/udp"  # Bedrock Edition (Geyser)
+
+    environment:
+      # Server Type
+      TYPE: PAPER
+      VERSION: "1.21.11"
+      EULA: "TRUE"
+
+      # Memory Settings (adjust based on your machine)
+      # 4GB is good for family play, increase if you have more RAM
+      MEMORY: "4G"
+      JVM_XX_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200"
+
+      # Server Properties
+      SERVER_NAME: "BlockHaven Local"
+      MOTD: "§a§lBlockHaven §r§7- Family Server"
+      LEVEL: "spawn"
+      MAX_PLAYERS: 20
+      DIFFICULTY: normal
+      MODE: survival
+      PVP: "false"
+      ONLINE_MODE: "false"  # Allow offline/cracked clients for local LAN
+      SPAWN_PROTECTION: 0
+      VIEW_DISTANCE: 12
+      SIMULATION_DISTANCE: 10
+
+      # RCON for management
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "localdev"
+      RCON_PORT: 25575
+
+      # Auto-downloaded plugins (same as VPS for compatibility)
+      MODRINTH_PROJECTS: multiverse-core,multiverse-portals,multiverse-netherportals,multiverse-inventories,voidgen
+      PLUGINS: |
+        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+        https://hangar.papermc.io/api/v1/projects/ViaVersion/versions/5.7.0/PAPER/download
+        https://hangar.papermc.io/api/v1/projects/Essentials/versions/2.21.0/PAPER/download
+        https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
+        https://download.luckperms.net/1556/bukkit/loader/LuckPerms-Bukkit-5.4.141.jar
+        https://hangar.papermc.io/api/v1/projects/WorldEdit/versions/7.3.9/PAPER/download
+        https://hangar.papermc.io/api/v1/projects/WorldGuard/versions/7.0.13/PAPER/download
+
+      # Timezone
+      TZ: "America/New_York"
+
+    volumes:
+      - blockhaven-local-data:/data
+      - ./extras:/extras:ro
+
+    healthcheck:
+      test: mc-health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+volumes:
+  blockhaven-local-data:
+    driver: local

@@ -66,27 +66,51 @@ ssh blockhaven_vps "cd /etc/dokploy/compose/blockhaven-mcserver-yst1sp/code && g
 ssh blockhaven_vps "cd /etc/dokploy/compose/blockhaven-mcserver-yst1sp/code/mc-server && bash scripts/create-worlds-rcon.sh"
 ```
 
-## Currently Installed Plugins (Phase 1)
+## Currently Installed Plugins
 
-**Auto-downloaded and WORKING (3 plugins):**
-- ✅ Geyser-Spigot v2.9.2 (Bedrock support)
-- ✅ Floodgate-Spigot v2.2.5 (Bedrock auth)
-- ✅ ViaVersion v5.7.0 (Protocol support)
+**Status:** 14/15 plugins loaded and working (as of Jan 2026)
 
-**Attempted to install (need version updates):**
-- ⚠️ EssentialsX (file exists but not loading - may need newer version)
-- ⚠️ Vault (file exists but not loading - may need newer version)
-- ❌ Jobs Reborn (download link broken - 404 error)
-- ❌ PlotSquared (download link broken - 404 error)
+**Core Plugins:**
+- ✅ Essentials (player commands, homes, warps, etc.)
+- ✅ Vault (economy/permissions API)
+- ✅ LuckPerms (permissions management)
 
-**Status:** 3/19 plugins working
+**Cross-Platform Support:**
+- ✅ Geyser-Spigot (Bedrock player support)
+- ✅ Floodgate (Bedrock authentication)
+- ✅ ViaVersion (protocol version support)
 
-**Next Steps:**
-- Will add additional plugins as needed for each phase
-- Phase 2 (LuckPerms) will require installing LuckPerms plugin
-- Phase 3 (Jobs/Economy) will require fixing Jobs Reborn and Vault
-- Phase 4 (World creation) will require Multiverse-Core
-- Other plugins can be added on-demand
+**World Management:**
+- ✅ Multiverse-Core (multiple worlds)
+- ✅ Multiverse-Portals (portal linking)
+- ✅ Multiverse-NetherPortals (nether portal routing)
+- ✅ Multiverse-Inventories (per-world inventories)
+- ✅ VoidGen (void world generator)
+
+**Building & Protection:**
+- ✅ WorldEdit (building tools)
+- ✅ WorldGuard (region protection)
+- ✅ UltimateLandClaim (land claiming)
+
+**Not Loaded:**
+- ❌ Jobs (economy jobs plugin - not currently needed)
+
+## Configured Worlds
+
+**Default World:** `spawn` (set via `level-name` in server.properties)
+
+| World | Alias | Mode | Difficulty | Seed |
+|-------|-------|------|------------|------|
+| `spawn` | Spawn_Hub | Adventure | Peaceful | -268740982617589902 |
+| `spawn_nether` | - | Survival | Normal | (linked to spawn) |
+| `spawn_the_end` | - | Survival | Normal | (linked to spawn) |
+| `creative_flat` | Creative_Plots | Creative | Peaceful | 8950076382012095193 |
+| `creative_terrain` | Creative_Hills | Creative | Peaceful | 3017885471480990383 |
+| `survival_easy` | SMP_Plains | Survival | Easy | 8377987092687320925 |
+| `survival_normal` | SMP_Ravine | Survival | Normal | -3821186818266249955 |
+| `survival_hard` | SMP_Cliffs | Survival | Hard | -8913466909937400889 |
+
+**Note:** World data is stored in the Docker named volume `minecraft-data`, not in the repo's `./data` directory.
 
 ## Connection Info
 
@@ -105,14 +129,14 @@ Port: 19132
 - Java: `play.bhsmp.com:25565`
 - Bedrock: `play.bhsmp.com:19132`
 
-## Next Steps
+## Completed Setup
 
 1. ✅ VPS deployed and running
-2. ✅ Base plugins installed (7 total)
-3. ⏳ Restart server to load new plugins
-4. ⏳ Choose world seeds
-5. ⏳ Create custom worlds
-6. ⏳ Configure LuckPerms (Phase 2)
+2. ✅ All plugins installed (14 working)
+3. ✅ 8 worlds created with custom seeds
+4. ✅ Spawn hub world configured
+5. ✅ LuckPerms installed
+6. ✅ Multiverse portal system ready
 
 ## Notes
 
