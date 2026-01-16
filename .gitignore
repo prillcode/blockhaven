@@ -74,3 +74,4 @@ coverage/
 
 # Private/local configs (override templates)
 mc-server/config/local/
+mc-server/blockhaven-export.tar.gz
