@@ -47,21 +47,24 @@ services:
       RCON_PASSWORD: "localdev"
       RCON_PORT: 25575
 
-      # Auto-downloaded plugins (same as VPS for compatibility)
-      # Using Modrinth for more reliable auto-updating downloads
-      MODRINTH_PROJECTS: multiverse-core,multiverse-portals,multiverse-netherportals,multiverse-inventories,voidgen,luckperms,worldedit,worldguard
+      # Plugins from local repo (reliable, version-controlled)
+      # Copies JARs from mounted /plugins-local to /data/plugins on startup
+      COPY_PLUGINS_SRC: /plugins-local
+      COPY_PLUGINS_DEST: /data/plugins
+
+      # Only download plugins not in our local collection
+      MODRINTH_PROJECTS: multiverse-core,multiverse-portals,multiverse-netherportals,voidgen
       PLUGINS: |
         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
         https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
         https://hangar.papermc.io/api/v1/projects/ViaVersion/versions/5.7.0/PAPER/download
-        https://hangar.papermc.io/api/v1/projects/Essentials/versions/2.21.0/PAPER/download
-        https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
 
       # Timezone
       TZ: "America/New_York"
 
     volumes:
       - blockhaven-local-data:/data
+      - ./plugins/downloaded_installers:/plugins-local:ro
       - ./extras:/extras:ro
 
     healthcheck:
