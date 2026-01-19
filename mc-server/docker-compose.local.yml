@@ -30,15 +30,18 @@ services:
       JVM_XX_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200"
 
       # Server Properties
-      SERVER_NAME: "BlockHaven Local"
-      MOTD: "§a§lBlockHaven §r§7- Family Server"
+      SERVER_NAME: "BlockHaven Home"
+      MOTD: "§a§lBlockHaven Home §7|| §bPrill Family Server\n§aSMP & Creative §7| §aEconomy §7| §aLand Claims §7| §aNo Griefing §b☻"
+      OVERRIDE_ICON: "TRUE"
+      OVERRIDE_SERVER_PROPERTIES: "TRUE"
       LEVEL: "spawn"
       MAX_PLAYERS: 20
       DIFFICULTY: normal
       MODE: survival
       PVP: "false"
-      ONLINE_MODE: "false"  # Allow offline/cracked clients for local LAN
-      SPAWN_PROTECTION: 0
+      ONLINE_MODE: "true"
+      ENFORCE_SECURE_PROFILE: "true"
+      SPAWN_PROTECTION: 16
       VIEW_DISTANCE: 12
       SIMULATION_DISTANCE: 10
 
@@ -66,6 +69,7 @@ services:
       - blockhaven-local-data:/data
       - ./plugins/downloaded_installers:/plugins-local:ro
       - ./extras:/extras:ro
+      - ./extras/server-icon.png:/data/server-icon.png:ro
 
     healthcheck:
       test: mc-health
