@@ -66,6 +66,7 @@ credentials.json
 # Build artifacts
 *.class
 *.jar
+!mc-server/plugins/downloaded_installers/*.jar
 target/
 
 # Testing
