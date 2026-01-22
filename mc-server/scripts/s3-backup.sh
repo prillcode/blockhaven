@@ -2,28 +2,39 @@
 # BlockHaven S3 Backup Script
 # Creates a backup of world data and plugin configs, uploads to S3, then cleans up
 #
-# Usage: ./backup-to-s3.sh [options]
+# Usage: ./s3-backup.sh [options]
 #   --no-stop     Don't stop the container (uses save-all instead, less safe)
 #   --keep-local  Keep local tarball after upload
 #   --dry-run     Show what would be done without executing
 #
-# Requirements:
-#   - AWS CLI configured with 'bgrweb' profile
-#   - Docker access to the minecraft container
+# Authentication (choose one):
+#   - AWS_PROFILE: Use a named AWS CLI profile (default: bgrweb)
+#   - AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY: Use access keys directly
 #
-# S3 Bucket: blockhaven-mc-backups
+# Requirements:
+#   - AWS CLI installed and configured
+#   - Docker access to the minecraft container
 
 set -e
 
 # Configuration
 CONTAINER_NAME="${MC_CONTAINER_NAME:-blockhaven-local}"
-AWS_PROFILE="${AWS_PROFILE:-bgrweb}"
 S3_BUCKET="${S3_BUCKET:-blockhaven-mc-backups}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="${SCRIPT_DIR}/../backups"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 TARBALL_NAME="${TIMESTAMP}.tar.gz"
 TARBALL_PATH="${BACKUP_DIR}/${TARBALL_NAME}"
+
+# AWS Authentication: Use access keys if set, otherwise use profile
+if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
+    AWS_ARGS=""
+    AUTH_METHOD="access keys"
+else
+    AWS_PROFILE="${AWS_PROFILE:-bgrweb}"
+    AWS_ARGS="--profile $AWS_PROFILE"
+    AUTH_METHOD="profile '$AWS_PROFILE'"
+fi
 
 # Options
 STOP_CONTAINER=true
@@ -89,10 +100,13 @@ check_prerequisites() {
         exit 1
     fi
 
-    # Check AWS profile
-    if ! aws configure list --profile "$AWS_PROFILE" &> /dev/null; then
-        log_error "AWS profile '$AWS_PROFILE' not configured."
-        exit 1
+    # Check AWS credentials
+    log_info "Using AWS authentication: $AUTH_METHOD"
+    if [ -n "$AWS_ARGS" ]; then
+        if ! aws configure list $AWS_ARGS &> /dev/null; then
+            log_error "AWS profile not configured. Run: aws configure --profile $AWS_PROFILE"
+            exit 1
+        fi
     fi
 
     # Check Docker
@@ -108,7 +122,7 @@ check_prerequisites() {
     fi
 
     # Check S3 bucket exists
-    if ! aws s3 ls "s3://${S3_BUCKET}" --profile "$AWS_PROFILE" &> /dev/null; then
+    if ! aws s3 ls "s3://${S3_BUCKET}" $AWS_ARGS &> /dev/null; then
         log_error "S3 bucket '$S3_BUCKET' not accessible."
         exit 1
     fi
@@ -236,11 +250,11 @@ upload_to_s3() {
     log_info "Uploading to S3..."
 
     if [ "$DRY_RUN" = true ]; then
-        echo "  [DRY-RUN] Would run: aws s3 cp $TARBALL_PATH s3://$S3_BUCKET/ --profile $AWS_PROFILE"
+        echo "  [DRY-RUN] Would run: aws s3 cp $TARBALL_PATH s3://$S3_BUCKET/ $AWS_ARGS"
         return
     fi
 
-    aws s3 cp "$TARBALL_PATH" "s3://${S3_BUCKET}/" --profile "$AWS_PROFILE"
+    aws s3 cp "$TARBALL_PATH" "s3://${S3_BUCKET}/" $AWS_ARGS
 
     log_info "Upload complete: s3://${S3_BUCKET}/${TARBALL_NAME}"
 }
@@ -258,7 +272,7 @@ verify_upload() {
     LOCAL_SIZE=$(stat -c%s "$TARBALL_PATH" 2>/dev/null || stat -f%z "$TARBALL_PATH")
 
     # Get S3 file size
-    S3_SIZE=$(aws s3api head-object --bucket "$S3_BUCKET" --key "$TARBALL_NAME" --profile "$AWS_PROFILE" --query 'ContentLength' --output text 2>/dev/null || echo "0")
+    S3_SIZE=$(aws s3api head-object --bucket "$S3_BUCKET" --key "$TARBALL_NAME" $AWS_ARGS --query 'ContentLength' --output text 2>/dev/null || echo "0")
 
     if [ "$LOCAL_SIZE" = "$S3_SIZE" ]; then
         log_info "Upload verified (size: $LOCAL_SIZE bytes)"
@@ -290,7 +304,7 @@ cleanup_local() {
 # List recent S3 backups
 list_recent_backups() {
     log_info "Recent backups in S3:"
-    aws s3 ls "s3://${S3_BUCKET}/" --profile "$AWS_PROFILE" | tail -5
+    aws s3 ls "s3://${S3_BUCKET}/" $AWS_ARGS | tail -5
 }
 
 # Main execution

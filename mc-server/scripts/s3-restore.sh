@@ -7,20 +7,31 @@
 #   --backup NUM  Restore backup number NUM from the list (1 = most recent)
 #   --dry-run     Show what would be done without executing
 #
-# Requirements:
-#   - AWS CLI configured with 'bgrweb' profile
-#   - Docker access to the minecraft container
+# Authentication (choose one):
+#   - AWS_PROFILE: Use a named AWS CLI profile (default: bgrweb)
+#   - AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY: Use access keys directly
 #
-# S3 Bucket: blockhaven-mc-backups
+# Requirements:
+#   - AWS CLI installed and configured
+#   - Docker access to the minecraft container
 
 set -e
 
 # Configuration
 CONTAINER_NAME="${MC_CONTAINER_NAME:-blockhaven-local}"
-AWS_PROFILE="${AWS_PROFILE:-bgrweb}"
 S3_BUCKET="${S3_BUCKET:-blockhaven-mc-backups}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RESTORE_DIR="${SCRIPT_DIR}/../restore-temp"
+
+# AWS Authentication: Use access keys if set, otherwise use profile
+if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
+    AWS_ARGS=""
+    AUTH_METHOD="access keys"
+else
+    AWS_PROFILE="${AWS_PROFILE:-bgrweb}"
+    AWS_ARGS="--profile $AWS_PROFILE"
+    AUTH_METHOD="profile '$AWS_PROFILE'"
+fi
 
 # Options
 LIST_ONLY=false
@@ -93,14 +104,17 @@ check_prerequisites() {
         exit 1
     fi
 
-    # Check AWS profile
-    if ! aws configure list --profile "$AWS_PROFILE" &> /dev/null; then
-        log_error "AWS profile '$AWS_PROFILE' not configured."
-        exit 1
+    # Check AWS credentials
+    log_info "Using AWS authentication: $AUTH_METHOD"
+    if [ -n "$AWS_ARGS" ]; then
+        if ! aws configure list $AWS_ARGS &> /dev/null; then
+            log_error "AWS profile not configured. Run: aws configure --profile $AWS_PROFILE"
+            exit 1
+        fi
     fi
 
     # Check S3 bucket exists
-    if ! aws s3 ls "s3://${S3_BUCKET}" --profile "$AWS_PROFILE" &> /dev/null; then
+    if ! aws s3 ls "s3://${S3_BUCKET}" $AWS_ARGS &> /dev/null; then
         log_error "S3 bucket '$S3_BUCKET' not accessible."
         exit 1
     fi
@@ -122,7 +136,7 @@ list_backups() {
     echo ""
 
     # Get list of backups, sorted newest first
-    BACKUP_LIST=$(aws s3 ls "s3://${S3_BUCKET}/" --profile "$AWS_PROFILE" 2>/dev/null | grep '\.tar\.gz$' | sort -r)
+    BACKUP_LIST=$(aws s3 ls "s3://${S3_BUCKET}/" $AWS_ARGS 2>/dev/null | grep '\.tar\.gz$' | sort -r)
 
     if [ -z "$BACKUP_LIST" ]; then
         log_error "No backups found in s3://${S3_BUCKET}/"
@@ -266,11 +280,11 @@ download_backup() {
     LOCAL_TARBALL="${RESTORE_DIR}/${SELECTED_BACKUP}"
 
     if [ "$DRY_RUN" = true ]; then
-        echo "  [DRY-RUN] Would run: aws s3 cp s3://$S3_BUCKET/$SELECTED_BACKUP $LOCAL_TARBALL"
+        echo "  [DRY-RUN] Would run: aws s3 cp s3://$S3_BUCKET/$SELECTED_BACKUP $LOCAL_TARBALL $AWS_ARGS"
         return
     fi
 
-    aws s3 cp "s3://${S3_BUCKET}/${SELECTED_BACKUP}" "$LOCAL_TARBALL" --profile "$AWS_PROFILE"
+    aws s3 cp "s3://${S3_BUCKET}/${SELECTED_BACKUP}" "$LOCAL_TARBALL" $AWS_ARGS
 
     log_info "Downloaded to: $LOCAL_TARBALL"
 }
