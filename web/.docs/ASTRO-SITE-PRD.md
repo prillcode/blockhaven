@@ -184,10 +184,12 @@ A lightweight, auto-generated Astro website that:
 - Why do you want to play? (optional textarea)
 
 **Backend:**
+- API route: `POST /api/request-access` (Cloudflare Worker)
 - Use Resend API for email delivery (free tier: 3,000 emails/month)
 - Environment variable for Resend API key
 - Environment variable for admin email recipient
 - Rate limiting: 3 submissions per 15 minutes per IP (prevent spam)
+- Server-side validation and sanitization
 
 **Email Format:**
 ```
@@ -350,7 +352,8 @@ IP: [IP Address] (for spam prevention)
 
 ### Tech Stack
 **Framework:** Astro 4.x (latest stable)
-- Static site generation
+- Hybrid rendering (static pages + SSR for API routes)
+- Cloudflare adapter for deployment (@astrojs/cloudflare)
 - Markdown support out-of-the-box
 - React/Vue/Svelte support for interactive components (if needed)
 - Fast builds, optimized output
@@ -366,12 +369,15 @@ IP: [IP Address] (for spam prevention)
 - Free tier: 3,000 emails/month
 - Simple REST API
 
-**Deployment:** Cloudflare Pages
+**Deployment:** Cloudflare Pages with Cloudflare Workers
+- @astrojs/cloudflare adapter (hybrid rendering: static + SSR)
 - Automatic builds on git push
 - Global CDN
 - Free SSL
 - Unlimited bandwidth (free tier)
+- Workers for API routes (100k requests/day free)
 - Environment variables for secrets
+- Future-ready for admin dashboard (Phase 2)
 
 **Content Sources:**
 - `/README.md`
@@ -396,7 +402,10 @@ IP: [IP Address] (for spam prevention)
 │   │   ├── rules.astro         # Rules page
 │   │   ├── plugins.astro       # Plugins page
 │   │   ├── connect.astro       # Connection instructions
-│   │   └── request.astro       # Request access form
+│   │   ├── request.astro       # Request access form
+│   │   ├── dashboard.astro     # Admin dashboard (placeholder - "Coming Soon")
+│   │   └── api/                # API routes (Cloudflare Workers)
+│   │       └── request-access.ts  # Form submission endpoint
 │   ├── layouts/                # Layout components
 │   │   └── BaseLayout.astro    # Base layout (header, footer)
 │   ├── components/             # Reusable components
@@ -452,16 +461,20 @@ DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/xxx/xxx
 {
   "dependencies": {
     "astro": "^4.0.0",
+    "@astrojs/cloudflare": "^11.0.0",
     "@astrojs/tailwind": "^5.0.0",
     "tailwindcss": "^3.4.0",
     "resend": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "wrangler": "^3.0.0"
   }
 }
 ```
+
+**Note:** Auth.js dependencies (`@auth/core`, `@auth/astro`) will be added in Phase 2 (Admin Dashboard).
 
 ---
 
@@ -639,17 +652,22 @@ Each world needs a 2-3 sentence description:
 ### Phase 1: Project Setup (1-2 days)
 **Tasks:**
 - Create new Astro project in `/web` directory
-- Install dependencies (Astro, Tailwind, Resend)
+- Install dependencies (Astro, Cloudflare adapter, Tailwind, Resend, Wrangler)
+- Configure Astro with @astrojs/cloudflare adapter (hybrid rendering)
 - Configure Tailwind with Minecraft colors
 - Set up TypeScript
-- Create basic project structure
+- Create basic project structure (pages, components, layouts)
+- Create placeholder `/dashboard` route with "Coming Soon" message
+- Create API route structure (`/api/request-access.ts`)
 - Archive old React plan to `/web/archives/`
 - Set up Cloudflare Pages project
 
 **Deliverables:**
-- [ ] Astro project initialized
-- [ ] Tailwind configured
-- [ ] Project structure created
+- [ ] Astro project initialized with Cloudflare adapter
+- [ ] Tailwind configured with Minecraft theme
+- [ ] Project structure created (ready for SSR + static)
+- [ ] Placeholder dashboard route exists
+- [ ] API route structure ready
 - [ ] Old plans archived
 - [ ] README.md updated
 
@@ -696,20 +714,22 @@ Each world needs a 2-3 sentence description:
 
 ### Phase 4: Request Form & Email (2 days)
 **Tasks:**
-- Create RequestForm component
-- Implement form validation
-- Set up Resend API integration
-- Create API route for form submission
-- Add rate limiting
-- Test email delivery
-- Handle success/error states
+- Create RequestForm component (client-side validation)
+- Implement server-side API route (`/api/request-access.ts`)
+- Set up Resend API integration in API route
+- Implement server-side validation and sanitization
+- Add rate limiting (IP-based, Cloudflare KV or in-memory)
+- Test email delivery (dev + production)
+- Handle success/error states in UI
+- Test spam prevention
 
 **Deliverables:**
-- [ ] Form validates input
-- [ ] Form submits to API
-- [ ] Email sent to admin
-- [ ] Rate limiting works
-- [ ] Error handling complete
+- [ ] Form validates input (client + server)
+- [ ] Form submits to API route (`POST /api/request-access`)
+- [ ] Email sent to admin via Resend
+- [ ] Rate limiting works (prevents spam)
+- [ ] Error handling complete (network, validation, API errors)
+- [ ] Works in Cloudflare Workers environment
 
 ---
 
@@ -810,7 +830,16 @@ The project is considered successful when:
 
 ### Related Tasks
 - **Task 1:** AWS EC2 Deployment (DEPLOYMENT-PLAN.md)
-- **Task 2:** This Astro Site (This PRD)
+- **Task 2:** This Astro Marketing Site (This PRD)
+- **Task 3 (Future):** Admin Dashboard (ASTRO-SITE-ADMIN-DASH-PRD.md)
+
+### Architecture Notes
+This PRD sets up the foundation for both the marketing site (Phase 1) and future admin dashboard (Phase 2):
+- **Cloudflare adapter** enables hybrid rendering (static pages + SSR for API routes and dashboard)
+- **API routes** structure ready for form submission and future admin endpoints
+- **Placeholder `/dashboard` route** with "Coming Soon" message
+- **Dependencies** include Wrangler for local Cloudflare Workers development
+- **Phase 2** will add Auth.js, GitHub OAuth, and AWS SDK (see ASTRO-SITE-ADMIN-DASH-PRD.md)
 
 ---
 
