@@ -6,9 +6,8 @@
 
 <p align="center">
   <a href="https://bhsmp.com">🌐 Website</a> •
-  <a href="mc-server/docs/SETUP.md">📖 Setup Guide</a> •
   <a href="mc-server/docs/PLUGINS.md">🔌 Plugins</a> •
-  <a href="mc-server/docs/WORLDS.md">🌍 Worlds</a>
+  <a href="mc-server/docs/CREATED-WORLDS-FINAL.md">🌍 Worlds</a>
 </p>
 
 ---
@@ -23,8 +22,6 @@ BlockHaven is a cross-platform Minecraft server supporting both **Java Edition**
 ✅ **Cross-Platform:** Java + Bedrock Edition support
 ✅ **Grief-Free:** Advanced land claims with UltimateLandClaim
 ✅ **Economy System:** Jobs, player shops, balanced payouts
-✅ **Private Worlds:** Premium players can create invite-only worlds
-✅ **Plot System:** Creative building plots (64x64 and 128x128)
 ✅ **Family-Friendly:** Chat filtering, moderation tools
 ✅ **Live Map:** BlueMap 3D web visualization
 ✅ **Discord Integration:** Chat bridge, notifications, analytics
@@ -79,7 +76,7 @@ docker compose up -d
 ./scripts/s3-restore.sh
 ```
 
-**Full setup guide:** [mc-server/docs/SETUP.md](mc-server/docs/SETUP.md)
+**AWS deployment:** [mc-server/aws/README.md](mc-server/aws/README.md)
 
 ---
 
@@ -88,21 +85,19 @@ docker compose up -d
 ```
 blockhaven/
 ├── mc-server/                  # Minecraft server (Docker-based)
-│   ├── docker-compose.yml      # Main Docker configuration
+│   ├── docker-compose.yml      # Remote/VPS configuration
+│   ├── docker-compose.local.yml # Local development
 │   ├── .env.example            # Environment variables template
 │   ├── scripts/                # Backup, restore, utility scripts
-│   ├── extras/                 # Plugin downloads list
-│   ├── plugins/configs/        # Plugin configuration templates
-│   ├── data/                   # Server data (worlds, plugins) - gitignored
-│   ├── backups/                # Automated backups - gitignored
+│   ├── aws/                    # AWS EC2 deployment (CloudFormation)
+│   ├── extras/                 # Server icon, resources
+│   ├── plugins/                # Plugin JARs and configs
 │   └── docs/                   # Documentation
-│       ├── SETUP.md            # Setup & deployment guide
 │       ├── PLUGINS.md          # Plugin reference
-│       ├── WORLDS.md           # World configuration
-│       └── MONETIZATION.md     # Tebex/donation setup
+│       ├── PLUGINS-QUICK-REF.md # Quick command reference
+│       └── CREATED-WORLDS-FINAL.md # World configuration
 ├── web/                        # Marketing website (future)
 │   └── .gitkeep
-├── blockhaven-planning-doc.md  # Complete planning document
 └── README.md                   # This file
 ```
 
@@ -112,11 +107,10 @@ blockhaven/
 
 | Document | Description |
 |----------|-------------|
-| [SETUP.md](mc-server/docs/SETUP.md) | Installation, deployment, troubleshooting |
 | [PLUGINS.md](mc-server/docs/PLUGINS.md) | Complete plugin reference & configuration |
-| [WORLDS.md](mc-server/docs/WORLDS.md) | World setup, inventory groups, portals |
-| [MONETIZATION.md](mc-server/docs/MONETIZATION.md) | Tebex packages, pricing, revenue model |
-| [blockhaven-planning-doc.md](blockhaven-planning-doc.md) | Full project planning document |
+| [PLUGINS-QUICK-REF.md](mc-server/docs/PLUGINS-QUICK-REF.md) | Quick command reference |
+| [CREATED-WORLDS-FINAL.md](mc-server/docs/CREATED-WORLDS-FINAL.md) | World setup, Nether/End linking, portals |
+| [AWS README](mc-server/aws/README.md) | EC2 deployment, costs, helper scripts |
 
 ---
 
@@ -208,32 +202,18 @@ Configured via Multiverse-Inventories - each group shares all inventory/stats:
 
 ---
 
-## Donation Ranks
-
-| Rank | Price | Benefits |
-|------|-------|----------|
-| **Friend** | $4.99/mo | Chat colors, 5 plots, 3 homes, particle effects |
-| **Family** | $9.99/mo | 1 private world, 10 plots, 5 homes, custom nickname |
-| **VIP** | $19.99/mo | 3 private worlds, 20 plots, 10 homes, fly in spawn |
-| **Lifetime VIP** | $99.99 | All VIP perks forever, unlimited plots |
-
-**Fair Play:** NO pay-to-win! Only cosmetics and convenience features.
-
----
-
 ## Development Status
 
-**Current Phase:** Phase 1 Complete ✅ | Ready for local testing
+**Current Phase:** Local development complete ✅ | AWS deployment ready
 
 - [x] **Phase 1:** Docker foundation, plugin stack validation
-- [ ] **Phase 2:** LuckPerms configuration (ranks, permissions)
-- [ ] **Phase 3:** Jobs & economy balancing
-- [ ] **Phase 4:** World generation & PlotSquared setup
-- [ ] **Phase 5:** GriefPrevention multi-world config
-- [ ] **Phase 6:** Private worlds system (custom Skript)
-- [ ] **Phase 7:** Monetization (Tebex integration)
-- [ ] **Phase 8:** Safety & moderation (ChatSentry)
-- [ ] **Phase 9:** Polish & launch
+- [x] **Phase 2:** World configuration (12 worlds with Nether/End linking)
+- [x] **Phase 3:** S3 backup/restore system
+- [x] **Phase 4:** AWS EC2 deployment infrastructure
+- [ ] **Phase 5:** LuckPerms configuration (ranks, permissions)
+- [ ] **Phase 6:** Jobs & economy balancing
+- [ ] **Phase 7:** Safety & moderation (ChatSentry)
+- [ ] **Phase 8:** Polish & launch
 
 ---
 
