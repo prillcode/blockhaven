@@ -33,8 +33,8 @@ BlockHaven is a cross-platform Minecraft server supporting both **Java Edition**
 
 - **Platform:** Paper 1.21.11 (Minecraft Java Edition)
 - **Deployment:** Docker + Docker Compose
-- **Hosting:** Hetzner VPS (8GB RAM → 16GB)
-- **Plugins:** 25+ (LuckPerms, Multiverse, GriefPrevention, PlotSquared, Geyser, BlueMap, etc.)
+- **Hosting:** Local (Docker) / VPS-ready
+- **Plugins:** 16 active (LuckPerms, Multiverse, EssentialsX, Geyser, etc.)
 - **CI/CD:** DokPloy automation
 
 ---
@@ -45,7 +45,7 @@ BlockHaven is a cross-platform Minecraft server supporting both **Java Edition**
 
 - Docker & Docker Compose installed
 - 8GB+ RAM available
-- Ports: 25565 (Java), 19132 (Bedrock), 8100 (BlueMap), 8804 (Plan)
+- Ports: 25565 (Java), 19132 (Bedrock)
 
 ### Local Development
 
@@ -54,19 +54,29 @@ BlockHaven is a cross-platform Minecraft server supporting both **Java Edition**
 git clone <repo-url>
 cd blockhaven/mc-server
 
+# Start local server
+docker compose -f docker-compose.local.yml up -d
+
+# View logs
+docker logs -f blockhaven-local
+
+# Connect
+# Java Edition: localhost:25565
+# Bedrock Edition: localhost:19132
+```
+
+### Remote/VPS Deployment
+
+```bash
 # Configure environment
 cp .env.example .env
 nano .env  # Set RCON_PASSWORD and SERVER_OPS
 
 # Start server
-docker-compose up -d
+docker compose up -d
 
-# View logs
-docker-compose logs -f minecraft
-
-# Connect
-# Java Edition: localhost:25565
-# Bedrock Edition: localhost:19132
+# Restore from S3 backup (to sync with local)
+./scripts/s3-restore.sh
 ```
 
 **Full setup guide:** [mc-server/docs/SETUP.md](mc-server/docs/SETUP.md)
@@ -107,6 +117,68 @@ blockhaven/
 | [WORLDS.md](mc-server/docs/WORLDS.md) | World setup, inventory groups, portals |
 | [MONETIZATION.md](mc-server/docs/MONETIZATION.md) | Tebex packages, pricing, revenue model |
 | [blockhaven-planning-doc.md](blockhaven-planning-doc.md) | Full project planning document |
+
+---
+
+## Backup & Restore
+
+BlockHaven uses S3 for backup storage. Scripts are located in `mc-server/scripts/`.
+
+### Backup to S3
+
+```bash
+cd mc-server/scripts
+
+# Full backup (stops server for consistency)
+./s3-backup.sh
+
+# Quick backup (uses RCON save-all, server stays online)
+./s3-backup.sh --no-stop
+
+# Preview what would happen
+./s3-backup.sh --dry-run
+```
+
+**Options:**
+| Flag | Description |
+|------|-------------|
+| `--no-stop` | Don't stop container (uses RCON save-all instead) |
+| `--keep-local` | Keep local tarball after S3 upload |
+| `--dry-run` | Preview without executing |
+
+### Restore from S3
+
+```bash
+cd mc-server/scripts
+
+# Interactive mode - lists backups and prompts for selection
+./s3-restore.sh
+
+# List available backups without restoring
+./s3-restore.sh --list
+
+# Restore specific backup (1 = most recent)
+./s3-restore.sh --backup 1
+
+# Preview restore
+./s3-restore.sh --backup 1 --dry-run
+```
+
+**Options:**
+| Flag | Description |
+|------|-------------|
+| `--list` | List available backups and exit |
+| `--backup NUM` | Restore backup #NUM (1 = most recent) |
+| `--dry-run` | Preview without executing |
+
+### Configuration
+
+Environment variables (defaults shown):
+```bash
+MC_CONTAINER_NAME=blockhaven-local  # Container to backup/restore
+AWS_PROFILE=bgrweb                   # AWS CLI profile
+S3_BUCKET=blockhaven-mc-backups      # S3 bucket name
+```
 
 ---
 

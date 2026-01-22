@@ -44,6 +44,10 @@ services:
       SPAWN_PROTECTION: 16
       VIEW_DISTANCE: 12
       SIMULATION_DISTANCE: 10
+      MAX_WORLD_SIZE: 10000
+
+      # Ops
+      OPS: "PrLLager207"
 
       # RCON for management
       ENABLE_RCON: "true"
