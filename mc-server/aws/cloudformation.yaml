@@ -150,6 +150,16 @@ Resources:
                 Resource:
                   - !Sub 'arn:aws:s3:::${S3BucketName}'
                   - !Sub 'arn:aws:s3:::${S3BucketName}/*'
+        - PolicyName: EC2VolumeAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:AttachVolume
+                  - ec2:DetachVolume
+                  - ec2:DescribeVolumes
+                Resource: '*'
       Tags:
         - Key: Project
           Value: BlockHaven
