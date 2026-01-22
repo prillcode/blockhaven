@@ -15,10 +15,15 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/.env.aws" 2>/dev/null || true
 
+# Export AWS credentials for CLI
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+export AWS_REGION
+
 # Configuration
 STACK_NAME="${STACK_NAME:-blockhaven-mc}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
-AWS_PROFILE="${AWS_PROFILE:-bgrweb}"
+AWS_PROFILE="${AWS_PROFILE:-}"
 S3_BUCKET="${S3_BUCKET:-blockhaven-mc-backups}"
 
 # Options
@@ -320,8 +325,8 @@ EOF
     echo -e "${CYAN}Quick Commands:${NC}"
     if [ "$INSTANCE_STATE" = "running" ]; then
         echo "  Stop server:   ./stop-server.sh"
-        echo "  SSH access:    ssh -i <key>.pem ec2-user@$PUBLIC_IP"
-        echo "  View logs:     ssh ec2-user@$PUBLIC_IP 'docker logs -f blockhaven-mc'"
+        echo "  SSH access:    ssh -i <key>.pem ubuntu@$PUBLIC_IP"
+        echo "  View logs:     ssh ubuntu@$PUBLIC_IP 'docker logs -f blockhaven-mc'"
     else
         echo "  Start server:  ./start-server.sh --wait"
     fi

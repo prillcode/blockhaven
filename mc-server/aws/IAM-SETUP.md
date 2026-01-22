@@ -23,75 +23,31 @@ This guide will help you create a dedicated IAM user with minimal permissions fo
 
 ## Step 2: Attach Permissions
 
-### Option A: Use Inline Policy (Recommended - Most Secure)
+### Option A: Managed Policies + Small Inline Policy (Recommended)
+
+This approach uses AWS Managed Policies to avoid inline policy size limits and incremental permission issues.
+
+**Step 2a: Attach Managed Policies**
 
 1. Select **"Attach policies directly"**
-2. **Don't select any predefined policies** (we'll create a custom one)
-3. Click **"Next"** to create the user first
-4. After user is created, click on the user name
-5. Click **"Add inline policy"**
-6. Click **"JSON"** tab
-7. Copy and paste the policy below:
+2. Search for and select these two policies:
+   - **`AmazonEC2FullAccess`**
+   - **`AWSCloudFormationFullAccess`**
+3. Click **"Next"**
+4. Click **"Create user"**
+
+**Step 2b: Add Inline Policy for IAM and S3**
+
+5. After user is created, click on the user name `blockhaven-deploy`
+6. Go to **"Permissions"** tab
+7. Click **"Add permissions"** → **"Create inline policy"**
+8. Click **"JSON"** tab
+9. Copy and paste this policy:
 
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
-    {
-      "Sid": "CloudFormationAccess",
-      "Effect": "Allow",
-      "Action": [
-        "cloudformation:CreateStack",
-        "cloudformation:UpdateStack",
-        "cloudformation:DeleteStack",
-        "cloudformation:DescribeStacks",
-        "cloudformation:DescribeStackEvents",
-        "cloudformation:DescribeStackResources",
-        "cloudformation:GetTemplate",
-        "cloudformation:ValidateTemplate"
-      ],
-      "Resource": "arn:aws:cloudformation:us-east-1:*:stack/blockhaven-mc/*"
-    },
-    {
-      "Sid": "EC2FullAccess",
-      "Effect": "Allow",
-      "Action": [
-        "ec2:RunInstances",
-        "ec2:TerminateInstances",
-        "ec2:StartInstances",
-        "ec2:StopInstances",
-        "ec2:DescribeInstances",
-        "ec2:DescribeInstanceStatus",
-        "ec2:DescribeVolumes",
-        "ec2:CreateVolume",
-        "ec2:DeleteVolume",
-        "ec2:AttachVolume",
-        "ec2:DetachVolume",
-        "ec2:ModifyInstanceAttribute",
-        "ec2:DescribeImages",
-        "ec2:DescribeSecurityGroups",
-        "ec2:CreateSecurityGroup",
-        "ec2:DeleteSecurityGroup",
-        "ec2:AuthorizeSecurityGroupIngress",
-        "ec2:AuthorizeSecurityGroupEgress",
-        "ec2:RevokeSecurityGroupIngress",
-        "ec2:RevokeSecurityGroupEgress",
-        "ec2:DescribeKeyPairs",
-        "ec2:AllocateAddress",
-        "ec2:ReleaseAddress",
-        "ec2:AssociateAddress",
-        "ec2:DisassociateAddress",
-        "ec2:DescribeAddresses",
-        "ec2:CreateTags",
-        "ec2:DescribeTags",
-        "ec2:DescribeSubnets",
-        "ec2:DescribeVpcs",
-        "ec2:RequestSpotInstances",
-        "ec2:CancelSpotInstanceRequests",
-        "ec2:DescribeSpotInstanceRequests"
-      ],
-      "Resource": "*"
-    },
     {
       "Sid": "IAMRoleCreation",
       "Effect": "Allow",
@@ -109,15 +65,17 @@ This guide will help you create a dedicated IAM user with minimal permissions fo
         "iam:DeleteInstanceProfile",
         "iam:GetInstanceProfile",
         "iam:AddRoleToInstanceProfile",
-        "iam:RemoveRoleFromInstanceProfile"
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:TagRole",
+        "iam:UntagRole"
       ],
       "Resource": [
-        "arn:aws:iam::*:role/blockhaven-mc-role",
-        "arn:aws:iam::*:instance-profile/blockhaven-mc-role"
+        "arn:aws:iam::*:role/blockhaven-*",
+        "arn:aws:iam::*:instance-profile/blockhaven-*"
       ]
     },
     {
-      "Sid": "S3BackupAccess",
+      "Sid": "S3BucketAccess",
       "Effect": "Allow",
       "Action": [
         "s3:ListBucket",
@@ -127,33 +85,39 @@ This guide will help you create a dedicated IAM user with minimal permissions fo
         "s3:GetBucketLocation"
       ],
       "Resource": [
-        "arn:aws:s3:::blockhaven-mc-backups",
-        "arn:aws:s3:::blockhaven-mc-backups/*"
+        "arn:aws:s3:::blockhaven-*",
+        "arn:aws:s3:::blockhaven-*/*"
       ]
     }
   ]
 }
 ```
 
-8. Click **"Next"**
-9. Policy name: `BlockHavenDeployPolicy`
-10. Click **"Create policy"**
+10. Click **"Next"**
+11. Policy name: `BlockHavenScopedAccess`
+12. Click **"Create policy"**
+
+**Summary:** This user will have:
+- ✅ Full EC2 access (via AmazonEC2FullAccess managed policy)
+- ✅ Full CloudFormation access (via AWSCloudFormationFullAccess managed policy)
+- ✅ Scoped IAM access (only blockhaven-mc-instance-role)
+- ✅ Scoped S3 access (only blockhaven-mc-backups bucket)
 
 ---
 
-### Option B: Use Managed Policies (Easier but Less Secure)
+### Option B: Fully Managed Policies (Simplest but Broadest Permissions)
 
-If you want a quicker setup (but broader permissions):
+If you want the absolute simplest setup:
 
 1. Select **"Attach policies directly"**
 2. Search and attach these policies:
    - `AmazonEC2FullAccess`
-   - `AmazonS3FullAccess` (or create custom for just blockhaven-mc-backups)
-   - `IAMFullAccess` (or limited to role creation)
+   - `AmazonS3FullAccess`
+   - `IAMFullAccess`
    - `AWSCloudFormationFullAccess`
 3. Click **"Next"** then **"Create user"**
 
-**Note:** This gives broader permissions than needed but is simpler.
+**⚠️ Warning:** This gives very broad permissions. Only use for personal/dev accounts.
 
 ---
 

@@ -15,10 +15,15 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/.env.aws" 2>/dev/null || true
 
+# Export AWS credentials for CLI
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+export AWS_REGION
+
 # Configuration
 STACK_NAME="${STACK_NAME:-blockhaven-mc}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
-AWS_PROFILE="${AWS_PROFILE:-bgrweb}"
+AWS_PROFILE="${AWS_PROFILE:-}"
 
 # Options
 WAIT_FOR_READY=false
@@ -149,7 +154,7 @@ if [ "$WAIT_FOR_READY" = true ] || [ "$SHOW_CONNECT" = true ]; then
         if [ $ATTEMPTS -eq $MAX_ATTEMPTS ]; then
             echo ""
             log_warn "Timeout waiting for Minecraft port. Server may still be starting."
-            log_warn "Check with: ssh ec2-user@$PUBLIC_IP 'docker logs blockhaven-mc'"
+            log_warn "Check with: ssh ubuntu@$PUBLIC_IP 'docker logs blockhaven-mc'"
         fi
     fi
 fi
@@ -173,10 +178,10 @@ if [ "$SHOW_CONNECT" = true ] || [ "$WAIT_FOR_READY" = true ]; then
     echo "  Bedrock Edition: $PUBLIC_IP:19132"
     echo ""
     echo -e "${CYAN}SSH Access:${NC}"
-    echo "  ssh -i <your-key>.pem ec2-user@$PUBLIC_IP"
+    echo "  ssh -i <your-key>.pem ubuntu@$PUBLIC_IP"
     echo ""
     echo -e "${CYAN}Server Logs:${NC}"
-    echo "  ssh ec2-user@$PUBLIC_IP 'docker logs -f blockhaven-mc'"
+    echo "  ssh ubuntu@$PUBLIC_IP 'docker logs -f blockhaven-mc'"
     echo ""
 fi
 

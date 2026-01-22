@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'BlockHaven Minecraft Server - On-Demand EC2 Deployment'
+Description: 'BlockHaven Minecraft Server - EC2 Deployment (Spot or On-Demand)'
 
 Parameters:
   InstanceType:
@@ -73,12 +73,13 @@ Parameters:
 Conditions:
   CreateElasticIP: !Equals [!Ref UseElasticIP, 'true']
   UseSpot: !Equals [!Ref UseSpotInstance, 'true']
+  UseOnDemand: !Equals [!Ref UseSpotInstance, 'false']
 
 Mappings:
-  # Amazon Linux 2023 AMIs (x86_64) - Update these for your region
+  # Ubuntu 22.04 LTS AMIs (x86_64) - Update these for your region
   RegionAMI:
     us-east-1:
-      AMI: ami-0c7217cdde317cfec  # Amazon Linux 2023
+      AMI: ami-0c7217cdde317cfec  # Ubuntu 22.04 LTS
     us-east-2:
       AMI: ami-05fb0b8c1424f266b
     us-west-1:
@@ -190,11 +191,11 @@ Resources:
         - Key: Project
           Value: BlockHaven
 
-  # Launch Template (for both on-demand and spot)
-  MinecraftLaunchTemplate:
+  # Launch Template for On-Demand Instances
+  MinecraftOnDemandLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
-      LaunchTemplateName: blockhaven-mc-launch-template
+      LaunchTemplateName: blockhaven-mc-ondemand-template
       LaunchTemplateData:
         ImageId: !FindInMap [RegionAMI, !Ref 'AWS::Region', AMI]
         InstanceType: !Ref InstanceType
@@ -233,21 +234,32 @@ Resources:
             SERVER_OPS="${ServerOps}"
 
             # Update system
-            dnf update -y
+            apt-get update -y
+            DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
-            # Install Docker and Git
-            dnf install -y docker git
+            # Install prerequisites
+            DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              ca-certificates curl gnupg lsb-release git unzip
+
+            # Install AWS CLI v2
+            cd /tmp
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+            rm -rf aws awscliv2.zip
+
+            # Install Docker
+            install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+            chmod a+r /etc/apt/keyrings/docker.gpg
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+            apt-get update -y
+            DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             systemctl enable docker
             systemctl start docker
 
-            # Install Docker Compose v2
-            mkdir -p /usr/local/lib/docker/cli-plugins
-            curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64" -o /usr/local/lib/docker/cli-plugins/docker-compose
-            chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
-            ln -sf /usr/local/lib/docker/cli-plugins/docker-compose /usr/local/bin/docker-compose
-
-            # Add ec2-user to docker group
-            usermod -aG docker ec2-user
+            # Add ubuntu user to docker group
+            usermod -aG docker ubuntu
 
             # Wait for and attach EBS volume
             VOLUME_ID="${MinecraftDataVolume}"
@@ -285,8 +297,9 @@ Resources:
             grep -q "/data" /etc/fstab || echo "$DEVICE /data xfs defaults,nofail 0 2" >> /etc/fstab
 
             # Create directories
+            # Note: Docker container runs as uid:gid 1000:1000 (ubuntu user on Ubuntu 22.04)
             mkdir -p /data/docker-volumes/blockhaven-mc-data
-            chown -R ec2-user:ec2-user /data
+            chown -R ubuntu:ubuntu /data
 
             # Clone or update repo
             if [ -d "/data/repo/.git" ]; then
@@ -299,7 +312,7 @@ Resources:
               rm -rf /data/repo
               git clone --branch $GIT_BRANCH --single-branch $GIT_REPO /data/repo
             fi
-            chown -R ec2-user:ec2-user /data/repo
+            chown -R ubuntu:ubuntu /data/repo
 
             # Create .env file with secrets (not in git)
             cat > /data/repo/mc-server/.env << EOF
@@ -319,7 +332,7 @@ Resources:
                   - ./extras:/extras:ro
             EOF
 
-            chown -R ec2-user:ec2-user /data/repo/mc-server
+            chown -R ubuntu:ubuntu /data/repo/mc-server
 
             # Restore from S3 if data directory is empty
             if [ ! -d "/data/docker-volumes/blockhaven-mc-data/spawn" ]; then
@@ -343,6 +356,200 @@ Resources:
                   fi
                 done
 
+                # Fix ownership for Docker container (runs as uid 1000)
+                echo "Setting correct ownership..."
+                chown -R 1000:1000 /data/docker-volumes/blockhaven-mc-data
+
+                rm -rf /tmp/backup.tar.gz /tmp/restore
+                echo "Restore complete!"
+              else
+                echo "No backups found in S3. Starting fresh."
+              fi
+            fi
+
+            # Start the server
+            cd /data/repo/mc-server
+            docker compose up -d
+
+            echo "=== Setup Complete ==="
+            echo "Server starting at: $(date)"
+            echo "Repo: $GIT_REPO (branch: $GIT_BRANCH)"
+            echo "Check logs with: docker logs -f blockhaven-mc"
+
+  # Launch Template for Spot Instances
+  MinecraftSpotLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: blockhaven-mc-spot-template
+      LaunchTemplateData:
+        ImageId: !FindInMap [RegionAMI, !Ref 'AWS::Region', AMI]
+        InstanceType: !Ref InstanceType
+        KeyName: !Ref KeyPairName
+        IamInstanceProfile:
+          Arn: !GetAtt MinecraftInstanceProfile.Arn
+        SecurityGroupIds:
+          - !GetAtt MinecraftSecurityGroup.GroupId
+        BlockDeviceMappings:
+          - DeviceName: /dev/xvda
+            Ebs:
+              VolumeSize: 20
+              VolumeType: gp3
+              DeleteOnTermination: true
+        InstanceMarketOptions:
+          MarketType: spot
+          SpotOptions:
+            SpotInstanceType: persistent
+            InstanceInterruptionBehavior: stop
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: blockhaven-mc-server-main
+              - Key: Project
+                Value: BlockHaven
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            set -e
+            exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+
+            echo "=== BlockHaven MC Server Setup ==="
+            echo "Started at: $(date)"
+
+            # Configuration from CloudFormation
+            GIT_REPO="${GitRepoUrl}"
+            GIT_BRANCH="${GitBranch}"
+            S3_BUCKET="${S3BucketName}"
+            RCON_PASSWORD="${RconPassword}"
+            SERVER_OPS="${ServerOps}"
+
+            # Update system
+            apt-get update -y
+            DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+
+            # Install prerequisites
+            DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              ca-certificates curl gnupg lsb-release git unzip
+
+            # Install AWS CLI v2
+            cd /tmp
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+            rm -rf aws awscliv2.zip
+
+            # Install Docker
+            install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+            chmod a+r /etc/apt/keyrings/docker.gpg
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+            apt-get update -y
+            DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            systemctl enable docker
+            systemctl start docker
+
+            # Add ubuntu user to docker group
+            usermod -aG docker ubuntu
+
+            # Wait for and attach EBS volume
+            VOLUME_ID="${MinecraftDataVolume}"
+            INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+
+            # Attach volume if not already attached
+            aws ec2 attach-volume --volume-id $VOLUME_ID --instance-id $INSTANCE_ID --device /dev/xvdf --region ${AWS::Region} || true
+
+            # Wait for volume to attach
+            echo "Waiting for volume to attach..."
+            for i in {1..30}; do
+              [ -e /dev/xvdf ] || [ -e /dev/nvme1n1 ] && break
+              sleep 2
+            done
+            sleep 3
+
+            # Determine actual device name (varies by instance type)
+            if [ -e /dev/nvme1n1 ]; then
+              DEVICE=/dev/nvme1n1
+            else
+              DEVICE=/dev/xvdf
+            fi
+
+            # Format if new volume (check for existing filesystem)
+            if ! blkid $DEVICE; then
+              echo "Formatting new volume..."
+              mkfs -t xfs $DEVICE
+            fi
+
+            # Mount volume
+            mkdir -p /data
+            mount $DEVICE /data
+
+            # Add to fstab if not already there
+            grep -q "/data" /etc/fstab || echo "$DEVICE /data xfs defaults,nofail 0 2" >> /etc/fstab
+
+            # Create directories
+            # Note: Docker container runs as uid:gid 1000:1000 (ubuntu user on Ubuntu 22.04)
+            mkdir -p /data/docker-volumes/blockhaven-mc-data
+            chown -R ubuntu:ubuntu /data
+
+            # Clone or update repo
+            if [ -d "/data/repo/.git" ]; then
+              echo "Updating existing repo..."
+              cd /data/repo
+              git fetch origin
+              git reset --hard origin/$GIT_BRANCH
+            else
+              echo "Cloning repo..."
+              rm -rf /data/repo
+              git clone --branch $GIT_BRANCH --single-branch $GIT_REPO /data/repo
+            fi
+            chown -R ubuntu:ubuntu /data/repo
+
+            # Create .env file with secrets (not in git)
+            cat > /data/repo/mc-server/.env << EOF
+            RCON_PASSWORD=$RCON_PASSWORD
+            SERVER_OPS=$SERVER_OPS
+            S3_BUCKET=$S3_BUCKET
+            MC_CONTAINER_NAME=blockhaven-mc
+            EOF
+
+            # Create docker-compose override for EC2 volume paths
+            cat > /data/repo/mc-server/docker-compose.override.yml << 'EOF'
+            services:
+              minecraft:
+                volumes:
+                  - /data/docker-volumes/blockhaven-mc-data:/data
+                  - ./plugins/downloaded_installers:/plugins-local:ro
+                  - ./extras:/extras:ro
+            EOF
+
+            chown -R ubuntu:ubuntu /data/repo/mc-server
+
+            # Restore from S3 if data directory is empty
+            if [ ! -d "/data/docker-volumes/blockhaven-mc-data/spawn" ]; then
+              echo "No existing world data found. Restoring from S3..."
+
+              LATEST=$(aws s3 ls "s3://$S3_BUCKET/" | grep '\.tar\.gz$' | sort -r | head -1 | awk '{print $4}')
+
+              if [ -n "$LATEST" ]; then
+                echo "Downloading backup: $LATEST"
+                aws s3 cp "s3://$S3_BUCKET/$LATEST" /tmp/backup.tar.gz
+
+                echo "Extracting backup..."
+                mkdir -p /tmp/restore
+                tar -xzf /tmp/backup.tar.gz -C /tmp/restore
+
+                echo "Restoring world data..."
+                cd /tmp/restore
+                for item in *; do
+                  if [ -d "$item" ]; then
+                    cp -r "$item" /data/docker-volumes/blockhaven-mc-data/
+                  fi
+                done
+
+                # Fix ownership for Docker container (runs as uid 1000)
+                echo "Setting correct ownership..."
+                chown -R 1000:1000 /data/docker-volumes/blockhaven-mc-data
+
                 rm -rf /tmp/backup.tar.gz /tmp/restore
                 echo "Restore complete!"
               else
@@ -362,18 +569,13 @@ Resources:
   # EC2 Instance (On-Demand)
   MinecraftInstance:
     Type: AWS::EC2::Instance
-    Condition: !Not [!Condition UseSpot]
+    Condition: UseOnDemand
     DependsOn: MinecraftDataVolume
     Properties:
       LaunchTemplate:
-        LaunchTemplateId: !Ref MinecraftLaunchTemplate
-        Version: !GetAtt MinecraftLaunchTemplate.LatestVersionNumber
+        LaunchTemplateId: !Ref MinecraftOnDemandLaunchTemplate
+        Version: !GetAtt MinecraftOnDemandLaunchTemplate.LatestVersionNumber
       AvailabilityZone: !Select [0, !GetAZs '']
-      Tags:
-        - Key: Name
-          Value: blockhaven-mc-server
-        - Key: Project
-          Value: BlockHaven
 
   # Spot Instance (if enabled)
   MinecraftSpotInstance:
@@ -382,19 +584,9 @@ Resources:
     DependsOn: MinecraftDataVolume
     Properties:
       LaunchTemplate:
-        LaunchTemplateId: !Ref MinecraftLaunchTemplate
-        Version: !GetAtt MinecraftLaunchTemplate.LatestVersionNumber
+        LaunchTemplateId: !Ref MinecraftSpotLaunchTemplate
+        Version: !GetAtt MinecraftSpotLaunchTemplate.LatestVersionNumber
       AvailabilityZone: !Select [0, !GetAZs '']
-      InstanceMarketOptions:
-        MarketType: spot
-        SpotOptions:
-          SpotInstanceType: persistent
-          InstanceInterruptionBehavior: stop
-      Tags:
-        - Key: Name
-          Value: blockhaven-mc-server-spot
-        - Key: Project
-          Value: BlockHaven
 
   # Elastic IP Association
   MinecraftEIPAssociation:
@@ -457,8 +649,8 @@ Outputs:
     Description: SSH command to connect
     Value: !If
       - CreateElasticIP
-      - !Sub 'ssh -i <your-key>.pem ec2-user@${MinecraftElasticIP}'
-      - !If [UseSpot, !Sub 'ssh -i <your-key>.pem ec2-user@${MinecraftSpotInstance.PublicIp}', !Sub 'ssh -i <your-key>.pem ec2-user@${MinecraftInstance.PublicIp}']
+      - !Sub 'ssh -i <your-key>.pem ubuntu@${MinecraftElasticIP}'
+      - !If [UseSpot, !Sub 'ssh -i <your-key>.pem ubuntu@${MinecraftSpotInstance.PublicIp}', !Sub 'ssh -i <your-key>.pem ubuntu@${MinecraftInstance.PublicIp}']
 
   EstimatedMonthlyCost:
     Description: Estimated monthly cost (running 24/7)

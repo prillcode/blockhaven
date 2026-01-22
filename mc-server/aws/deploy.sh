@@ -28,6 +28,11 @@ fi
 
 source "$SCRIPT_DIR/.env.aws"
 
+# Export AWS credentials for CLI
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+export AWS_REGION
+
 # Validate required variables
 REQUIRED_VARS="AWS_REGION STACK_NAME S3_BUCKET KEY_PAIR_NAME RCON_PASSWORD"
 for var in $REQUIRED_VARS; do
@@ -251,13 +256,13 @@ echo ""
 echo -e "${CYAN}Connection Info:${NC}"
 echo "  Java Edition:    $PUBLIC_IP:25565"
 echo "  Bedrock Edition: $PUBLIC_IP:19132"
-echo "  SSH:             ssh -i $SSH_KEY_FILE ec2-user@$PUBLIC_IP"
+echo "  SSH:             ssh -i ~/.ssh/blockhaven-key.pem ubuntu@$PUBLIC_IP"
 echo ""
 
 echo -e "${CYAN}Next Steps:${NC}"
 echo "  1. Wait 2-3 minutes for the Minecraft server to start"
 echo "  2. Check status:  ./status.sh"
-echo "  3. View logs:     ssh ec2-user@$PUBLIC_IP 'docker logs -f blockhaven-mc'"
+echo "  3. View logs:     ssh ubuntu@$PUBLIC_IP 'docker logs -f blockhaven-mc'"
 echo ""
 
 echo -e "${YELLOW}Cost Reminder:${NC}"

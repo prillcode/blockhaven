@@ -15,10 +15,15 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/.env.aws" 2>/dev/null || true
 
+# Export AWS credentials for CLI
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+export AWS_REGION
+
 # Configuration
 STACK_NAME="${STACK_NAME:-blockhaven-mc}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
-AWS_PROFILE="${AWS_PROFILE:-bgrweb}"
+AWS_PROFILE="${AWS_PROFILE:-}"
 S3_BUCKET="${S3_BUCKET:-blockhaven-mc-backups}"
 
 # Options
@@ -153,7 +158,7 @@ if [ "$SKIP_BACKUP" = false ]; then
     log_info "Running backup on EC2 instance..."
     echo ""
 
-    ssh -i "$KEY_FILE" -o StrictHostKeyChecking=no ec2-user@"$PUBLIC_IP" << 'REMOTESCRIPT'
+    ssh -i "$KEY_FILE" -o StrictHostKeyChecking=no ubuntu@"$PUBLIC_IP" << 'REMOTESCRIPT'
         set -e
         cd /data/repo/mc-server
         source .env
@@ -213,7 +218,7 @@ REMOTESCRIPT
 else
     # Just stop the container without backup
     log_warn "Skipping backup as requested"
-    ssh -i "$KEY_FILE" -o StrictHostKeyChecking=no ec2-user@"$PUBLIC_IP" \
+    ssh -i "$KEY_FILE" -o StrictHostKeyChecking=no ubuntu@"$PUBLIC_IP" \
         "docker stop blockhaven-mc 2>/dev/null || true"
 fi
 
