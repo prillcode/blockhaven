@@ -19,9 +19,9 @@ BlockHaven is a cross-platform Minecraft server supporting both **Java Edition**
 
 ### Features
 
-✅ **6 Unique Worlds:** Survival Easy/Hard, Creative Flat/Terrain, Resource (monthly reset), Spawn Hub
+✅ **12 Worlds:** 3 Survival worlds (Easy/Normal/Hard) with Nether & End, 2 Creative worlds, Spawn Hub
 ✅ **Cross-Platform:** Java + Bedrock Edition support
-✅ **Grief-Free:** Advanced land claims with GriefPrevention
+✅ **Grief-Free:** Advanced land claims with UltimateLandClaim
 ✅ **Economy System:** Jobs, player shops, balanced payouts
 ✅ **Private Worlds:** Premium players can create invite-only worlds
 ✅ **Plot System:** Creative building plots (64x64 and 128x128)
@@ -114,20 +114,25 @@ blockhaven/
 
 ### Worlds
 
-| World | Type | Difficulty | Description |
-|-------|------|------------|-------------|
-| **survival_easy** | Survival | Normal | Flat villages, 2x claim rate |
-| **survival_hard** | Survival | Hard | Mountains, 1.5x job payouts |
-| **creative_flat** | Creative | Peaceful | 64x64 building plots |
-| **creative_terrain** | Creative | Peaceful | 128x128 natural plots |
-| **resource** | Survival | Normal | Monthly reset mining world |
-| **spawn** | Adventure | Peaceful | Hub with portals |
+| World | Alias | Type | Difficulty | Nether/End |
+|-------|-------|------|------------|------------|
+| **spawn** | Spawn_Hub | Adventure | Peaceful | No |
+| **survival_easy** | SMP_Plains | Survival | Easy | Yes |
+| **survival_normal** | SMP_Ravine | Survival | Normal | Yes |
+| **survival_hard** | SMP_Cliffs | Survival | Hard | Yes |
+| **creative_flat** | Creative_Plots | Creative | Peaceful | No |
+| **creative_terrain** | Creative_Hills | Creative | Peaceful | No |
+
+Each survival world has its own linked nether and end dimensions (e.g., `survival_easy_nether`, `survival_easy_the_end`).
 
 ### Inventory Groups
 
-- **Survival Group:** `survival_easy`, `survival_hard`, `resource`, `spawn` share inventory & ender chest only
+Configured via Multiverse-Inventories - each group shares all inventory/stats:
+- **survival_easy_group:** `survival_easy` + its nether/end
+- **survival_normal_group:** `survival_normal` + its nether/end
+- **survival_hard_group:** `survival_hard` + its nether/end
+- **default:** `spawn` (isolated, adventure mode)
 - **Creative Worlds:** Fully isolated (no creative items in survival)
-- **Private Worlds:** Per-world inventories
 
 ---
 
