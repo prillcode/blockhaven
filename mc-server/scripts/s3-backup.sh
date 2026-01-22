@@ -208,13 +208,12 @@ create_backup() {
     log_info "Copying world data..."
 
     # Copy all world directories (excluding cache/temp files)
+    # Note: docker cp works on stopped containers, no need for docker exec checks
     for world in spawn survival_easy survival_easy_nether survival_easy_the_end \
                  survival_normal survival_normal_nether survival_normal_the_end \
                  survival_hard survival_hard_nether survival_hard_the_end \
                  creative_flat creative_terrain; do
-        if docker exec "$CONTAINER_NAME" test -d "/data/$world"; then
-            docker cp "$CONTAINER_NAME:/data/$world" "$TEMP_DIR/" 2>/dev/null || true
-        fi
+        docker cp "$CONTAINER_NAME:/data/$world" "$TEMP_DIR/" 2>/dev/null || true
     done
 
     log_info "Copying plugin configs..."
@@ -224,16 +223,12 @@ create_backup() {
     for plugin in Multiverse-Core Multiverse-NetherPortals Multiverse-Portals \
                   Multiverse-Inventories EssentialsX LuckPerms Vault \
                   UltimateLandClaim Jobs; do
-        if docker exec "$CONTAINER_NAME" test -d "/data/plugins/$plugin"; then
-            docker cp "$CONTAINER_NAME:/data/plugins/$plugin" "$TEMP_DIR/plugins/" 2>/dev/null || true
-        fi
+        docker cp "$CONTAINER_NAME:/data/plugins/$plugin" "$TEMP_DIR/plugins/" 2>/dev/null || true
     done
 
     # Copy server configs
     for config in server.properties bukkit.yml spigot.yml paper-global.yml; do
-        if docker exec "$CONTAINER_NAME" test -f "/data/$config"; then
-            docker cp "$CONTAINER_NAME:/data/$config" "$TEMP_DIR/" 2>/dev/null || true
-        fi
+        docker cp "$CONTAINER_NAME:/data/$config" "$TEMP_DIR/" 2>/dev/null || true
     done
 
     log_info "Creating tarball..."
