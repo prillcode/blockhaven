@@ -306,11 +306,17 @@ EOF
             t3a.large)
                 HOURLY="0.0752"
                 ;;
+            t3a.xlarge)
+                HOURLY="0.1504"
+                ;;
             t3.large)
                 HOURLY="0.0832"
                 ;;
+            t3.xlarge)
+                HOURLY="0.1664"
+                ;;
             *)
-                HOURLY="0.08"
+                HOURLY="0.10"
                 ;;
         esac
         if [ "$RUNNING_HOURS" -gt 0 ]; then
