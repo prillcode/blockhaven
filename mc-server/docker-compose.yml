@@ -66,7 +66,8 @@ services:
       TZ: "America/New_York"
 
     volumes:
-      - blockhaven-mc-data:/data
+      # Bind mount to dedicated 50GB EBS volume (mounted at /data on host)
+      - /data/docker-volumes/blockhaven-mc-data:/data
       - ./plugins/downloaded_installers:/plugins-local:ro
       - ./extras:/extras:ro
       - ./extras/server-icon.png:/data/server-icon.png:ro
@@ -80,7 +81,3 @@ services:
 
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
-
-volumes:
-  blockhaven-mc-data:
-    driver: local
