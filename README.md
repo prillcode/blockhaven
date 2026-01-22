@@ -78,6 +78,71 @@ docker compose up -d
 
 **AWS deployment:** [mc-server/aws/README.md](mc-server/aws/README.md)
 
+### Updating the Server
+
+**⚠️ Important:** EC2 instance restarts do NOT automatically pull the latest code changes from the repository.
+
+To apply updates from git:
+
+```bash
+# SSH into the server
+ssh -i ~/.ssh/blockhaven-key.pem ubuntu@<server-ip>
+
+# Navigate to the repository
+cd /data/repo
+
+# Pull latest changes
+git pull
+
+# Restart the server with new configuration
+docker compose down && docker compose up -d
+
+# Verify the server is running
+docker ps
+docker logs -f blockhaven-mc
+```
+
+**Note:** Simply stopping/starting the EC2 instance will restart the container with the existing configuration. You must manually `git pull` and restart Docker to apply code changes.
+
+### Server Management
+
+#### Managing the Whitelist
+
+**⚠️ Bedrock Player Limitation:** Bedrock players (with `.` prefix) CANNOT be added to the `WHITELIST` environment variable in docker-compose.yml. Adding them will cause the server to crash on startup.
+
+**Current Configuration:**
+- `ENABLE_WHITELIST: "false"` in docker-compose.yml allows all players to connect initially
+
+**To whitelist Bedrock players:**
+
+```bash
+# 1. Have the Bedrock player connect to the server at least once
+# 2. SSH into the server
+ssh -i ~/.ssh/blockhaven-key.pem ubuntu@<server-ip>
+
+# 3. Add player to whitelist via RCON
+docker exec blockhaven-mc rcon-cli whitelist add .PlayerName
+
+# 4. (Optional) Enable whitelist enforcement
+docker exec blockhaven-mc rcon-cli whitelist on
+
+# 5. Monitor player connections
+docker logs -f blockhaven-mc 2>&1 | grep -E "joined the game|left the game|lost connection"
+```
+
+**Useful RCON Commands:**
+```bash
+# View current whitelist
+docker exec blockhaven-mc rcon-cli whitelist list
+
+# Remove a player
+docker exec blockhaven-mc rcon-cli whitelist remove PlayerName
+
+# Toggle whitelist on/off
+docker exec blockhaven-mc rcon-cli whitelist on
+docker exec blockhaven-mc rcon-cli whitelist off
+```
+
 ---
 
 ## Project Structure
