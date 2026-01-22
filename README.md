@@ -143,6 +143,39 @@ docker exec blockhaven-mc rcon-cli whitelist on
 docker exec blockhaven-mc rcon-cli whitelist off
 ```
 
+#### Expanding Storage Volume
+
+The server uses a 50GB EBS volume for world data. You can expand it online without downtime or data loss.
+
+**Cost:** gp3 storage is $0.08/GB-month
+- 50GB → 100GB: +$4/month (~$0.13/day)
+- 50GB → 150GB: +$8/month (~$0.27/day)
+
+**To expand the volume:**
+
+```bash
+# Set AWS credentials (locally)
+export AWS_ACCESS_KEY_ID=<your-key>
+export AWS_SECRET_ACCESS_KEY=<your-secret>
+export AWS_DEFAULT_REGION=us-east-1
+
+# Expand to 100GB (no downtime)
+aws ec2 modify-volume --volume-id vol-0f5df064f273a71db --size 100
+
+# SSH into server and extend the filesystem
+ssh -i ~/.ssh/blockhaven-key.pem ubuntu@<server-ip>
+sudo xfs_growfs /data
+
+# Verify new size
+df -h /data
+```
+
+**Notes:**
+- Can only increase size (never decrease)
+- Changes take effect immediately
+- No server restart required
+- Filesystem automatically expands with `xfs_growfs`
+
 ---
 
 ## Project Structure
