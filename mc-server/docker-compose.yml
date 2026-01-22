@@ -40,7 +40,7 @@ services:
       # Whitelist (invite-only server)
       ENABLE_WHITELIST: "true"
       # Note: Bedrock/Xbox players via Floodgate have usernames starting with "."
-      WHITELIST: "PrLLager207,JavaFriend1,.BedrockFriend1,.BedrockFriend2"
+      WHITELIST: "PrLLager207"
 
       # RCON for remote management
       ENABLE_RCON: "true"
