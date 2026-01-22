@@ -38,9 +38,9 @@ services:
       MAX_WORLD_SIZE: 10000
 
       # Whitelist (invite-only server)
-      ENABLE_WHITELIST: "true"
+      ENABLE_WHITELIST: "false" #False by defaut or Bedrock players can't join (once they join once, I can whitelist them and turn this on via RCON)
       # Note: Bedrock/Xbox players via Floodgate have usernames starting with "."
-      WHITELIST: "PrLLager207"
+      WHITELIST: "PrLLager207, Pomzii_YT"
 
       # RCON for remote management
       ENABLE_RCON: "true"
