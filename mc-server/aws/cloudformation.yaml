@@ -4,14 +4,14 @@ Description: 'BlockHaven Minecraft Server - EC2 Deployment (Spot or On-Demand)'
 Parameters:
   InstanceType:
     Type: String
-    Default: t3a.large
+    Default: t3a.xlarge
     AllowedValues:
       - t3a.large      # 2 vCPU, 8GB RAM, $0.0752/hr (~$2.26/day)
       - t3.large       # 2 vCPU, 8GB RAM, $0.0832/hr (~$2.50/day)
       - t3a.xlarge     # 4 vCPU, 16GB RAM, $0.1504/hr (~$4.51/day)
       - m6a.large      # 2 vCPU, 8GB RAM, $0.0864/hr (~$2.59/day)
       - c6a.large      # 2 vCPU, 4GB RAM, $0.0765/hr (not recommended - low RAM)
-    Description: EC2 instance type (t3a.large recommended for best price/performance)
+    Description: EC2 instance type (t3a.xlarge recommended for 8GB Minecraft allocation)
 
   KeyPairName:
     Type: AWS::EC2::KeyPair::KeyName
