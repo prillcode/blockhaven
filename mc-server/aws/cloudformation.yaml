@@ -1,0 +1,470 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'BlockHaven Minecraft Server - On-Demand EC2 Deployment'
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3a.large
+    AllowedValues:
+      - t3a.large      # 2 vCPU, 8GB RAM, $0.0752/hr (~$2.26/day)
+      - t3.large       # 2 vCPU, 8GB RAM, $0.0832/hr (~$2.50/day)
+      - t3a.xlarge     # 4 vCPU, 16GB RAM, $0.1504/hr (~$4.51/day)
+      - m6a.large      # 2 vCPU, 8GB RAM, $0.0864/hr (~$2.59/day)
+      - c6a.large      # 2 vCPU, 4GB RAM, $0.0765/hr (not recommended - low RAM)
+    Description: EC2 instance type (t3a.large recommended for best price/performance)
+
+  KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of existing EC2 KeyPair for SSH access
+
+  AllowedSSHCidr:
+    Type: String
+    Default: '0.0.0.0/0'
+    Description: CIDR block allowed for SSH access (use your IP for security, e.g., 1.2.3.4/32)
+
+  S3BucketName:
+    Type: String
+    Default: blockhaven-mc-backups
+    Description: S3 bucket name for world backups
+
+  VolumeSize:
+    Type: Number
+    Default: 50
+    MinValue: 20
+    MaxValue: 100
+    Description: EBS volume size in GB
+
+  UseElasticIP:
+    Type: String
+    Default: 'true'
+    AllowedValues:
+      - 'true'
+      - 'false'
+    Description: Allocate an Elastic IP for consistent server address
+
+  UseSpotInstance:
+    Type: String
+    Default: 'false'
+    AllowedValues:
+      - 'true'
+      - 'false'
+    Description: Use Spot Instance for cost savings (~70% cheaper, but can be interrupted)
+
+  RconPassword:
+    Type: String
+    NoEcho: true
+    Description: RCON password for server management
+
+  ServerOps:
+    Type: String
+    Default: 'PRLLAGER207'
+    Description: Comma-separated list of server operators
+
+  GitRepoUrl:
+    Type: String
+    Default: 'https://github.com/prillcode/blockhaven.git'
+    Description: Git repository URL (must be public or accessible)
+
+  GitBranch:
+    Type: String
+    Default: 'main'
+    Description: Git branch to deploy
+
+Conditions:
+  CreateElasticIP: !Equals [!Ref UseElasticIP, 'true']
+  UseSpot: !Equals [!Ref UseSpotInstance, 'true']
+
+Mappings:
+  # Amazon Linux 2023 AMIs (x86_64) - Update these for your region
+  RegionAMI:
+    us-east-1:
+      AMI: ami-0c7217cdde317cfec  # Amazon Linux 2023
+    us-east-2:
+      AMI: ami-05fb0b8c1424f266b
+    us-west-1:
+      AMI: ami-0ce2cb35386fc22e9
+    us-west-2:
+      AMI: ami-008fe2fc65df48dac
+
+Resources:
+  # VPC (use default VPC for simplicity)
+  # If you need a custom VPC, expand this section
+
+  # Security Group
+  MinecraftSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for BlockHaven Minecraft server
+      GroupName: blockhaven-mc-sg
+      SecurityGroupIngress:
+        # Minecraft Java Edition
+        - IpProtocol: tcp
+          FromPort: 25565
+          ToPort: 25565
+          CidrIp: 0.0.0.0/0
+          Description: Minecraft Java Edition
+        # Minecraft Bedrock Edition (Geyser)
+        - IpProtocol: udp
+          FromPort: 19132
+          ToPort: 19132
+          CidrIp: 0.0.0.0/0
+          Description: Minecraft Bedrock Edition (Geyser)
+        # SSH Access
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AllowedSSHCidr
+          Description: SSH Access
+      Tags:
+        - Key: Name
+          Value: blockhaven-mc-sg
+        - Key: Project
+          Value: BlockHaven
+
+  # IAM Role for EC2
+  MinecraftInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: blockhaven-mc-instance-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore  # For SSM Session Manager
+      Policies:
+        - PolicyName: S3BackupAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - s3:DeleteObject
+                Resource:
+                  - !Sub 'arn:aws:s3:::${S3BucketName}'
+                  - !Sub 'arn:aws:s3:::${S3BucketName}/*'
+      Tags:
+        - Key: Project
+          Value: BlockHaven
+
+  # Instance Profile
+  MinecraftInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: blockhaven-mc-instance-profile
+      Roles:
+        - !Ref MinecraftInstanceRole
+
+  # EBS Volume for persistent data
+  MinecraftDataVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Size: !Ref VolumeSize
+      VolumeType: gp3
+      Iops: 3000
+      Throughput: 125
+      Encrypted: true
+      Tags:
+        - Key: Name
+          Value: blockhaven-mc-data
+        - Key: Project
+          Value: BlockHaven
+    DeletionPolicy: Retain  # Don't delete data on stack deletion
+
+  # Elastic IP (optional)
+  MinecraftElasticIP:
+    Type: AWS::EC2::EIP
+    Condition: CreateElasticIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: blockhaven-mc-eip
+        - Key: Project
+          Value: BlockHaven
+
+  # Launch Template (for both on-demand and spot)
+  MinecraftLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: blockhaven-mc-launch-template
+      LaunchTemplateData:
+        ImageId: !FindInMap [RegionAMI, !Ref 'AWS::Region', AMI]
+        InstanceType: !Ref InstanceType
+        KeyName: !Ref KeyPairName
+        IamInstanceProfile:
+          Arn: !GetAtt MinecraftInstanceProfile.Arn
+        SecurityGroupIds:
+          - !GetAtt MinecraftSecurityGroup.GroupId
+        BlockDeviceMappings:
+          - DeviceName: /dev/xvda
+            Ebs:
+              VolumeSize: 20
+              VolumeType: gp3
+              DeleteOnTermination: true
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: blockhaven-mc-server
+              - Key: Project
+                Value: BlockHaven
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            set -e
+            exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+
+            echo "=== BlockHaven MC Server Setup ==="
+            echo "Started at: $(date)"
+
+            # Configuration from CloudFormation
+            GIT_REPO="${GitRepoUrl}"
+            GIT_BRANCH="${GitBranch}"
+            S3_BUCKET="${S3BucketName}"
+            RCON_PASSWORD="${RconPassword}"
+            SERVER_OPS="${ServerOps}"
+
+            # Update system
+            dnf update -y
+
+            # Install Docker and Git
+            dnf install -y docker git
+            systemctl enable docker
+            systemctl start docker
+
+            # Install Docker Compose v2
+            mkdir -p /usr/local/lib/docker/cli-plugins
+            curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64" -o /usr/local/lib/docker/cli-plugins/docker-compose
+            chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+            ln -sf /usr/local/lib/docker/cli-plugins/docker-compose /usr/local/bin/docker-compose
+
+            # Add ec2-user to docker group
+            usermod -aG docker ec2-user
+
+            # Wait for and attach EBS volume
+            VOLUME_ID="${MinecraftDataVolume}"
+            INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+
+            # Attach volume if not already attached
+            aws ec2 attach-volume --volume-id $VOLUME_ID --instance-id $INSTANCE_ID --device /dev/xvdf --region ${AWS::Region} || true
+
+            # Wait for volume to attach
+            echo "Waiting for volume to attach..."
+            for i in {1..30}; do
+              [ -e /dev/xvdf ] || [ -e /dev/nvme1n1 ] && break
+              sleep 2
+            done
+            sleep 3
+
+            # Determine actual device name (varies by instance type)
+            if [ -e /dev/nvme1n1 ]; then
+              DEVICE=/dev/nvme1n1
+            else
+              DEVICE=/dev/xvdf
+            fi
+
+            # Format if new volume (check for existing filesystem)
+            if ! blkid $DEVICE; then
+              echo "Formatting new volume..."
+              mkfs -t xfs $DEVICE
+            fi
+
+            # Mount volume
+            mkdir -p /data
+            mount $DEVICE /data
+
+            # Add to fstab if not already there
+            grep -q "/data" /etc/fstab || echo "$DEVICE /data xfs defaults,nofail 0 2" >> /etc/fstab
+
+            # Create directories
+            mkdir -p /data/docker-volumes/blockhaven-mc-data
+            chown -R ec2-user:ec2-user /data
+
+            # Clone or update repo
+            if [ -d "/data/repo/.git" ]; then
+              echo "Updating existing repo..."
+              cd /data/repo
+              git fetch origin
+              git reset --hard origin/$GIT_BRANCH
+            else
+              echo "Cloning repo..."
+              rm -rf /data/repo
+              git clone --branch $GIT_BRANCH --single-branch $GIT_REPO /data/repo
+            fi
+            chown -R ec2-user:ec2-user /data/repo
+
+            # Create .env file with secrets (not in git)
+            cat > /data/repo/mc-server/.env << EOF
+            RCON_PASSWORD=$RCON_PASSWORD
+            SERVER_OPS=$SERVER_OPS
+            S3_BUCKET=$S3_BUCKET
+            MC_CONTAINER_NAME=blockhaven-mc
+            EOF
+
+            # Create docker-compose override for EC2 volume paths
+            cat > /data/repo/mc-server/docker-compose.override.yml << 'EOF'
+            services:
+              minecraft:
+                volumes:
+                  - /data/docker-volumes/blockhaven-mc-data:/data
+                  - ./plugins/downloaded_installers:/plugins-local:ro
+                  - ./extras:/extras:ro
+            EOF
+
+            chown -R ec2-user:ec2-user /data/repo/mc-server
+
+            # Restore from S3 if data directory is empty
+            if [ ! -d "/data/docker-volumes/blockhaven-mc-data/spawn" ]; then
+              echo "No existing world data found. Restoring from S3..."
+
+              LATEST=$(aws s3 ls "s3://$S3_BUCKET/" | grep '\.tar\.gz$' | sort -r | head -1 | awk '{print $4}')
+
+              if [ -n "$LATEST" ]; then
+                echo "Downloading backup: $LATEST"
+                aws s3 cp "s3://$S3_BUCKET/$LATEST" /tmp/backup.tar.gz
+
+                echo "Extracting backup..."
+                mkdir -p /tmp/restore
+                tar -xzf /tmp/backup.tar.gz -C /tmp/restore
+
+                echo "Restoring world data..."
+                cd /tmp/restore
+                for item in *; do
+                  if [ -d "$item" ]; then
+                    cp -r "$item" /data/docker-volumes/blockhaven-mc-data/
+                  fi
+                done
+
+                rm -rf /tmp/backup.tar.gz /tmp/restore
+                echo "Restore complete!"
+              else
+                echo "No backups found in S3. Starting fresh."
+              fi
+            fi
+
+            # Start the server
+            cd /data/repo/mc-server
+            docker compose up -d
+
+            echo "=== Setup Complete ==="
+            echo "Server starting at: $(date)"
+            echo "Repo: $GIT_REPO (branch: $GIT_BRANCH)"
+            echo "Check logs with: docker logs -f blockhaven-mc"
+
+  # EC2 Instance (On-Demand)
+  MinecraftInstance:
+    Type: AWS::EC2::Instance
+    Condition: !Not [!Condition UseSpot]
+    DependsOn: MinecraftDataVolume
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref MinecraftLaunchTemplate
+        Version: !GetAtt MinecraftLaunchTemplate.LatestVersionNumber
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: blockhaven-mc-server
+        - Key: Project
+          Value: BlockHaven
+
+  # Spot Instance (if enabled)
+  MinecraftSpotInstance:
+    Type: AWS::EC2::Instance
+    Condition: UseSpot
+    DependsOn: MinecraftDataVolume
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref MinecraftLaunchTemplate
+        Version: !GetAtt MinecraftLaunchTemplate.LatestVersionNumber
+      AvailabilityZone: !Select [0, !GetAZs '']
+      InstanceMarketOptions:
+        MarketType: spot
+        SpotOptions:
+          SpotInstanceType: persistent
+          InstanceInterruptionBehavior: stop
+      Tags:
+        - Key: Name
+          Value: blockhaven-mc-server-spot
+        - Key: Project
+          Value: BlockHaven
+
+  # Elastic IP Association
+  MinecraftEIPAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Condition: CreateElasticIP
+    Properties:
+      EIP: !Ref MinecraftElasticIP
+      InstanceId: !If [UseSpot, !Ref MinecraftSpotInstance, !Ref MinecraftInstance]
+
+Outputs:
+  InstanceId:
+    Description: EC2 Instance ID
+    Value: !If [UseSpot, !Ref MinecraftSpotInstance, !Ref MinecraftInstance]
+    Export:
+      Name: BlockHaven-InstanceId
+
+  PublicIP:
+    Description: Server Public IP
+    Value: !If
+      - CreateElasticIP
+      - !Ref MinecraftElasticIP
+      - !If [UseSpot, !GetAtt MinecraftSpotInstance.PublicIp, !GetAtt MinecraftInstance.PublicIp]
+    Export:
+      Name: BlockHaven-PublicIP
+
+  ElasticIP:
+    Condition: CreateElasticIP
+    Description: Elastic IP Address (static)
+    Value: !Ref MinecraftElasticIP
+    Export:
+      Name: BlockHaven-ElasticIP
+
+  SecurityGroupId:
+    Description: Security Group ID
+    Value: !GetAtt MinecraftSecurityGroup.GroupId
+    Export:
+      Name: BlockHaven-SecurityGroupId
+
+  VolumeId:
+    Description: EBS Data Volume ID
+    Value: !Ref MinecraftDataVolume
+    Export:
+      Name: BlockHaven-VolumeId
+
+  MinecraftJavaAddress:
+    Description: Minecraft Java Edition connection address
+    Value: !If
+      - CreateElasticIP
+      - !Sub '${MinecraftElasticIP}:25565'
+      - !If [UseSpot, !Sub '${MinecraftSpotInstance.PublicIp}:25565', !Sub '${MinecraftInstance.PublicIp}:25565']
+
+  MinecraftBedrockAddress:
+    Description: Minecraft Bedrock Edition connection address
+    Value: !If
+      - CreateElasticIP
+      - !Sub '${MinecraftElasticIP}:19132'
+      - !If [UseSpot, !Sub '${MinecraftSpotInstance.PublicIp}:19132', !Sub '${MinecraftSpotInstance.PublicIp}:19132']
+
+  SSHCommand:
+    Description: SSH command to connect
+    Value: !If
+      - CreateElasticIP
+      - !Sub 'ssh -i <your-key>.pem ec2-user@${MinecraftElasticIP}'
+      - !If [UseSpot, !Sub 'ssh -i <your-key>.pem ec2-user@${MinecraftSpotInstance.PublicIp}', !Sub 'ssh -i <your-key>.pem ec2-user@${MinecraftInstance.PublicIp}']
+
+  EstimatedMonthlyCost:
+    Description: Estimated monthly cost (running 24/7)
+    Value: !Sub |
+      On-Demand t3a.large: ~$55/month (24/7) or ~$2.26/day
+      Spot t3a.large: ~$17/month (24/7) or ~$0.68/day (70% savings)
+      EBS 50GB gp3: ~$4/month
+      Elastic IP (when stopped): $3.60/month
+      Data Transfer: Varies by usage

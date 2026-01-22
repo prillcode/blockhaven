@@ -76,3 +76,7 @@ coverage/
 # Private/local configs (override templates)
 mc-server/config/local/
 mc-server/blockhaven-export.tar.gz
+
+# AWS deployment secrets
+mc-server/aws/.env.aws
+mc-server/restore-temp/
