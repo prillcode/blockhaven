@@ -80,3 +80,4 @@ mc-server/blockhaven-export.tar.gz
 # AWS deployment secrets
 mc-server/aws/.env.aws
 mc-server/restore-temp/
+minecraft-logs.txt
