@@ -160,6 +160,138 @@ import Button from '../components/Button.astro';
     </div>
   </section>
 
+  <!-- Console Limitations Notice -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-primary-gold/10 border-t-4 border-primary-gold">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-start gap-4 mb-6">
+        <span class="text-4xl flex-shrink-0">⚠️</span>
+        <div>
+          <h2 class="text-2xl font-bold text-text-light mb-2">
+            Important Note for Console Players
+          </h2>
+          <p class="text-text-muted">
+            Xbox, PlayStation, and Nintendo Switch players: Please read this section carefully!
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-secondary-dark rounded-xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-text-light mb-3">Console Limitation</h3>
+        <p class="text-text-muted mb-4">
+          Unfortunately, Microsoft restricts custom server connections on console versions of Minecraft Bedrock Edition.
+          Unlike PC and Mobile, <strong class="text-text-light">Xbox, PlayStation, and Nintendo Switch do not have an "Add Server" button</strong> in the game menu.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div class="bg-green-500/10 rounded-lg p-4">
+            <div class="font-semibold text-green-400 mb-2">✅ Native Support</div>
+            <ul class="text-text-light space-y-1">
+              <li>• Windows 10/11 PC</li>
+              <li>• Mobile (iOS & Android)</li>
+            </ul>
+          </div>
+          <div class="bg-accent-redstone/10 rounded-lg p-4">
+            <div class="font-semibold text-accent-redstone mb-2">❌ Requires Workaround</div>
+            <ul class="text-text-light space-y-1">
+              <li>• Xbox (all versions)</li>
+              <li>• PlayStation 4 & 5</li>
+              <li>• Nintendo Switch</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-secondary-dark rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-text-light mb-3">Workaround: DNS Redirection Method</h3>
+        <p class="text-text-muted mb-4">
+          The good news: There's a reliable community workaround called <strong class="text-text-light">BedrockConnect</strong> that works on all three console platforms!
+        </p>
+
+        <div class="bg-secondary-stone/20 rounded-lg p-5 mb-4">
+          <h4 class="font-semibold text-text-light mb-3">How It Works:</h4>
+          <ol class="space-y-3 text-text-muted">
+            <li class="flex gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center font-semibold">1</span>
+              <span>Change your console's DNS settings to use the BedrockConnect DNS server</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center font-semibold">2</span>
+              <span>Restart Minecraft and go to the Servers tab</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center font-semibold">3</span>
+              <span>Click on any Featured Server - you'll see a BedrockConnect menu instead</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center font-semibold">4</span>
+              <span>Enter <code class="text-primary-gold">play.bhsmp.com</code> in the custom server field</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-primary-gold/10 rounded-lg p-5 mb-4">
+          <h4 class="font-semibold text-text-light mb-3">DNS Settings to Use:</h4>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-center justify-between bg-secondary-dark rounded p-3">
+              <span class="text-text-muted">Primary DNS:</span>
+              <code class="text-primary-gold font-mono">104.238.130.180</code>
+            </div>
+            <div class="flex items-center justify-between bg-secondary-dark rounded p-3">
+              <span class="text-text-muted">Secondary DNS:</span>
+              <code class="text-accent-diamond font-mono">8.8.8.8</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-semibold text-text-light">Platform-Specific Guides:</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <a href="https://github.com/Pugmatt/BedrockConnect" target="_blank" rel="noopener noreferrer"
+               class="flex items-center gap-2 bg-secondary-stone/20 hover:bg-secondary-stone/30 rounded-lg p-3 transition-colors group">
+              <span class="text-xl">🎮</span>
+              <div class="flex-1">
+                <div class="font-semibold text-text-light group-hover:text-primary-gold transition-colors">BedrockConnect</div>
+                <div class="text-text-muted text-xs">Official GitHub</div>
+              </div>
+              <svg class="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            <a href="https://shockbyte.com/help/knowledgebase/articles/how-to-connect-to-your-minecraft-bedrock-server-on-xbox-series-xors-and-xbox-one" target="_blank" rel="noopener noreferrer"
+               class="flex items-center gap-2 bg-secondary-stone/20 hover:bg-secondary-stone/30 rounded-lg p-3 transition-colors group">
+              <span class="text-xl">🎮</span>
+              <div class="flex-1">
+                <div class="font-semibold text-text-light group-hover:text-primary-gold transition-colors">Xbox Guide</div>
+                <div class="text-text-muted text-xs">Step-by-step setup</div>
+              </div>
+              <svg class="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            <a href="https://apexminecrafthosting.com/how-to-join-a-bedrock-edition-server-on-xbox-switch/" target="_blank" rel="noopener noreferrer"
+               class="flex items-center gap-2 bg-secondary-stone/20 hover:bg-secondary-stone/30 rounded-lg p-3 transition-colors group">
+              <span class="text-xl">📖</span>
+              <div class="flex-1">
+                <div class="font-semibold text-text-light group-hover:text-primary-gold transition-colors">All Consoles</div>
+                <div class="text-text-muted text-xs">Xbox, PS, Switch</div>
+              </div>
+              <svg class="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-4 p-4 bg-accent-redstone/10 rounded-lg border border-accent-redstone/30">
+          <p class="text-sm text-text-muted">
+            <strong class="text-text-light">Note:</strong> This workaround is maintained by the community and works as of early 2026.
+            While reliable, Microsoft/Mojang could potentially change policies in future updates.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Troubleshooting -->
   <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
     <div class="max-w-4xl mx-auto">
@@ -207,7 +339,7 @@ import Button from '../components/Button.astro';
           </summary>
           <div class="p-4 pt-0 text-text-muted text-sm space-y-2">
             <p>• Make sure you're using port <code class="text-accent-diamond">19132</code></p>
-            <p>• On consoles, you may need to add the server through a companion app.</p>
+            <p>• <strong class="text-text-light">Console players:</strong> Check the "Console Limitations" section above for the DNS workaround method.</p>
             <p>• Some networks block gaming ports - try a different network or ask your admin.</p>
           </div>
         </details>
