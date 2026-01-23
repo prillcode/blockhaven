@@ -1,0 +1,165 @@
+---
+/**
+ * Worlds page - displays all 6 worlds with details
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorldCard from '../components/WorldCard.astro';
+
+// Get all worlds and group by type
+const allWorlds = await getCollection('worlds');
+const worldsByType = {
+  spawn: allWorlds.filter((w) => w.data.type === 'spawn'),
+  survival: allWorlds
+    .filter((w) => w.data.type === 'survival')
+    .sort((a, b) => {
+      const difficultyOrder = { easy: 1, normal: 2, hard: 3, peaceful: 0 };
+      return difficultyOrder[a.data.difficulty] - difficultyOrder[b.data.difficulty];
+    }),
+  creative: allWorlds.filter((w) => w.data.type === 'creative'),
+};
+---
+
+<BaseLayout title="Worlds" description="Explore the 6 unique worlds available on BlockHaven">
+  <!-- Hero Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
+        Our Worlds
+      </h1>
+      <p class="text-xl text-text-muted max-w-2xl mx-auto">
+        BlockHaven offers 6 unique worlds with different gameplay styles.
+        Choose your adventure!
+      </p>
+    </div>
+  </section>
+
+  <!-- Spawn World -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-6 flex items-center gap-2">
+        <span class="text-2xl">🏠</span>
+        Spawn Hub
+      </h2>
+      <div class="grid grid-cols-1 gap-6">
+        {worldsByType.spawn.map((world) => (
+          <WorldCard
+            id={world.data.id}
+            displayName={world.data.displayName}
+            alias={world.data.alias}
+            type={world.data.type}
+            difficulty={world.data.difficulty}
+            description={world.data.description}
+            features={world.data.features}
+            hasNether={world.data.hasNether}
+            hasEnd={world.data.hasEnd}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Survival Worlds -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-2 flex items-center gap-2">
+        <span class="text-2xl">⚔️</span>
+        Survival Worlds
+      </h2>
+      <p class="text-text-muted mb-6">
+        Choose your difficulty level. All survival worlds have separate inventories,
+        but each includes full access to the Nether and End dimensions.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {worldsByType.survival.map((world) => (
+          <WorldCard
+            id={world.data.id}
+            displayName={world.data.displayName}
+            alias={world.data.alias}
+            type={world.data.type}
+            difficulty={world.data.difficulty}
+            description={world.data.description}
+            features={world.data.features}
+            hasNether={world.data.hasNether}
+            hasEnd={world.data.hasEnd}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Creative Worlds -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-2 flex items-center gap-2">
+        <span class="text-2xl">🎨</span>
+        Creative Worlds
+      </h2>
+      <p class="text-text-muted mb-6">
+        Unleash your creativity! Build anything you can imagine with unlimited resources.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {worldsByType.creative.map((world) => (
+          <WorldCard
+            id={world.data.id}
+            displayName={world.data.displayName}
+            alias={world.data.alias}
+            type={world.data.type}
+            difficulty={world.data.difficulty}
+            description={world.data.description}
+            features={world.data.features}
+            hasNether={world.data.hasNether}
+            hasEnd={world.data.hasEnd}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- World Features Info -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-6 text-center">
+        World Features
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="p-6 rounded-xl bg-secondary-stone/10">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span>📦</span> Separate Inventories
+          </h3>
+          <p class="text-text-muted text-sm">
+            Each survival difficulty has its own inventory, health, experience,
+            and achievements. Creative worlds also have separate inventories.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl bg-secondary-stone/10">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span>🌀</span> Portal Linking
+          </h3>
+          <p class="text-text-muted text-sm">
+            Nether portals in survival worlds automatically link to the correct
+            dimension. Build a portal in SMP_Plains and you'll arrive in its own Nether!
+          </p>
+        </div>
+        <div class="p-6 rounded-xl bg-secondary-stone/10">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span>🛡️</span> Land Claims
+          </h3>
+          <p class="text-text-muted text-sm">
+            All survival worlds support land claims. Protect your builds using
+            the <code class="text-primary-gold">/claim</code> command.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl bg-secondary-stone/10">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span>🚀</span> World Travel
+          </h3>
+          <p class="text-text-muted text-sm">
+            Travel between worlds using portals in the Spawn Hub, or use
+            <code class="text-primary-gold">/mv tp [world]</code> if you have permission.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

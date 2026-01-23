@@ -1,0 +1,195 @@
+---
+/**
+ * Plugins page - displays plugin descriptions and player commands
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Get all plugins grouped by category
+const allPlugins = await getCollection('plugins');
+const pluginsByCategory = {
+  'cross-platform': allPlugins.filter((p) => p.data.category === 'cross-platform'),
+  'grief-prevention': allPlugins.filter((p) => p.data.category === 'grief-prevention'),
+  'economy': allPlugins.filter((p) => p.data.category === 'economy'),
+  'world-management': allPlugins.filter((p) => p.data.category === 'world-management'),
+  'utilities': allPlugins.filter((p) => p.data.category === 'utilities'),
+  'permissions': allPlugins.filter((p) => p.data.category === 'permissions'),
+};
+
+const categoryLabels: Record<string, { label: string; icon: string }> = {
+  'cross-platform': { label: 'Cross-Platform Support', icon: '🎮' },
+  'grief-prevention': { label: 'Grief Prevention', icon: '🛡️' },
+  'economy': { label: 'Economy', icon: '💰' },
+  'world-management': { label: 'World Management', icon: '🌍' },
+  'utilities': { label: 'Utilities', icon: '🔧' },
+  'permissions': { label: 'Permissions', icon: '🔐' },
+};
+
+// Get plugins with commands for the quick reference
+const pluginsWithCommands = allPlugins.filter((p) => p.data.commands && p.data.commands.length > 0);
+---
+
+<BaseLayout title="Plugins" description="Learn about BlockHaven's plugins and player commands">
+  <!-- Hero Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
+        Plugins & Commands
+      </h1>
+      <p class="text-xl text-text-muted max-w-2xl mx-auto">
+        BlockHaven runs a carefully curated set of plugins to enhance your gameplay
+        while keeping things simple and stable.
+      </p>
+    </div>
+  </section>
+
+  <!-- Plugin Categories -->
+  {Object.entries(pluginsByCategory).map(([category, plugins]) => (
+    plugins.length > 0 && (
+      <section class={`py-8 px-4 sm:px-6 lg:px-8 ${category === 'grief-prevention' || category === 'utilities' ? 'bg-secondary-stone/5' : ''}`}>
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-2xl font-bold text-text-light mb-6 flex items-center gap-2">
+            <span class="text-2xl">{categoryLabels[category]?.icon}</span>
+            {categoryLabels[category]?.label}
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {plugins.map((plugin) => (
+              <div class="bg-secondary-stone/10 rounded-xl p-6">
+                <div class="flex items-start justify-between gap-4 mb-3">
+                  <h3 class="text-lg font-semibold text-text-light">
+                    {plugin.data.name}
+                  </h3>
+                  {plugin.data.docsUrl && (
+                    <a
+                      href={plugin.data.docsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-accent-diamond hover:text-primary-gold text-sm transition-colors"
+                    >
+                      Docs →
+                    </a>
+                  )}
+                </div>
+
+                <p class="text-text-muted text-sm mb-4">
+                  {plugin.data.purpose}
+                </p>
+
+                <div class="mb-4">
+                  <h4 class="text-sm font-medium text-text-light mb-2">Features</h4>
+                  <ul class="space-y-1">
+                    {plugin.data.features.map((feature) => (
+                      <li class="flex items-start gap-2 text-sm text-text-muted">
+                        <span class="text-primary-gold mt-0.5">•</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {plugin.data.commands && plugin.data.commands.length > 0 && (
+                  <div class="pt-4 border-t border-secondary-stone/20">
+                    <h4 class="text-sm font-medium text-text-light mb-2">Quick Commands</h4>
+                    <div class="space-y-2">
+                      {plugin.data.commands.slice(0, 3).map((cmd) => (
+                        <div class="text-sm">
+                          <code class="text-primary-gold">{cmd.command}</code>
+                          <span class="text-text-muted ml-2">- {cmd.description}</span>
+                        </div>
+                      ))}
+                      {plugin.data.commands.length > 3 && (
+                        <p class="text-text-muted text-xs">
+                          + {plugin.data.commands.length - 3} more commands below
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  ))}
+
+  <!-- Command Quick Reference -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-2 text-center">
+        Player Command Reference
+      </h2>
+      <p class="text-text-muted text-center mb-8 max-w-2xl mx-auto">
+        Quick reference for commonly used commands. All commands are available to all players.
+      </p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {pluginsWithCommands.map((plugin) => (
+          <div class="bg-secondary-stone/10 rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-text-light mb-4 flex items-center gap-2">
+              {plugin.data.name}
+            </h3>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-secondary-stone/20">
+                    <th class="text-left py-2 text-text-light font-medium">Command</th>
+                    <th class="text-left py-2 text-text-light font-medium">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-secondary-stone/10">
+                  {plugin.data.commands?.map((cmd) => (
+                    <tr>
+                      <td class="py-2">
+                        <code class="text-primary-gold text-xs">{cmd.command}</code>
+                        {cmd.aliases && cmd.aliases.length > 0 && (
+                          <div class="text-text-muted text-xs mt-0.5">
+                            Aliases: {cmd.aliases.join(', ')}
+                          </div>
+                        )}
+                      </td>
+                      <td class="py-2 text-text-muted">{cmd.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips Section -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-6 text-center">
+        Tips for New Players
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <h3 class="font-semibold text-text-light mb-2">🏠 Getting Started</h3>
+          <ol class="text-text-muted text-sm space-y-2 list-decimal list-inside">
+            <li>Set a home with <code class="text-primary-gold">/sethome</code></li>
+            <li>Claim your land with <code class="text-primary-gold">/claim</code></li>
+            <li>Join a job with <code class="text-primary-gold">/jobs browse</code></li>
+            <li>Check your balance with <code class="text-primary-gold">/bal</code></li>
+          </ol>
+        </div>
+
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <h3 class="font-semibold text-text-light mb-2">🤝 Playing with Friends</h3>
+          <ol class="text-text-muted text-sm space-y-2 list-decimal list-inside">
+            <li>Teleport request with <code class="text-primary-gold">/tpa [player]</code></li>
+            <li>Accept with <code class="text-primary-gold">/tpaccept</code></li>
+            <li>Trust friends to your claim with <code class="text-primary-gold">/claim trust</code></li>
+            <li>Send money with <code class="text-primary-gold">/pay [player] [amount]</code></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

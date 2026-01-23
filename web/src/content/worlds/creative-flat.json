@@ -1,0 +1,17 @@
+{
+  "id": "creative_flat",
+  "displayName": "Creative Plots",
+  "alias": "Creative_Plots",
+  "type": "creative",
+  "difficulty": "peaceful",
+  "description": "Superflat world for building without limits. Claim a plot and build whatever you can imagine in creative mode. Perfect for architectural projects, redstone contraptions, or just experimenting with builds.",
+  "features": [
+    "Creative mode with all items available",
+    "Flat terrain for easy building",
+    "Peaceful environment",
+    "Great for redstone and architecture"
+  ],
+  "hasNether": false,
+  "hasEnd": false,
+  "order": 5
+}

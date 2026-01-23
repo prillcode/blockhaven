@@ -1,0 +1,121 @@
+---
+/**
+ * Header component with navigation and mobile hamburger menu
+ */
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/worlds', label: 'Worlds' },
+  { href: '/rules', label: 'Rules' },
+  { href: '/plugins', label: 'Plugins' },
+  { href: '/connect', label: 'Connect' },
+];
+---
+
+<header class="sticky top-0 z-50 bg-secondary-dark border-b border-secondary-stone/20">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 text-primary-gold font-bold text-xl hover:text-primary-wheat transition-colors">
+        <img src="/server-icon.png" alt="BlockHaven" class="w-8 h-8 rounded" />
+        <span>BlockHaven</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm font-medium transition-colors',
+              currentPath === link.href
+                ? 'text-primary-gold'
+                : 'text-text-light hover:text-primary-gold',
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+        <a
+          href="/request"
+          class="bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
+        >
+          Request Access
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 text-text-light hover:text-primary-gold transition-colors"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            id="menu-icon"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden pb-4"
+    >
+      <div class="flex flex-col gap-2">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+              currentPath === link.href
+                ? 'bg-primary-gold/10 text-primary-gold'
+                : 'text-text-light hover:bg-secondary-stone/20 hover:text-primary-gold',
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+        <a
+          href="/request"
+          class="mt-2 bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm text-center transition-colors"
+        >
+          Request Access
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+
+  menuBtn?.addEventListener('click', () => {
+    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+    menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+    mobileMenu?.classList.toggle('hidden');
+
+    // Toggle icon between hamburger and X
+    if (menuIcon) {
+      menuIcon.setAttribute(
+        'd',
+        isExpanded
+          ? 'M4 6h16M4 12h16M4 18h16'
+          : 'M6 18L18 6M6 6l12 12'
+      );
+    }
+  });
+</script>

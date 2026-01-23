@@ -1,0 +1,137 @@
+---
+/**
+ * Footer component with server info, quick links, and copyright
+ */
+const currentYear = new Date().getFullYear();
+
+const quickLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/worlds', label: 'Worlds' },
+  { href: '/rules', label: 'Rules' },
+  { href: '/plugins', label: 'Plugins' },
+  { href: '/connect', label: 'Connect' },
+  { href: '/request', label: 'Request Access' },
+];
+---
+
+<footer class="bg-secondary-dark border-t border-secondary-stone/20 mt-auto">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Server Info -->
+      <div>
+        <h3 class="text-primary-gold font-bold text-lg mb-4 flex items-center gap-2">
+          <img src="/server-icon.png" alt="BlockHaven" class="w-6 h-6 rounded" />
+          BlockHaven
+        </h3>
+        <p class="text-text-muted text-sm mb-4">
+          A family-friendly, cross-platform Minecraft server for friends and family.
+        </p>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="text-accent-diamond text-sm font-medium">Java:</span>
+            <code class="bg-secondary-stone/20 text-text-light px-2 py-1 rounded text-sm" id="java-ip">
+              play.bhsmp.com
+            </code>
+            <button
+              class="copy-btn text-text-muted hover:text-primary-gold transition-colors"
+              data-copy="play.bhsmp.com"
+              aria-label="Copy Java IP"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </button>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-accent-diamond text-sm font-medium">Bedrock:</span>
+            <code class="bg-secondary-stone/20 text-text-light px-2 py-1 rounded text-sm" id="bedrock-ip">
+              play.bhsmp.com:19132
+            </code>
+            <button
+              class="copy-btn text-text-muted hover:text-primary-gold transition-colors"
+              data-copy="play.bhsmp.com:19132"
+              aria-label="Copy Bedrock IP"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-text-light font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          {quickLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-text-muted hover:text-primary-gold text-sm transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- About -->
+      <div>
+        <h3 class="text-text-light font-semibold mb-4">About</h3>
+        <p class="text-text-muted text-sm mb-4">
+          BlockHaven is an invite-only Minecraft server. Request access to join our community!
+        </p>
+        <a
+          href="/request"
+          class="inline-block bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
+        >
+          Request Access
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-secondary-stone/20 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-text-muted text-sm">
+        &copy; {currentYear} BlockHaven. All rights reserved.
+      </p>
+      <div class="flex items-center gap-2 text-text-muted text-sm">
+        <span>Built with</span>
+        <a
+          href="https://astro.build"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-accent-diamond hover:text-primary-gold transition-colors"
+        >
+          Astro
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Copy to clipboard functionality
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy');
+      if (text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          // Visual feedback
+          const originalColor = btn.classList.contains('text-text-muted');
+          btn.classList.remove('text-text-muted');
+          btn.classList.add('text-primary-gold');
+          setTimeout(() => {
+            btn.classList.remove('text-primary-gold');
+            btn.classList.add('text-text-muted');
+          }, 1000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      }
+    });
+  });
+</script>

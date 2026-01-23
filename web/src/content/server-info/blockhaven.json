@@ -1,0 +1,46 @@
+{
+  "name": "BlockHaven",
+  "tagline": "A family-friendly, cross-platform Minecraft server",
+  "javaAddress": "play.bhsmp.com",
+  "javaPort": 25565,
+  "bedrockAddress": "play.bhsmp.com",
+  "bedrockPort": 19132,
+  "features": [
+    {
+      "id": "cross-platform",
+      "title": "Cross-Platform",
+      "description": "Play together whether you're on Java Edition or Bedrock Edition. Connect from PC, console, or mobile.",
+      "icon": "gamepad"
+    },
+    {
+      "id": "grief-protection",
+      "title": "Grief Protection",
+      "description": "Free land claims for all players. Protect your builds from griefing with our easy-to-use claiming system.",
+      "icon": "shield"
+    },
+    {
+      "id": "family-friendly",
+      "title": "Family Friendly",
+      "description": "A safe environment for all ages. Clean chat, respectful community, and active moderation.",
+      "icon": "users"
+    },
+    {
+      "id": "multiple-worlds",
+      "title": "Multiple Worlds",
+      "description": "Choose your adventure with 6 unique worlds - from easy survival to challenging hard mode, plus creative worlds.",
+      "icon": "globe"
+    },
+    {
+      "id": "economy",
+      "title": "Jobs & Economy",
+      "description": "Earn money by mining, farming, building, and more. Join jobs, level up, and trade with other players.",
+      "icon": "coins"
+    },
+    {
+      "id": "invite-only",
+      "title": "Invite Only",
+      "description": "A private server for family and friends. Request access to join our welcoming community.",
+      "icon": "lock"
+    }
+  ]
+}

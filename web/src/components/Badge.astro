@@ -1,0 +1,37 @@
+---
+/**
+ * Badge component for difficulty levels and status indicators
+ */
+interface Props {
+  variant?: 'easy' | 'normal' | 'hard' | 'peaceful' | 'survival' | 'creative' | 'spawn';
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { variant = 'normal', size = 'sm', class: className = '' } = Astro.props;
+
+const baseClasses = 'inline-flex items-center font-medium rounded-full';
+
+const variantClasses = {
+  // Difficulty badges
+  peaceful: 'bg-accent-diamond/20 text-accent-diamond',
+  easy: 'bg-primary-gold/20 text-primary-gold',
+  normal: 'bg-accent-gold/20 text-accent-gold',
+  hard: 'bg-accent-redstone/20 text-accent-redstone',
+  // World type badges
+  survival: 'bg-primary-wheat/20 text-primary-wheat',
+  creative: 'bg-accent-diamond/20 text-accent-diamond',
+  spawn: 'bg-secondary-stone/30 text-text-light',
+};
+
+const sizeClasses = {
+  sm: 'px-2 py-0.5 text-xs',
+  md: 'px-3 py-1 text-sm',
+};
+
+const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+---
+
+<span class={classes}>
+  <slot />
+</span>

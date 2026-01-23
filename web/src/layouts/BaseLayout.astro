@@ -1,8 +1,11 @@
 ---
-// Base layout for all pages
-// Imports global styles and provides consistent page structure
-
+/**
+ * Base layout for all pages
+ * Provides consistent page structure with Header, Footer, and global styles
+ */
 import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
@@ -10,10 +13,11 @@ interface Props {
 }
 
 const { title, description = 'BlockHaven - A family-friendly Minecraft server' } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,9 +25,19 @@ const { title, description = 'BlockHaven - A family-friendly Minecraft server' }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${title} | BlockHaven`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
     <title>{title} | BlockHaven</title>
   </head>
-  <body class="min-h-screen bg-bg-light text-text-dark">
-    <slot />
+  <body class="min-h-screen flex flex-col bg-bg-dark text-text-light">
+    <Header currentPath={currentPath} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>

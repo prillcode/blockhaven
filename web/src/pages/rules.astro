@@ -1,0 +1,163 @@
+---
+/**
+ * Rules page - displays server rules and guidelines
+ */
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Get server rules
+const rulesData = await getEntry('rules', 'server-rules');
+const rules = rulesData?.data.rules || [];
+---
+
+<BaseLayout title="Rules" description="Server rules and guidelines for BlockHaven">
+  <!-- Hero Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
+        Server Rules
+      </h1>
+      <p class="text-xl text-text-muted max-w-2xl mx-auto">
+        BlockHaven is a family-friendly server. Please follow these rules to ensure
+        everyone has a great experience.
+      </p>
+    </div>
+  </section>
+
+  <!-- Family-Friendly Policy -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-primary-gold/10 border border-primary-gold/30 rounded-xl p-6 mb-8">
+        <h2 class="text-xl font-bold text-primary-gold mb-3 flex items-center gap-2">
+          <span>👨‍👩‍👧‍👦</span>
+          Family-Friendly Policy
+        </h2>
+        <p class="text-text-light">
+          BlockHaven welcomes players of all ages. We maintain a safe, respectful
+          environment where families can play together. All chat, builds, and behavior
+          should be appropriate for children.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rules List -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-4">
+        {rules.map((rule) => (
+          <div class="bg-secondary-stone/10 rounded-xl p-6 flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-gold/20 flex items-center justify-center">
+              <span class="text-primary-gold font-bold">{rule.id}</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-text-light mb-1">
+                {rule.title}
+              </h3>
+              <p class="text-text-muted">
+                {rule.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Guidelines -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-6 text-center">
+        Additional Guidelines
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Land Claims -->
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span class="text-xl">🛡️</span>
+            Land Claims
+          </h3>
+          <p class="text-text-muted text-sm mb-3">
+            Protect your builds by claiming land. Use <code class="text-primary-gold">/claim</code>
+            to start claiming. Unclaimed builds may not be protected if disputes arise.
+          </p>
+          <ul class="text-text-muted text-sm space-y-1">
+            <li>• Claims are free for all players</li>
+            <li>• Respect the boundaries of others' claims</li>
+            <li>• Don't claim near other players without asking</li>
+          </ul>
+        </div>
+
+        <!-- Economy -->
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span class="text-xl">💰</span>
+            Economy
+          </h3>
+          <p class="text-text-muted text-sm mb-3">
+            Earn money through jobs and use it to trade with other players.
+            The economy is meant to be fun, not competitive.
+          </p>
+          <ul class="text-text-muted text-sm space-y-1">
+            <li>• No scamming other players</li>
+            <li>• Honor trade agreements</li>
+            <li>• Don't exploit economy bugs</li>
+          </ul>
+        </div>
+
+        <!-- Building -->
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span class="text-xl">🏗️</span>
+            Building
+          </h3>
+          <p class="text-text-muted text-sm mb-3">
+            Build whatever you like (within family-friendly guidelines), but please
+            be considerate of the server environment.
+          </p>
+          <ul class="text-text-muted text-sm space-y-1">
+            <li>• No inappropriate builds or pixel art</li>
+            <li>• Clean up abandoned projects</li>
+            <li>• Don't build lag machines</li>
+          </ul>
+        </div>
+
+        <!-- Communication -->
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <h3 class="font-semibold text-text-light mb-3 flex items-center gap-2">
+            <span class="text-xl">💬</span>
+            Communication
+          </h3>
+          <p class="text-text-muted text-sm mb-3">
+            Keep chat friendly and inclusive. Remember that players of all ages
+            may be reading.
+          </p>
+          <ul class="text-text-muted text-sm space-y-1">
+            <li>• English preferred in public chat</li>
+            <li>• No excessive caps or spam</li>
+            <li>• Keep discussions civil</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enforcement -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-bold text-text-light mb-4">
+        Rule Enforcement
+      </h2>
+      <p class="text-text-muted max-w-2xl mx-auto mb-6">
+        We believe in fair, consistent enforcement. Minor issues result in warnings,
+        while serious or repeated violations may result in temporary or permanent bans.
+        All decisions can be appealed.
+      </p>
+      <div class="inline-flex items-center gap-2 text-text-muted text-sm">
+        <span class="text-primary-gold">Questions?</span>
+        Contact an admin in-game or when requesting access.
+      </div>
+    </div>
+  </section>
+</BaseLayout>

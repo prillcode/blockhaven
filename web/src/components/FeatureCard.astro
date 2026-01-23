@@ -1,0 +1,35 @@
+---
+/**
+ * Feature card component for displaying server features
+ */
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+  class?: string;
+}
+
+const { title, description, icon, class: className = '' } = Astro.props;
+
+// Map icon names to emoji (simple approach without external dependencies)
+const iconMap: Record<string, string> = {
+  gamepad: '🎮',
+  shield: '🛡️',
+  users: '👨‍👩‍👧‍👦',
+  globe: '🌍',
+  coins: '💰',
+  lock: '🔒',
+  pickaxe: '⛏️',
+  sword: '⚔️',
+  heart: '❤️',
+  star: '⭐',
+};
+
+const displayIcon = icon ? iconMap[icon] || '✨' : '✨';
+---
+
+<div class:list={['p-6 rounded-xl bg-secondary-stone/10 border border-secondary-stone/20 hover:border-primary-gold/30 transition-colors', className]}>
+  <div class="text-3xl mb-3">{displayIcon}</div>
+  <h3 class="text-lg font-semibold text-text-light mb-2">{title}</h3>
+  <p class="text-text-muted text-sm leading-relaxed">{description}</p>
+</div>

@@ -1,0 +1,17 @@
+{
+  "id": "survival_normal",
+  "displayName": "SMP Ravine",
+  "alias": "SMP_Ravine",
+  "type": "survival",
+  "difficulty": "normal",
+  "description": "Challenging terrain with ravines, cliffs, and caves to explore. Standard difficulty provides a balanced survival experience with regular mob spawns. Perfect for players who want a traditional Minecraft survival challenge.",
+  "features": [
+    "Normal difficulty for balanced gameplay",
+    "Interesting terrain with ravines and caves",
+    "Full Nether and End access",
+    "Land claim protection available"
+  ],
+  "hasNether": true,
+  "hasEnd": true,
+  "order": 3
+}

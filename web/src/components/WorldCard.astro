@@ -1,0 +1,88 @@
+---
+/**
+ * World card component for displaying world information
+ */
+import Badge from './Badge.astro';
+
+interface Props {
+  id: string;
+  displayName: string;
+  alias: string;
+  type: 'survival' | 'creative' | 'spawn';
+  difficulty: 'peaceful' | 'easy' | 'normal' | 'hard';
+  description: string;
+  features: string[];
+  hasNether: boolean;
+  hasEnd: boolean;
+  compact?: boolean;
+}
+
+const {
+  displayName,
+  alias,
+  type,
+  difficulty,
+  description,
+  features,
+  hasNether,
+  hasEnd,
+  compact = false,
+} = Astro.props;
+
+// Type colors
+const typeColors = {
+  survival: 'border-primary-wheat/30',
+  creative: 'border-accent-diamond/30',
+  spawn: 'border-secondary-stone/30',
+};
+---
+
+<div class:list={[
+  'rounded-xl bg-secondary-stone/10 border-2 transition-all hover:shadow-lg',
+  typeColors[type],
+  compact ? 'p-4' : 'p-6',
+]}>
+  <div class="flex items-start justify-between gap-4 mb-3">
+    <div>
+      <h3 class:list={['font-bold text-text-light', compact ? 'text-lg' : 'text-xl']}>
+        {displayName}
+      </h3>
+      <p class="text-text-muted text-sm">{alias}</p>
+    </div>
+    <div class="flex flex-col items-end gap-1">
+      <Badge variant={difficulty}>{difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</Badge>
+      <Badge variant={type} size="sm">{type.charAt(0).toUpperCase() + type.slice(1)}</Badge>
+    </div>
+  </div>
+
+  <p class:list={['text-text-muted leading-relaxed', compact ? 'text-sm mb-3' : 'mb-4']}>
+    {description}
+  </p>
+
+  {!compact && (
+    <>
+      <div class="mb-4">
+        <h4 class="text-sm font-semibold text-text-light mb-2">Features</h4>
+        <ul class="space-y-1">
+          {features.map((feature) => (
+            <li class="flex items-center gap-2 text-sm text-text-muted">
+              <span class="text-primary-gold">•</span>
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="flex items-center gap-4 pt-3 border-t border-secondary-stone/20">
+        <div class="flex items-center gap-1.5">
+          <span class="text-lg">{hasNether ? '🔥' : '❌'}</span>
+          <span class="text-xs text-text-muted">Nether</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-lg">{hasEnd ? '🌌' : '❌'}</span>
+          <span class="text-xs text-text-muted">End</span>
+        </div>
+      </div>
+    </>
+  )}
+</div>

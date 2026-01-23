@@ -1,0 +1,17 @@
+{
+  "id": "survival_hard",
+  "displayName": "SMP Cliffs",
+  "alias": "SMP_Cliffs",
+  "type": "survival",
+  "difficulty": "hard",
+  "description": "Extreme terrain with towering cliffs, deep valleys, and dangerous caves. Hard difficulty with increased mob spawns for experienced players. Bring your best gear when you're ready for the challenge.",
+  "features": [
+    "Hard difficulty for experienced players",
+    "Challenging cliff and valley terrain",
+    "Full Nether and End access",
+    "Higher risk, greater rewards"
+  ],
+  "hasNether": true,
+  "hasEnd": true,
+  "order": 4
+}

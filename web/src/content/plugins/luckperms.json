@@ -1,0 +1,13 @@
+{
+  "name": "LuckPerms",
+  "slug": "luckperms",
+  "category": "permissions",
+  "purpose": "Permission management and rank system",
+  "features": [
+    "Flexible permission system",
+    "Support for ranks and groups",
+    "Web-based permission editor",
+    "Per-world permissions"
+  ],
+  "docsUrl": "https://luckperms.net/wiki"
+}

@@ -1,0 +1,269 @@
+---
+/**
+ * Connect page - connection instructions for Java and Bedrock players
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServerStatus from '../components/ServerStatus.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Connect" description="How to connect to BlockHaven Minecraft server">
+  <!-- Hero Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
+        How to Connect
+      </h1>
+      <p class="text-xl text-text-muted max-w-2xl mx-auto mb-8">
+        BlockHaven supports both Java Edition and Bedrock Edition. Follow the
+        instructions below for your platform.
+      </p>
+
+      <!-- Server Status -->
+      <div class="max-w-sm mx-auto">
+        <ServerStatus />
+      </div>
+    </div>
+  </section>
+
+  <!-- Connection Instructions -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Java Edition -->
+        <div class="bg-secondary-stone/10 rounded-xl p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">☕</span>
+            <div>
+              <h2 class="text-2xl font-bold text-text-light">Java Edition</h2>
+              <p class="text-text-muted text-sm">PC, Mac, Linux</p>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-secondary-dark rounded-lg p-4">
+              <label class="text-sm text-text-muted block mb-1">Server Address</label>
+              <div class="flex items-center gap-2">
+                <code class="text-lg text-primary-gold font-mono flex-1">play.bhsmp.com</code>
+                <button
+                  class="copy-btn p-2 text-text-muted hover:text-primary-gold transition-colors"
+                  data-copy="play.bhsmp.com"
+                  aria-label="Copy server address"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-semibold text-text-light mb-3">Step-by-Step</h3>
+              <ol class="space-y-3 text-text-muted">
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">1</span>
+                  <span>Open Minecraft Java Edition</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">2</span>
+                  <span>Click <strong class="text-text-light">Multiplayer</strong></span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">3</span>
+                  <span>Click <strong class="text-text-light">Add Server</strong></span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">4</span>
+                  <span>Enter <code class="text-primary-gold">play.bhsmp.com</code> as the Server Address</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">5</span>
+                  <span>Click <strong class="text-text-light">Done</strong>, then join!</span>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bedrock Edition -->
+        <div class="bg-secondary-stone/10 rounded-xl p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">🎮</span>
+            <div>
+              <h2 class="text-2xl font-bold text-text-light">Bedrock Edition</h2>
+              <p class="text-text-muted text-sm">Windows 10/11, Xbox, PlayStation, Switch, Mobile</p>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-secondary-dark rounded-lg p-4 space-y-3">
+              <div>
+                <label class="text-sm text-text-muted block mb-1">Server Address</label>
+                <div class="flex items-center gap-2">
+                  <code class="text-lg text-primary-gold font-mono flex-1">play.bhsmp.com</code>
+                  <button
+                    class="copy-btn p-2 text-text-muted hover:text-primary-gold transition-colors"
+                    data-copy="play.bhsmp.com"
+                    aria-label="Copy server address"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="text-sm text-text-muted block mb-1">Port</label>
+                <div class="flex items-center gap-2">
+                  <code class="text-lg text-accent-diamond font-mono flex-1">19132</code>
+                  <button
+                    class="copy-btn p-2 text-text-muted hover:text-primary-gold transition-colors"
+                    data-copy="19132"
+                    aria-label="Copy port"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-semibold text-text-light mb-3">Step-by-Step</h3>
+              <ol class="space-y-3 text-text-muted">
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center">1</span>
+                  <span>Open Minecraft Bedrock Edition</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center">2</span>
+                  <span>Click <strong class="text-text-light">Play</strong> → <strong class="text-text-light">Servers</strong></span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center">3</span>
+                  <span>Scroll down and click <strong class="text-text-light">Add Server</strong></span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center">4</span>
+                  <span>Enter the address and port shown above</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-diamond/20 text-accent-diamond text-sm flex items-center justify-center">5</span>
+                  <span>Click <strong class="text-text-light">Save</strong>, then join!</span>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Troubleshooting -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-6 text-center">
+        Troubleshooting
+      </h2>
+
+      <div class="space-y-4">
+        <details class="bg-secondary-stone/10 rounded-xl overflow-hidden group">
+          <summary class="p-4 cursor-pointer text-text-light font-medium flex items-center justify-between hover:bg-secondary-stone/20 transition-colors">
+            Can't connect to the server?
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="p-4 pt-0 text-text-muted text-sm space-y-2">
+            <p>• Make sure you've been whitelisted. Request access if you haven't.</p>
+            <p>• Check that you're using the correct address and port.</p>
+            <p>• Verify your internet connection is working.</p>
+            <p>• Try restarting Minecraft and connecting again.</p>
+          </div>
+        </details>
+
+        <details class="bg-secondary-stone/10 rounded-xl overflow-hidden group">
+          <summary class="p-4 cursor-pointer text-text-light font-medium flex items-center justify-between hover:bg-secondary-stone/20 transition-colors">
+            "You are not whitelisted" error?
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="p-4 pt-0 text-text-muted text-sm space-y-2">
+            <p>BlockHaven is an invite-only server. You need to request access before you can join.</p>
+            <p class="pt-2">
+              <Button href="/request" size="sm">Request Access</Button>
+            </p>
+          </div>
+        </details>
+
+        <details class="bg-secondary-stone/10 rounded-xl overflow-hidden group">
+          <summary class="p-4 cursor-pointer text-text-light font-medium flex items-center justify-between hover:bg-secondary-stone/20 transition-colors">
+            Bedrock: "Unable to connect to world"?
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="p-4 pt-0 text-text-muted text-sm space-y-2">
+            <p>• Make sure you're using port <code class="text-accent-diamond">19132</code></p>
+            <p>• On consoles, you may need to add the server through a companion app.</p>
+            <p>• Some networks block gaming ports - try a different network or ask your admin.</p>
+          </div>
+        </details>
+
+        <details class="bg-secondary-stone/10 rounded-xl overflow-hidden group">
+          <summary class="p-4 cursor-pointer text-text-light font-medium flex items-center justify-between hover:bg-secondary-stone/20 transition-colors">
+            Version mismatch?
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="p-4 pt-0 text-text-muted text-sm space-y-2">
+            <p>We support a wide range of Minecraft versions. If you're having issues:</p>
+            <p>• Java Edition: Try using the latest stable release</p>
+            <p>• Bedrock Edition: Make sure your game is updated</p>
+            <p>• The server uses ViaVersion to support multiple client versions</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-bold text-text-light mb-4">
+        Need Help?
+      </h2>
+      <p class="text-text-muted mb-6">
+        If you're still having trouble connecting, mention the issue when you request access
+        and we'll help you out!
+      </p>
+      <Button href="/request">Request Access</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Copy to clipboard functionality
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy');
+      if (text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          // Visual feedback
+          btn.classList.remove('text-text-muted');
+          btn.classList.add('text-primary-gold');
+          setTimeout(() => {
+            btn.classList.remove('text-primary-gold');
+            btn.classList.add('text-text-muted');
+          }, 1000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      }
+    });
+  });
+</script>

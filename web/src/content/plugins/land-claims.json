@@ -1,0 +1,40 @@
+{
+  "name": "UltimateLandClaim",
+  "slug": "land-claims",
+  "category": "grief-prevention",
+  "purpose": "Protect your builds with a powerful land claiming system",
+  "features": [
+    "Chunk-based claiming (16x16 areas)",
+    "Free claims for all players",
+    "Trust system with multiple permission levels",
+    "Visual claim boundaries"
+  ],
+  "docsUrl": "https://www.spigotmc.org/resources/ultimatelandclaim.131608/",
+  "commands": [
+    {
+      "command": "/claim",
+      "description": "Show claiming instructions"
+    },
+    {
+      "command": "/claim auto",
+      "description": "Toggle auto-claim while walking"
+    },
+    {
+      "command": "/claim info",
+      "description": "Show details about the current claim"
+    },
+    {
+      "command": "/claim trust <player> <level>",
+      "description": "Grant access (ACCESS, CONTAINER, BUILD, MANAGER)"
+    },
+    {
+      "command": "/claim untrust <player>",
+      "description": "Remove a player's trust"
+    },
+    {
+      "command": "/unstuck",
+      "description": "Teleport out if stuck in someone's claim",
+      "aliases": ["/escape", "/claimstuck"]
+    }
+  ]
+}
