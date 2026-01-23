@@ -1,0 +1,54 @@
+{
+  "rules": [
+    {
+      "id": 1,
+      "title": "Be respectful to all players",
+      "description": "Treat everyone with kindness and respect. We're all here to have fun together."
+    },
+    {
+      "id": 2,
+      "title": "No griefing or stealing",
+      "description": "Respect other players' builds and items. Don't destroy, modify, or take what isn't yours."
+    },
+    {
+      "id": 3,
+      "title": "No inappropriate language",
+      "description": "This is a family-friendly environment. Keep chat clean and appropriate for all ages."
+    },
+    {
+      "id": 4,
+      "title": "No advertising other servers",
+      "description": "This is our community. Please don't promote other Minecraft servers here."
+    },
+    {
+      "id": 5,
+      "title": "No hacking or cheating",
+      "description": "Play fair. No modified clients, exploits, or unfair advantages."
+    },
+    {
+      "id": 6,
+      "title": "Follow staff instructions",
+      "description": "Admins and moderators are here to help. Please respect their decisions."
+    },
+    {
+      "id": 7,
+      "title": "Use land claims",
+      "description": "Protect your builds with the land claim system. Use /claim to get started."
+    },
+    {
+      "id": 8,
+      "title": "No exploiting bugs",
+      "description": "Report bugs instead of abusing them. Help us keep the server fair for everyone."
+    },
+    {
+      "id": 9,
+      "title": "Keep chat friendly",
+      "description": "No spam, arguments, or drama. Keep conversations positive and constructive."
+    },
+    {
+      "id": 10,
+      "title": "Have fun!",
+      "description": "This is a game - enjoy yourself! We're all here to have a great time."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "spawn",
+  "displayName": "Spawn Hub",
+  "alias": "Spawn_Hub",
+  "type": "spawn",
+  "difficulty": "peaceful",
+  "description": "Central hub world connecting all other worlds. Safe zone with portals to survival and creative worlds. Start here when you first join the server.",
+  "features": [
+    "Central spawn point for all players",
+    "Portals to all game worlds",
+    "Safe adventure mode zone",
+    "Information boards and signs"
+  ],
+  "hasNether": false,
+  "hasEnd": false,
+  "order": 1
+}

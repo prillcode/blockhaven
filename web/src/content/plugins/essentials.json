@@ -1,0 +1,48 @@
+{
+  "name": "EssentialsX",
+  "slug": "essentials",
+  "category": "utilities",
+  "purpose": "Core server utilities for teleportation, homes, economy, and more",
+  "features": [
+    "Set and teleport to homes",
+    "Player-to-player teleport requests",
+    "Economy system with balances and payments",
+    "Kits and warps"
+  ],
+  "docsUrl": "https://essinfo.xeya.me/commands.html",
+  "commands": [
+    {
+      "command": "/spawn",
+      "description": "Teleport to the world spawn"
+    },
+    {
+      "command": "/sethome [name]",
+      "description": "Set a home location"
+    },
+    {
+      "command": "/home [name]",
+      "description": "Teleport to your home"
+    },
+    {
+      "command": "/tpa <player>",
+      "description": "Request to teleport to another player"
+    },
+    {
+      "command": "/tpaccept",
+      "description": "Accept a teleport request"
+    },
+    {
+      "command": "/back",
+      "description": "Return to your last location"
+    },
+    {
+      "command": "/balance",
+      "description": "Check your money",
+      "aliases": ["/bal"]
+    },
+    {
+      "command": "/pay <player> <amount>",
+      "description": "Send money to another player"
+    }
+  ]
+}

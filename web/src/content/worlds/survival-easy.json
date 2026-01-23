@@ -1,0 +1,17 @@
+{
+  "id": "survival_easy",
+  "displayName": "SMP Plains",
+  "alias": "SMP_Plains",
+  "type": "survival",
+  "difficulty": "easy",
+  "description": "Peaceful plains biome perfect for new players and relaxed building. Easy difficulty means fewer hostile mobs and more time to focus on building your dream base. Great for beginners or players who prefer a calmer survival experience.",
+  "features": [
+    "Easy difficulty with reduced mob damage",
+    "Perfect for new players",
+    "Full Nether and End access",
+    "Land claim protection available"
+  ],
+  "hasNether": true,
+  "hasEnd": true,
+  "order": 2
+}

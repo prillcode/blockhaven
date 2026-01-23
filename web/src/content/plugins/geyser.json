@@ -1,0 +1,13 @@
+{
+  "name": "Geyser + Floodgate",
+  "slug": "geyser",
+  "category": "cross-platform",
+  "purpose": "Allow Bedrock Edition players to join the Java Edition server",
+  "features": [
+    "Bedrock players can connect via port 19132",
+    "No extra client required for Bedrock players",
+    "Automatic username prefixing for Bedrock users",
+    "Seamless cross-platform gameplay"
+  ],
+  "docsUrl": "https://geysermc.org/"
+}

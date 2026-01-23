@@ -1,0 +1,35 @@
+{
+  "name": "Jobs Reborn",
+  "slug": "jobs",
+  "category": "economy",
+  "purpose": "Earn money by performing job tasks",
+  "features": [
+    "12 different jobs to choose from",
+    "Earn money for mining, farming, building, and more",
+    "Level up jobs to earn more",
+    "Quests for bonus rewards"
+  ],
+  "docsUrl": "https://www.zrips.net/jobs/",
+  "commands": [
+    {
+      "command": "/jobs browse",
+      "description": "Open the jobs GUI to see all available jobs"
+    },
+    {
+      "command": "/jobs join <job>",
+      "description": "Join a job (e.g., /jobs join Miner)"
+    },
+    {
+      "command": "/jobs leave <job>",
+      "description": "Leave a job"
+    },
+    {
+      "command": "/jobs stats",
+      "description": "View your personal job statistics"
+    },
+    {
+      "command": "/jobs top",
+      "description": "View the global job leaderboard"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Multiverse",
+  "slug": "multiverse",
+  "category": "world-management",
+  "purpose": "Manage multiple worlds with separate settings",
+  "features": [
+    "Multiple survival and creative worlds",
+    "Separate inventories per world group",
+    "Automatic Nether/End portal linking",
+    "Per-world game rules and settings"
+  ],
+  "docsUrl": "https://github.com/Multiverse/Multiverse-Core/wiki",
+  "commands": [
+    {
+      "command": "/mv list",
+      "description": "List all worlds"
+    },
+    {
+      "command": "/mv tp <world>",
+      "description": "Teleport to a world"
+    }
+  ]
+}

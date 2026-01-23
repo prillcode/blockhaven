@@ -1,0 +1,11 @@
+{
+  "name": "ViaVersion",
+  "slug": "viaversion",
+  "category": "cross-platform",
+  "purpose": "Allow players on newer Minecraft versions to connect",
+  "features": [
+    "Version compatibility during MC updates",
+    "Players don't need to downgrade their client",
+    "Automatic protocol translation"
+  ]
+}

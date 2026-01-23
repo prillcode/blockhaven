@@ -1,0 +1,17 @@
+{
+  "id": "creative_terrain",
+  "displayName": "Creative Hills",
+  "alias": "Creative_Hills",
+  "type": "creative",
+  "difficulty": "peaceful",
+  "description": "Creative mode with natural terrain generation. Build in a realistic landscape with hills, rivers, and biomes. Great for players who want creative freedom but prefer natural terrain over flat plots.",
+  "features": [
+    "Creative mode with all items available",
+    "Natural terrain with hills and biomes",
+    "Peaceful environment",
+    "Build integrated with nature"
+  ],
+  "hasNether": false,
+  "hasEnd": false,
+  "order": 6
+}
