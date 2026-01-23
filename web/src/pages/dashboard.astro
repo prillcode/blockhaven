@@ -1,0 +1,49 @@
+---
+// src/pages/dashboard.astro
+// Phase 2: Admin Dashboard with GitHub OAuth + AWS SDK integration
+//
+// This is a placeholder page to validate SSR (server-side rendering) works
+// with the Cloudflare adapter. In Phase 2, this will become the admin dashboard
+// with GitHub OAuth authentication and AWS EC2 management features.
+
+export const prerender = false; // Enable SSR for this route (not pre-rendered at build time)
+
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Coming Soon | BlockHaven</title>
+</head>
+<body class="bg-bg-dark text-text-light min-h-screen flex items-center justify-center p-8">
+  <div class="max-w-2xl text-center">
+    <h1 class="text-5xl font-bold text-primary-grass mb-6">
+      Admin Dashboard
+    </h1>
+    <p class="text-xl text-text-light mb-4">
+      Coming in Phase 2
+    </p>
+    <div class="bg-secondary-dark p-6 rounded-lg mb-8">
+      <p class="text-text-light mb-4">
+        Future features:
+      </p>
+      <ul class="text-left space-y-2 text-text-light">
+        <li>• GitHub OAuth authentication</li>
+        <li>• AWS SDK integration for EC2 server management</li>
+        <li>• Server start/stop controls</li>
+        <li>• Player whitelist management</li>
+        <li>• Server status monitoring</li>
+      </ul>
+    </div>
+    <a
+      href="/"
+      class="inline-block text-accent-diamond hover:text-accent-gold transition-colors"
+    >
+      ← Back to Home
+    </a>
+  </div>
+</body>
+</html>
