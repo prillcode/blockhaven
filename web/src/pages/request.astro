@@ -14,14 +14,51 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         Request Access
       </h1>
       <p class="text-xl text-text-muted">
-        BlockHaven is an invite-only server for family and friends. Fill out the form
-        below to request access.
+        BlockHaven is currently in pre-launch testing. Read below for more information!
       </p>
     </div>
   </section>
 
-  <!-- Request Form -->
+  <!-- Pre-Launch Info -->
   <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-primary-gold/10 border-2 border-primary-gold rounded-xl p-6">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="text-3xl flex-shrink-0">🎉</span>
+          <div>
+            <h2 class="text-xl font-bold text-primary-gold mb-2">Pre-Launch Testing Phase!</h2>
+            <div class="text-text-light space-y-3">
+              <p>
+                BlockHaven is in the pre-launch testing phase! As a result the <strong class="text-primary-gold">WHITELIST is turned off</strong>,
+                and therefore anyone can join and try out our server! So if you've made your way here, consider yourself lucky...
+                and if you cause problems, expect to be banned swiftly.
+              </p>
+              <p>
+                Thank you for your cooperation, and enjoy playing (if the server is currently up).
+              </p>
+              <p class="text-sm italic text-text-muted">
+                - BlockHaven Admin
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-primary-gold/30">
+          <a
+            href="/connect"
+            class="inline-flex items-center gap-2 bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-6 py-3 rounded-lg transition-colors"
+          >
+            <span>View Connection Guide</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Request Form -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8 hidden">
     <div class="max-w-xl mx-auto">
       <form id="request-form" class="space-y-6">
         <!-- Name -->
@@ -176,7 +213,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- What Happens Next -->
-  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5 hidden">
     <div class="max-w-2xl mx-auto">
       <h2 class="text-2xl font-bold text-text-light mb-6 text-center">
         What Happens Next?
