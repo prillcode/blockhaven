@@ -31,7 +31,7 @@ Built with Astro 5.x, Cloudflare Pages, and Tailwind CSS 4.x with a custom Minec
 
 2. **Install dependencies:**
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Configure environment variables:**
@@ -42,7 +42,7 @@ Built with Astro 5.x, Cloudflare Pages, and Tailwind CSS 4.x with a custom Minec
 
 4. **Start the development server:**
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 5. **Open your browser:**
@@ -56,12 +56,11 @@ All commands are run from the `/web` directory:
 
 | Command                | Action                                           |
 |:-----------------------|:-------------------------------------------------|
-| `npm install`          | Install dependencies                             |
-| `npm run dev`          | Start dev server at `localhost:4321`             |
-| `npm run build`        | Build production site to `./dist/`               |
-| `npm run preview`      | Preview production build locally                 |
-| `npm run check`        | Type-check the project (TypeScript)              |
-| `npm run astro`        | Run Astro CLI commands                           |
+| `pnpm install`         | Install dependencies                             |
+| `pnpm dev`             | Start dev server at `localhost:4321`             |
+| `pnpm build`           | Build production site to `./dist/`               |
+| `pnpm check`           | Type-check the project (TypeScript)              |
+| `pnpm astro`           | Run Astro CLI commands                           |
 
 ## Project Structure
 
