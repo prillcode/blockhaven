@@ -11,7 +11,7 @@ import Button from '../components/Button.astro';
   <!-- Hero Section -->
   <section class="py-16 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold text-primary-grass mb-4">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
         How to Connect
       </h1>
       <p class="text-xl text-text-muted max-w-2xl mx-auto mb-8">
@@ -44,9 +44,9 @@ import Button from '../components/Button.astro';
             <div class="bg-secondary-dark rounded-lg p-4">
               <label class="text-sm text-text-muted block mb-1">Server Address</label>
               <div class="flex items-center gap-2">
-                <code class="text-lg text-primary-grass font-mono flex-1">play.bhsmp.com</code>
+                <code class="text-lg text-primary-gold font-mono flex-1">play.bhsmp.com</code>
                 <button
-                  class="copy-btn p-2 text-text-muted hover:text-primary-grass transition-colors"
+                  class="copy-btn p-2 text-text-muted hover:text-primary-gold transition-colors"
                   data-copy="play.bhsmp.com"
                   aria-label="Copy server address"
                 >
@@ -61,23 +61,23 @@ import Button from '../components/Button.astro';
               <h3 class="font-semibold text-text-light mb-3">Step-by-Step</h3>
               <ol class="space-y-3 text-text-muted">
                 <li class="flex gap-3">
-                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-grass/20 text-primary-grass text-sm flex items-center justify-center">1</span>
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">1</span>
                   <span>Open Minecraft Java Edition</span>
                 </li>
                 <li class="flex gap-3">
-                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-grass/20 text-primary-grass text-sm flex items-center justify-center">2</span>
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">2</span>
                   <span>Click <strong class="text-text-light">Multiplayer</strong></span>
                 </li>
                 <li class="flex gap-3">
-                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-grass/20 text-primary-grass text-sm flex items-center justify-center">3</span>
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">3</span>
                   <span>Click <strong class="text-text-light">Add Server</strong></span>
                 </li>
                 <li class="flex gap-3">
-                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-grass/20 text-primary-grass text-sm flex items-center justify-center">4</span>
-                  <span>Enter <code class="text-primary-grass">play.bhsmp.com</code> as the Server Address</span>
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">4</span>
+                  <span>Enter <code class="text-primary-gold">play.bhsmp.com</code> as the Server Address</span>
                 </li>
                 <li class="flex gap-3">
-                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-grass/20 text-primary-grass text-sm flex items-center justify-center">5</span>
+                  <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-gold/20 text-primary-gold text-sm flex items-center justify-center">5</span>
                   <span>Click <strong class="text-text-light">Done</strong>, then join!</span>
                 </li>
               </ol>
@@ -100,9 +100,9 @@ import Button from '../components/Button.astro';
               <div>
                 <label class="text-sm text-text-muted block mb-1">Server Address</label>
                 <div class="flex items-center gap-2">
-                  <code class="text-lg text-primary-grass font-mono flex-1">play.bhsmp.com</code>
+                  <code class="text-lg text-primary-gold font-mono flex-1">play.bhsmp.com</code>
                   <button
-                    class="copy-btn p-2 text-text-muted hover:text-primary-grass transition-colors"
+                    class="copy-btn p-2 text-text-muted hover:text-primary-gold transition-colors"
                     data-copy="play.bhsmp.com"
                     aria-label="Copy server address"
                   >
@@ -117,7 +117,7 @@ import Button from '../components/Button.astro';
                 <div class="flex items-center gap-2">
                   <code class="text-lg text-accent-diamond font-mono flex-1">19132</code>
                   <button
-                    class="copy-btn p-2 text-text-muted hover:text-primary-grass transition-colors"
+                    class="copy-btn p-2 text-text-muted hover:text-primary-gold transition-colors"
                     data-copy="19132"
                     aria-label="Copy port"
                   >
@@ -255,9 +255,9 @@ import Button from '../components/Button.astro';
           await navigator.clipboard.writeText(text);
           // Visual feedback
           btn.classList.remove('text-text-muted');
-          btn.classList.add('text-primary-grass');
+          btn.classList.add('text-primary-gold');
           setTimeout(() => {
-            btn.classList.remove('text-primary-grass');
+            btn.classList.remove('text-primary-gold');
             btn.classList.add('text-text-muted');
           }, 1000);
         } catch (err) {

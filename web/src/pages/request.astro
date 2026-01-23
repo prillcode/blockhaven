@@ -10,7 +10,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Hero Section -->
   <section class="py-16 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mx-auto text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold text-primary-grass mb-4">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
         Request Access
       </h1>
       <p class="text-xl text-text-muted">
@@ -35,7 +35,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             name="name"
             required
             autocomplete="name"
-            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-gold focus:ring-1 focus:ring-primary-gold transition-colors"
             placeholder="Your first name"
           />
         </div>
@@ -52,7 +52,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             required
             pattern="[a-zA-Z0-9_]{3,16}"
             title="3-16 characters, letters, numbers, and underscores only"
-            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-gold focus:ring-1 focus:ring-primary-gold transition-colors"
             placeholder="Your Minecraft username (Java or Bedrock)"
           />
           <p class="mt-1 text-xs text-text-muted">
@@ -71,7 +71,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             name="email"
             required
             autocomplete="email"
-            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-gold focus:ring-1 focus:ring-primary-gold transition-colors"
             placeholder="your.email@example.com"
           />
           <p class="mt-1 text-xs text-text-muted">
@@ -87,7 +87,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <select
             id="platform"
             name="platform"
-            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light focus:outline-none focus:border-primary-gold focus:ring-1 focus:ring-primary-gold transition-colors"
           >
             <option value="">Select your platform</option>
             <option value="java">Java Edition (PC/Mac/Linux)</option>
@@ -108,7 +108,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             type="text"
             id="relationship"
             name="relationship"
-            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-gold focus:ring-1 focus:ring-primary-gold transition-colors"
             placeholder="e.g., Friend of the family, cousin, etc."
           />
         </div>
@@ -123,7 +123,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             name="message"
             rows="3"
             maxlength="500"
-            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors resize-none"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-gold focus:ring-1 focus:ring-primary-gold transition-colors resize-none"
             placeholder="Anything else you'd like us to know?"
           ></textarea>
           <p class="mt-1 text-xs text-text-muted">
@@ -139,10 +139,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               id="agree_rules"
               name="agree_rules"
               required
-              class="mt-1 w-4 h-4 rounded border-secondary-stone/30 bg-secondary-stone/10 text-primary-grass focus:ring-primary-grass focus:ring-offset-0"
+              class="mt-1 w-4 h-4 rounded border-secondary-stone/30 bg-secondary-stone/10 text-primary-gold focus:ring-primary-gold focus:ring-offset-0"
             />
             <span class="text-sm text-text-muted">
-              I agree to follow the <a href="/rules" class="text-primary-grass hover:underline" target="_blank">server rules</a>
+              I agree to follow the <a href="/rules" class="text-primary-gold hover:underline" target="_blank">server rules</a>
               and understand that BlockHaven is a family-friendly environment.
               <span class="text-accent-redstone">*</span>
             </span>
@@ -154,7 +154,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <button
             type="submit"
             id="submit-btn"
-            class="w-full bg-primary-grass hover:bg-primary-emerald text-secondary-dark font-semibold px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-grass focus:ring-offset-2 focus:ring-offset-secondary-dark disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-gold focus:ring-offset-2 focus:ring-offset-secondary-dark disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span id="btn-text">Submit Request</span>
             <span id="btn-loading" class="hidden">Submitting...</span>
@@ -162,8 +162,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <!-- Form Messages -->
-        <div id="form-success" class="hidden bg-primary-grass/20 border border-primary-grass/30 rounded-lg p-4">
-          <p class="text-primary-grass font-medium">Request submitted successfully!</p>
+        <div id="form-success" class="hidden bg-primary-gold/20 border border-primary-gold/30 rounded-lg p-4">
+          <p class="text-primary-gold font-medium">Request submitted successfully!</p>
           <p class="text-text-muted text-sm mt-1">We'll review your request and email you when it's approved.</p>
         </div>
 
@@ -184,8 +184,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="space-y-4">
         <div class="flex gap-4">
-          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
-            <span class="text-primary-grass font-bold text-sm">1</span>
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-gold/20 flex items-center justify-center">
+            <span class="text-primary-gold font-bold text-sm">1</span>
           </div>
           <div>
             <h3 class="font-medium text-text-light">We review your request</h3>
@@ -194,8 +194,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="flex gap-4">
-          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
-            <span class="text-primary-grass font-bold text-sm">2</span>
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-gold/20 flex items-center justify-center">
+            <span class="text-primary-gold font-bold text-sm">2</span>
           </div>
           <div>
             <h3 class="font-medium text-text-light">You get whitelisted</h3>
@@ -204,8 +204,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="flex gap-4">
-          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
-            <span class="text-primary-grass font-bold text-sm">3</span>
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-gold/20 flex items-center justify-center">
+            <span class="text-primary-gold font-bold text-sm">3</span>
           </div>
           <div>
             <h3 class="font-medium text-text-light">We email you</h3>
@@ -214,13 +214,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="flex gap-4">
-          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
-            <span class="text-primary-grass font-bold text-sm">4</span>
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-gold/20 flex items-center justify-center">
+            <span class="text-primary-gold font-bold text-sm">4</span>
           </div>
           <div>
             <h3 class="font-medium text-text-light">Connect and play!</h3>
             <p class="text-text-muted text-sm">
-              Follow the <a href="/connect" class="text-primary-grass hover:underline">connection guide</a> to join.
+              Follow the <a href="/connect" class="text-primary-gold hover:underline">connection guide</a> to join.
             </p>
           </div>
         </div>

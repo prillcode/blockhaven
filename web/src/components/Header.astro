@@ -21,7 +21,7 @@ const navLinks = [
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-2 text-primary-grass font-bold text-xl hover:text-primary-emerald transition-colors">
+      <a href="/" class="flex items-center gap-2 text-primary-gold font-bold text-xl hover:text-primary-wheat transition-colors">
         <img src="/server-icon.png" alt="BlockHaven" class="w-8 h-8 rounded" />
         <span>BlockHaven</span>
       </a>
@@ -34,8 +34,8 @@ const navLinks = [
             class:list={[
               'text-sm font-medium transition-colors',
               currentPath === link.href
-                ? 'text-primary-grass'
-                : 'text-text-light hover:text-primary-grass',
+                ? 'text-primary-gold'
+                : 'text-text-light hover:text-primary-gold',
             ]}
           >
             {link.label}
@@ -43,7 +43,7 @@ const navLinks = [
         ))}
         <a
           href="/request"
-          class="bg-primary-grass hover:bg-primary-emerald text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
+          class="bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
         >
           Request Access
         </a>
@@ -52,7 +52,7 @@ const navLinks = [
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-btn"
-        class="md:hidden p-2 text-text-light hover:text-primary-grass transition-colors"
+        class="md:hidden p-2 text-text-light hover:text-primary-gold transition-colors"
         aria-label="Toggle menu"
         aria-expanded="false"
       >
@@ -80,8 +80,8 @@ const navLinks = [
             class:list={[
               'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
               currentPath === link.href
-                ? 'bg-primary-grass/10 text-primary-grass'
-                : 'text-text-light hover:bg-secondary-stone/20 hover:text-primary-grass',
+                ? 'bg-primary-gold/10 text-primary-gold'
+                : 'text-text-light hover:bg-secondary-stone/20 hover:text-primary-gold',
             ]}
           >
             {link.label}
@@ -89,7 +89,7 @@ const navLinks = [
         ))}
         <a
           href="/request"
-          class="mt-2 bg-primary-grass hover:bg-primary-emerald text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm text-center transition-colors"
+          class="mt-2 bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm text-center transition-colors"
         >
           Request Access
         </a>

@@ -33,7 +33,7 @@ const pluginsWithCommands = allPlugins.filter((p) => p.data.commands && p.data.c
   <!-- Hero Section -->
   <section class="py-16 px-4 sm:px-6 lg:px-8">
     <div class="max-w-6xl mx-auto text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold text-primary-grass mb-4">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
         Plugins & Commands
       </h1>
       <p class="text-xl text-text-muted max-w-2xl mx-auto">
@@ -65,7 +65,7 @@ const pluginsWithCommands = allPlugins.filter((p) => p.data.commands && p.data.c
                       href={plugin.data.docsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="text-accent-diamond hover:text-primary-grass text-sm transition-colors"
+                      class="text-accent-diamond hover:text-primary-gold text-sm transition-colors"
                     >
                       Docs →
                     </a>
@@ -81,7 +81,7 @@ const pluginsWithCommands = allPlugins.filter((p) => p.data.commands && p.data.c
                   <ul class="space-y-1">
                     {plugin.data.features.map((feature) => (
                       <li class="flex items-start gap-2 text-sm text-text-muted">
-                        <span class="text-primary-grass mt-0.5">•</span>
+                        <span class="text-primary-gold mt-0.5">•</span>
                         {feature}
                       </li>
                     ))}
@@ -94,7 +94,7 @@ const pluginsWithCommands = allPlugins.filter((p) => p.data.commands && p.data.c
                     <div class="space-y-2">
                       {plugin.data.commands.slice(0, 3).map((cmd) => (
                         <div class="text-sm">
-                          <code class="text-primary-grass">{cmd.command}</code>
+                          <code class="text-primary-gold">{cmd.command}</code>
                           <span class="text-text-muted ml-2">- {cmd.description}</span>
                         </div>
                       ))}
@@ -143,7 +143,7 @@ const pluginsWithCommands = allPlugins.filter((p) => p.data.commands && p.data.c
                   {plugin.data.commands?.map((cmd) => (
                     <tr>
                       <td class="py-2">
-                        <code class="text-primary-grass text-xs">{cmd.command}</code>
+                        <code class="text-primary-gold text-xs">{cmd.command}</code>
                         {cmd.aliases && cmd.aliases.length > 0 && (
                           <div class="text-text-muted text-xs mt-0.5">
                             Aliases: {cmd.aliases.join(', ')}
@@ -173,20 +173,20 @@ const pluginsWithCommands = allPlugins.filter((p) => p.data.commands && p.data.c
         <div class="bg-secondary-stone/10 rounded-xl p-6">
           <h3 class="font-semibold text-text-light mb-2">🏠 Getting Started</h3>
           <ol class="text-text-muted text-sm space-y-2 list-decimal list-inside">
-            <li>Set a home with <code class="text-primary-grass">/sethome</code></li>
-            <li>Claim your land with <code class="text-primary-grass">/claim</code></li>
-            <li>Join a job with <code class="text-primary-grass">/jobs browse</code></li>
-            <li>Check your balance with <code class="text-primary-grass">/bal</code></li>
+            <li>Set a home with <code class="text-primary-gold">/sethome</code></li>
+            <li>Claim your land with <code class="text-primary-gold">/claim</code></li>
+            <li>Join a job with <code class="text-primary-gold">/jobs browse</code></li>
+            <li>Check your balance with <code class="text-primary-gold">/bal</code></li>
           </ol>
         </div>
 
         <div class="bg-secondary-stone/10 rounded-xl p-6">
           <h3 class="font-semibold text-text-light mb-2">🤝 Playing with Friends</h3>
           <ol class="text-text-muted text-sm space-y-2 list-decimal list-inside">
-            <li>Teleport request with <code class="text-primary-grass">/tpa [player]</code></li>
-            <li>Accept with <code class="text-primary-grass">/tpaccept</code></li>
-            <li>Trust friends to your claim with <code class="text-primary-grass">/claim trust</code></li>
-            <li>Send money with <code class="text-primary-grass">/pay [player] [amount]</code></li>
+            <li>Teleport request with <code class="text-primary-gold">/tpa [player]</code></li>
+            <li>Accept with <code class="text-primary-gold">/tpaccept</code></li>
+            <li>Trust friends to your claim with <code class="text-primary-gold">/claim trust</code></li>
+            <li>Send money with <code class="text-primary-gold">/pay [player] [amount]</code></li>
           </ol>
         </div>
       </div>

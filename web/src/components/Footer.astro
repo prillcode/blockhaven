@@ -19,8 +19,8 @@ const quickLinks = [
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Server Info -->
       <div>
-        <h3 class="text-primary-grass font-bold text-lg mb-4 flex items-center gap-2">
-          <span>⛏️</span>
+        <h3 class="text-primary-gold font-bold text-lg mb-4 flex items-center gap-2">
+          <img src="/server-icon.png" alt="BlockHaven" class="w-6 h-6 rounded" />
           BlockHaven
         </h3>
         <p class="text-text-muted text-sm mb-4">
@@ -33,7 +33,7 @@ const quickLinks = [
               play.bhsmp.com
             </code>
             <button
-              class="copy-btn text-text-muted hover:text-primary-grass transition-colors"
+              class="copy-btn text-text-muted hover:text-primary-gold transition-colors"
               data-copy="play.bhsmp.com"
               aria-label="Copy Java IP"
             >
@@ -48,7 +48,7 @@ const quickLinks = [
               play.bhsmp.com:19132
             </code>
             <button
-              class="copy-btn text-text-muted hover:text-primary-grass transition-colors"
+              class="copy-btn text-text-muted hover:text-primary-gold transition-colors"
               data-copy="play.bhsmp.com:19132"
               aria-label="Copy Bedrock IP"
             >
@@ -68,7 +68,7 @@ const quickLinks = [
             <li>
               <a
                 href={link.href}
-                class="text-text-muted hover:text-primary-grass text-sm transition-colors"
+                class="text-text-muted hover:text-primary-gold text-sm transition-colors"
               >
                 {link.label}
               </a>
@@ -85,7 +85,7 @@ const quickLinks = [
         </p>
         <a
           href="/request"
-          class="inline-block bg-primary-grass hover:bg-primary-emerald text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
+          class="inline-block bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
         >
           Request Access
         </a>
@@ -103,7 +103,7 @@ const quickLinks = [
           href="https://astro.build"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-accent-diamond hover:text-primary-grass transition-colors"
+          class="text-accent-diamond hover:text-primary-gold transition-colors"
         >
           Astro
         </a>
@@ -123,9 +123,9 @@ const quickLinks = [
           // Visual feedback
           const originalColor = btn.classList.contains('text-text-muted');
           btn.classList.remove('text-text-muted');
-          btn.classList.add('text-primary-grass');
+          btn.classList.add('text-primary-gold');
           setTimeout(() => {
-            btn.classList.remove('text-primary-grass');
+            btn.classList.remove('text-primary-gold');
             btn.classList.add('text-text-muted');
           }, 1000);
         } catch (err) {

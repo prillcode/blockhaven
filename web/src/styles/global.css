@@ -3,8 +3,8 @@
 /* Minecraft-themed color palette for BlockHaven */
 @theme {
   /* Primary colors - Gold ore theme */
-  --color-primary-grass: #D4A017;
-  --color-primary-emerald: #E6B830;
+  --color-primary-gold: #D4A017;
+  --color-primary-wheat: #E6B830;
 
   /* Secondary colors - Stone/dark tones */
   --color-secondary-stone: #7F7F7F;
