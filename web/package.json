@@ -1,15 +1,26 @@
 {
-  "name": "awesome-aperture",
+  "name": "blockhaven-web",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "Marketing website for BlockHaven Minecraft server",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "start": "astro dev",
+    "build": "astro check && astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",
-    "astro": "^5.16.14"
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.14",
+    "resend": "^6.8.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.10",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.60.0"
   }
 }

@@ -1,17 +1,63 @@
 ---
-
+// Homepage - pre-rendered at build time (default behavior)
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home" description="Welcome to BlockHaven - A family-friendly, cross-platform Minecraft server">
+  <main class="flex min-h-screen flex-col items-center justify-center p-8">
+    <div class="text-center max-w-2xl">
+      <!-- Logo/Title -->
+      <h1 class="text-5xl font-bold text-primary-grass mb-4">
+        BlockHaven
+      </h1>
+
+      <p class="text-xl text-text-muted mb-8">
+        A family-friendly, cross-platform Minecraft server
+      </p>
+
+      <!-- Server Info Card -->
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-2 border-primary-grass">
+        <h2 class="text-2xl font-semibold text-secondary-dark mb-4">
+          Join the Adventure
+        </h2>
+
+        <div class="space-y-2 text-left">
+          <p class="flex items-center gap-2">
+            <span class="text-accent-diamond font-semibold">Java:</span>
+            <code class="bg-secondary-stone/10 px-2 py-1 rounded">play.bhsmp.com</code>
+          </p>
+          <p class="flex items-center gap-2">
+            <span class="text-accent-diamond font-semibold">Bedrock:</span>
+            <code class="bg-secondary-stone/10 px-2 py-1 rounded">play.bhsmp.com:19132</code>
+          </p>
+        </div>
+      </div>
+
+      <!-- Feature Highlights -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="p-4 bg-primary-emerald/10 rounded-lg">
+          <div class="text-2xl mb-2">🛡️</div>
+          <h3 class="font-semibold text-primary-grass">Grief Protection</h3>
+          <p class="text-sm text-text-muted">Free land claims for all players</p>
+        </div>
+
+        <div class="p-4 bg-accent-diamond/10 rounded-lg">
+          <div class="text-2xl mb-2">🎮</div>
+          <h3 class="font-semibold text-accent-diamond">Cross-Platform</h3>
+          <p class="text-sm text-text-muted">Java & Bedrock supported</p>
+        </div>
+
+        <div class="p-4 bg-accent-gold/10 rounded-lg">
+          <div class="text-2xl mb-2">👨‍👩‍👧‍👦</div>
+          <h3 class="font-semibold text-accent-gold">Family Friendly</h3>
+          <p class="text-sm text-text-muted">Safe environment for all ages</p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <p class="text-text-muted">
+        Coming soon: Request access form and more!
+      </p>
+    </div>
+  </main>
+</BaseLayout>
