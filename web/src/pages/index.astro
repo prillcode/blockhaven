@@ -1,63 +1,161 @@
 ---
-// Homepage - pre-rendered at build time (default behavior)
+/**
+ * Homepage - pre-rendered at build time (default behavior)
+ */
+import { getEntry, getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import WorldCard from '../components/WorldCard.astro';
+import ServerStatus from '../components/ServerStatus.astro';
+import Button from '../components/Button.astro';
+
+// Get server info and features
+const serverInfo = await getEntry('server-info', 'blockhaven');
+
+// Get survival worlds for preview
+const allWorlds = await getCollection('worlds');
+const survivalWorlds = allWorlds
+  .filter((w) => w.data.type === 'survival')
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 ---
 
 <BaseLayout title="Home" description="Welcome to BlockHaven - A family-friendly, cross-platform Minecraft server">
-  <main class="flex min-h-screen flex-col items-center justify-center p-8">
-    <div class="text-center max-w-2xl">
-      <!-- Logo/Title -->
-      <h1 class="text-5xl font-bold text-primary-grass mb-4">
-        BlockHaven
-      </h1>
+  <!-- Hero Section -->
+  <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-primary-grass/5 to-transparent"></div>
+    <div class="max-w-6xl mx-auto relative">
+      <div class="text-center">
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-primary-grass mb-6">
+          BlockHaven
+        </h1>
+        <p class="text-xl sm:text-2xl text-text-muted mb-8 max-w-2xl mx-auto">
+          {serverInfo?.data.tagline}
+        </p>
 
-      <p class="text-xl text-text-muted mb-8">
-        A family-friendly, cross-platform Minecraft server
-      </p>
+        <!-- Server Status Widget -->
+        <div class="max-w-sm mx-auto mb-8">
+          <ServerStatus />
+        </div>
 
-      <!-- Server Info Card -->
-      <div class="bg-secondary-dark rounded-lg shadow-lg p-6 mb-8 border-2 border-primary-grass">
-        <h2 class="text-2xl font-semibold text-text-light mb-4">
-          Join the Adventure
-        </h2>
-
-        <div class="space-y-2 text-left">
-          <p class="flex items-center gap-2">
-            <span class="text-accent-diamond font-semibold">Java:</span>
-            <code class="bg-secondary-stone/20 text-text-light px-2 py-1 rounded">play.bhsmp.com</code>
-          </p>
-          <p class="flex items-center gap-2">
-            <span class="text-accent-diamond font-semibold">Bedrock:</span>
-            <code class="bg-secondary-stone/20 text-text-light px-2 py-1 rounded">play.bhsmp.com:19132</code>
-          </p>
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button href="/request" size="lg">
+            Request Access
+          </Button>
+          <Button href="/connect" variant="secondary" size="lg">
+            How to Connect
+          </Button>
         </div>
       </div>
-
-      <!-- Feature Highlights -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div class="p-4 bg-primary-emerald/10 rounded-lg">
-          <div class="text-2xl mb-2">🛡️</div>
-          <h3 class="font-semibold text-primary-grass">Grief Protection</h3>
-          <p class="text-sm text-text-muted">Free land claims for all players</p>
-        </div>
-
-        <div class="p-4 bg-accent-diamond/10 rounded-lg">
-          <div class="text-2xl mb-2">🎮</div>
-          <h3 class="font-semibold text-accent-diamond">Cross-Platform</h3>
-          <p class="text-sm text-text-muted">Java & Bedrock supported</p>
-        </div>
-
-        <div class="p-4 bg-accent-gold/10 rounded-lg">
-          <div class="text-2xl mb-2">👨‍👩‍👧‍👦</div>
-          <h3 class="font-semibold text-accent-gold">Family Friendly</h3>
-          <p class="text-sm text-text-muted">Safe environment for all ages</p>
-        </div>
-      </div>
-
-      <!-- CTA -->
-      <p class="text-text-muted">
-        Coming soon: Request access form and more!
-      </p>
     </div>
-  </main>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold text-text-light mb-4">
+          Why BlockHaven?
+        </h2>
+        <p class="text-text-muted max-w-2xl mx-auto">
+          Everything you need for a great Minecraft experience
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {serverInfo?.data.features.map((feature) => (
+          <FeatureCard
+            title={feature.title}
+            description={feature.description}
+            icon={feature.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Worlds Preview Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold text-text-light mb-4">
+          Choose Your Adventure
+        </h2>
+        <p class="text-text-muted max-w-2xl mx-auto">
+          Multiple survival worlds with different difficulties - find your perfect challenge
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {survivalWorlds.map((world) => (
+          <WorldCard
+            id={world.data.id}
+            displayName={world.data.displayName}
+            alias={world.data.alias}
+            type={world.data.type}
+            difficulty={world.data.difficulty}
+            description={world.data.description}
+            features={world.data.features}
+            hasNether={world.data.hasNether}
+            hasEnd={world.data.hasEnd}
+            compact
+          />
+        ))}
+      </div>
+
+      <div class="text-center">
+        <Button href="/worlds" variant="secondary">
+          View All Worlds →
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rules Preview Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-text-light mb-4">
+        Family-Friendly Environment
+      </h2>
+      <p class="text-text-muted mb-8 max-w-2xl mx-auto">
+        BlockHaven is a safe space for players of all ages. We maintain clear rules
+        and active moderation to ensure everyone has a great experience.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div class="p-4 rounded-lg bg-secondary-stone/10">
+          <span class="text-2xl">🛡️</span>
+          <p class="text-text-light font-medium mt-2">No Griefing</p>
+        </div>
+        <div class="p-4 rounded-lg bg-secondary-stone/10">
+          <span class="text-2xl">💬</span>
+          <p class="text-text-light font-medium mt-2">Clean Chat</p>
+        </div>
+        <div class="p-4 rounded-lg bg-secondary-stone/10">
+          <span class="text-2xl">👥</span>
+          <p class="text-text-light font-medium mt-2">Respectful Community</p>
+        </div>
+      </div>
+
+      <Button href="/rules" variant="secondary">
+        Read Full Rules →
+      </Button>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-text-light mb-4">
+        Ready to Join?
+      </h2>
+      <p class="text-text-muted mb-8 max-w-2xl mx-auto">
+        BlockHaven is an invite-only server for family and friends. Request access
+        to join our community!
+      </p>
+      <Button href="/request" size="lg">
+        Request Access
+      </Button>
+    </div>
+  </section>
 </BaseLayout>

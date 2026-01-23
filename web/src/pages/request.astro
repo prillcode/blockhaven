@@ -1,0 +1,303 @@
+---
+/**
+ * Request Access page - form to request whitelist access
+ * Form submission handled in Epic 4
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Request Access" description="Request access to join BlockHaven Minecraft server">
+  <!-- Hero Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-grass mb-4">
+        Request Access
+      </h1>
+      <p class="text-xl text-text-muted">
+        BlockHaven is an invite-only server for family and friends. Fill out the form
+        below to request access.
+      </p>
+    </div>
+  </section>
+
+  <!-- Request Form -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-xl mx-auto">
+      <form id="request-form" class="space-y-6">
+        <!-- Name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-text-light mb-2">
+            Your Name <span class="text-accent-redstone">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            autocomplete="name"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            placeholder="Your first name"
+          />
+        </div>
+
+        <!-- Minecraft Username -->
+        <div>
+          <label for="minecraft_username" class="block text-sm font-medium text-text-light mb-2">
+            Minecraft Username <span class="text-accent-redstone">*</span>
+          </label>
+          <input
+            type="text"
+            id="minecraft_username"
+            name="minecraft_username"
+            required
+            pattern="[a-zA-Z0-9_]{3,16}"
+            title="3-16 characters, letters, numbers, and underscores only"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            placeholder="Your Minecraft username (Java or Bedrock)"
+          />
+          <p class="mt-1 text-xs text-text-muted">
+            Bedrock players: Enter your gamertag without the "." prefix
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-text-light mb-2">
+            Email Address <span class="text-accent-redstone">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            placeholder="your.email@example.com"
+          />
+          <p class="mt-1 text-xs text-text-muted">
+            We'll email you when your request is approved
+          </p>
+        </div>
+
+        <!-- Platform -->
+        <div>
+          <label for="platform" class="block text-sm font-medium text-text-light mb-2">
+            Platform
+          </label>
+          <select
+            id="platform"
+            name="platform"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+          >
+            <option value="">Select your platform</option>
+            <option value="java">Java Edition (PC/Mac/Linux)</option>
+            <option value="bedrock-windows">Bedrock - Windows 10/11</option>
+            <option value="bedrock-xbox">Bedrock - Xbox</option>
+            <option value="bedrock-playstation">Bedrock - PlayStation</option>
+            <option value="bedrock-switch">Bedrock - Nintendo Switch</option>
+            <option value="bedrock-mobile">Bedrock - Mobile (iOS/Android)</option>
+          </select>
+        </div>
+
+        <!-- Relationship (optional) -->
+        <div>
+          <label for="relationship" class="block text-sm font-medium text-text-light mb-2">
+            How do you know us?
+          </label>
+          <input
+            type="text"
+            id="relationship"
+            name="relationship"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors"
+            placeholder="e.g., Friend of the family, cousin, etc."
+          />
+        </div>
+
+        <!-- Message (optional) -->
+        <div>
+          <label for="message" class="block text-sm font-medium text-text-light mb-2">
+            Message <span class="text-text-muted font-normal">(optional)</span>
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="3"
+            maxlength="500"
+            class="w-full px-4 py-3 rounded-lg bg-secondary-stone/10 border border-secondary-stone/30 text-text-light placeholder-text-muted focus:outline-none focus:border-primary-grass focus:ring-1 focus:ring-primary-grass transition-colors resize-none"
+            placeholder="Anything else you'd like us to know?"
+          ></textarea>
+          <p class="mt-1 text-xs text-text-muted">
+            <span id="char-count">0</span>/500 characters
+          </p>
+        </div>
+
+        <!-- Rules Agreement -->
+        <div class="bg-secondary-stone/10 rounded-lg p-4">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              id="agree_rules"
+              name="agree_rules"
+              required
+              class="mt-1 w-4 h-4 rounded border-secondary-stone/30 bg-secondary-stone/10 text-primary-grass focus:ring-primary-grass focus:ring-offset-0"
+            />
+            <span class="text-sm text-text-muted">
+              I agree to follow the <a href="/rules" class="text-primary-grass hover:underline" target="_blank">server rules</a>
+              and understand that BlockHaven is a family-friendly environment.
+              <span class="text-accent-redstone">*</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full bg-primary-grass hover:bg-primary-emerald text-secondary-dark font-semibold px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-grass focus:ring-offset-2 focus:ring-offset-secondary-dark disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span id="btn-text">Submit Request</span>
+            <span id="btn-loading" class="hidden">Submitting...</span>
+          </button>
+        </div>
+
+        <!-- Form Messages -->
+        <div id="form-success" class="hidden bg-primary-grass/20 border border-primary-grass/30 rounded-lg p-4">
+          <p class="text-primary-grass font-medium">Request submitted successfully!</p>
+          <p class="text-text-muted text-sm mt-1">We'll review your request and email you when it's approved.</p>
+        </div>
+
+        <div id="form-error" class="hidden bg-accent-redstone/20 border border-accent-redstone/30 rounded-lg p-4">
+          <p class="text-accent-redstone font-medium">Something went wrong</p>
+          <p id="error-message" class="text-text-muted text-sm mt-1">Please try again later.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- What Happens Next -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-6 text-center">
+        What Happens Next?
+      </h2>
+
+      <div class="space-y-4">
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
+            <span class="text-primary-grass font-bold text-sm">1</span>
+          </div>
+          <div>
+            <h3 class="font-medium text-text-light">We review your request</h3>
+            <p class="text-text-muted text-sm">We'll check that we know you and verify your username.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
+            <span class="text-primary-grass font-bold text-sm">2</span>
+          </div>
+          <div>
+            <h3 class="font-medium text-text-light">You get whitelisted</h3>
+            <p class="text-text-muted text-sm">Once approved, your username is added to the whitelist.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
+            <span class="text-primary-grass font-bold text-sm">3</span>
+          </div>
+          <div>
+            <h3 class="font-medium text-text-light">We email you</h3>
+            <p class="text-text-muted text-sm">You'll receive a confirmation email with connection details.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-grass/20 flex items-center justify-center">
+            <span class="text-primary-grass font-bold text-sm">4</span>
+          </div>
+          <div>
+            <h3 class="font-medium text-text-light">Connect and play!</h3>
+            <p class="text-text-muted text-sm">
+              Follow the <a href="/connect" class="text-primary-grass hover:underline">connection guide</a> to join.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Character counter for message field
+  const messageField = document.getElementById('message') as HTMLTextAreaElement;
+  const charCount = document.getElementById('char-count');
+
+  messageField?.addEventListener('input', () => {
+    if (charCount) {
+      charCount.textContent = String(messageField.value.length);
+    }
+  });
+
+  // Form submission handler
+  const form = document.getElementById('request-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = document.getElementById('btn-text');
+  const btnLoading = document.getElementById('btn-loading');
+  const formSuccess = document.getElementById('form-success');
+  const formError = document.getElementById('form-error');
+  const errorMessage = document.getElementById('error-message');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Hide previous messages
+    formSuccess?.classList.add('hidden');
+    formError?.classList.add('hidden');
+
+    // Show loading state
+    if (submitBtn) submitBtn.setAttribute('disabled', 'true');
+    btnText?.classList.add('hidden');
+    btnLoading?.classList.remove('hidden');
+
+    try {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('/api/request-access', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Show success message
+        formSuccess?.classList.remove('hidden');
+        form.reset();
+        if (charCount) charCount.textContent = '0';
+      } else {
+        // Show error message
+        if (errorMessage) {
+          errorMessage.textContent = result.error || 'Please try again later.';
+        }
+        formError?.classList.remove('hidden');
+      }
+    } catch (error) {
+      // Show error message
+      if (errorMessage) {
+        errorMessage.textContent = 'Network error. Please check your connection and try again.';
+      }
+      formError?.classList.remove('hidden');
+    } finally {
+      // Reset button state
+      if (submitBtn) submitBtn.removeAttribute('disabled');
+      btnText?.classList.remove('hidden');
+      btnLoading?.classList.add('hidden');
+    }
+  });
+</script>
