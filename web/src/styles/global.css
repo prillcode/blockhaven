@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Minecraft-themed color palette for BlockHaven */
+@theme {
+  /* Primary colors - Minecraft grass/nature */
+  --color-primary-grass: #7CBD2F;
+  --color-primary-emerald: #50C878;
+
+  /* Secondary colors - Stone/dark tones */
+  --color-secondary-stone: #7F7F7F;
+  --color-secondary-dark: #1A1A1A;
+
+  /* Accent colors - Rare items */
+  --color-accent-diamond: #5DCCE3;
+  --color-accent-gold: #FCEE4B;
+  --color-accent-redstone: #FF0000;
+
+  /* Background colors */
+  --color-bg-light: #F5F5F5;
+  --color-bg-dark: #1A1A1A;
+  --color-bg-dirt: #8B5A2B;
+
+  /* Text colors */
+  --color-text-dark: #2D2D2D;
+  --color-text-light: #E5E5E5;
+  --color-text-muted: #6B7280;
+
+  /* Minecraft UI colors */
+  --color-mc-green: #5AC54F;
+  --color-mc-dark-green: #3B7D4A;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+  }
+}
