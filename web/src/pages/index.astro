@@ -32,13 +32,17 @@ const survivalWorlds = allWorlds
           {serverInfo?.data.tagline}
         </p>
 
-        <!-- Server Status Widget -->
-        <div class="relative max-w-sm mx-auto mb-8">
-          <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-            <img src="/blockhaven-icon-medium.png" alt="" class="w-48 h-48 object-contain" />
-          </div>
-          <div class="relative">
-            <ServerStatus />
+        <!-- Server Status Widget with Background -->
+        <div class="relative flex items-center justify-center mb-8">
+          <img
+            src="/blockhaven-icon-medium.png"
+            alt=""
+            class="w-[500px] sm:w-[600px] lg:w-[700px] h-auto opacity-15 pointer-events-none"
+          />
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-full max-w-sm">
+              <ServerStatus />
+            </div>
           </div>
         </div>
 
