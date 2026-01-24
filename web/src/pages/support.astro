@@ -1,0 +1,148 @@
+---
+/**
+ * Support page - placeholder for future donation/support system
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Support BlockHaven" description="Help support BlockHaven and keep our Minecraft server running">
+  <!-- Hero Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-gold mb-4">
+        Support BlockHaven
+      </h1>
+      <p class="text-xl text-text-muted max-w-2xl mx-auto">
+        Help keep our community thriving! Your support helps cover server costs and
+        enables us to continue providing a great Minecraft experience.
+      </p>
+    </div>
+  </section>
+
+  <!-- Coming Soon Section -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-primary-gold/10 border border-primary-gold/30 rounded-xl p-8 text-center">
+        <span class="text-5xl mb-4 block">🚧</span>
+        <h2 class="text-2xl font-bold text-text-light mb-4">
+          Coming Soon!
+        </h2>
+        <p class="text-text-muted mb-6">
+          We're working on setting up a way for our community to support BlockHaven.
+          Check back soon for ways to contribute and earn exclusive cosmetic perks!
+        </p>
+        <Button href="/" variant="secondary">
+          Return Home
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We're Planning Section -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-text-light mb-8 text-center">
+        What We're Planning
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">🎨</span>
+            <h3 class="text-lg font-semibold text-text-light">Cosmetic Perks</h3>
+          </div>
+          <p class="text-text-muted text-sm">
+            Unique chat colors, name tags, particle effects, and other visual perks
+            that show off your supporter status without affecting gameplay.
+          </p>
+        </div>
+
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">⭐</span>
+            <h3 class="text-lg font-semibold text-text-light">Supporter Ranks</h3>
+          </div>
+          <p class="text-text-muted text-sm">
+            Special ranks that recognize your contribution to the community
+            with exclusive cosmetic benefits.
+          </p>
+        </div>
+
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">✨</span>
+            <h3 class="text-lg font-semibold text-text-light">No Pay-to-Win</h3>
+          </div>
+          <p class="text-text-muted text-sm">
+            All perks will be purely cosmetic. We're committed to keeping gameplay
+            fair for everyone, whether they support financially or not.
+          </p>
+        </div>
+
+        <div class="bg-secondary-stone/10 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">💚</span>
+            <h3 class="text-lg font-semibold text-text-light">Server Sustainability</h3>
+          </div>
+          <p class="text-text-muted text-sm">
+            Contributions help cover hosting costs, backups, and improvements
+            to keep BlockHaven running smoothly for years to come.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Server Costs Info -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-2xl font-bold text-text-light mb-4">
+        Where Your Support Goes
+      </h2>
+      <p class="text-text-muted mb-8">
+        BlockHaven is powered by AWS infrastructure to provide reliable, low-latency gameplay.
+        Your support helps cover:
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-secondary-stone/10 rounded-lg p-4">
+          <span class="text-2xl">🖥️</span>
+          <p class="text-text-light font-medium mt-2">Server Hosting</p>
+          <p class="text-text-muted text-sm">AWS compute & storage</p>
+        </div>
+        <div class="bg-secondary-stone/10 rounded-lg p-4">
+          <span class="text-2xl">💾</span>
+          <p class="text-text-light font-medium mt-2">Backups</p>
+          <p class="text-text-muted text-sm">Regular world backups</p>
+        </div>
+        <div class="bg-secondary-stone/10 rounded-lg p-4">
+          <span class="text-2xl">🌐</span>
+          <p class="text-text-light font-medium mt-2">Domain & CDN</p>
+          <p class="text-text-muted text-sm">Website & downloads</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stay Updated -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-2xl font-bold text-text-light mb-4">
+        Stay Updated
+      </h2>
+      <p class="text-text-muted mb-6">
+        Want to know when our supporter program launches? Join the server and stay connected
+        with our community!
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href="/connect">
+          How to Connect
+        </Button>
+        <Button href="/guide" variant="secondary">
+          Players Guide
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

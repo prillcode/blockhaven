@@ -1,0 +1,103 @@
+---
+/**
+ * Guide layout with sidebar navigation for docs-style pages
+ */
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  currentPage?: string;
+}
+
+const { title, description = 'BlockHaven Players Guide', currentPage = '' } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const guidePages = [
+  { href: '/guide', label: 'Quick Start', id: 'quick-start' },
+  { href: '/guide/basics', label: 'Minecraft Basics', id: 'basics' },
+  { href: '/guide/land-claims', label: 'Land Claims', id: 'land-claims' },
+  { href: '/guide/economy', label: 'Jobs & Economy', id: 'economy' },
+  { href: '/guide/worlds', label: 'Worlds & Travel', id: 'worlds' },
+];
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/server-icon.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${title} | BlockHaven Guide`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <title>BlockHaven | {title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col bg-bg-dark text-text-light">
+    <Header currentPath={currentPath} />
+    <main class="flex-1">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="lg:grid lg:grid-cols-[250px_1fr] lg:gap-8">
+          <!-- Sidebar Navigation -->
+          <aside class="hidden lg:block">
+            <nav class="sticky top-24 space-y-1">
+              <h3 class="text-sm font-semibold text-primary-gold mb-4 uppercase tracking-wider">
+                Players Guide
+              </h3>
+              {guidePages.map((page) => (
+                <a
+                  href={page.href}
+                  class:list={[
+                    'block px-3 py-2 rounded-lg text-sm transition-colors',
+                    currentPage === page.id
+                      ? 'bg-primary-gold/10 text-primary-gold font-medium'
+                      : 'text-text-muted hover:text-text-light hover:bg-secondary-stone/10',
+                  ]}
+                >
+                  {page.label}
+                </a>
+              ))}
+            </nav>
+          </aside>
+
+          <!-- Mobile Navigation -->
+          <div class="lg:hidden mb-6">
+            <label class="text-sm font-semibold text-primary-gold mb-2 block uppercase tracking-wider">
+              Players Guide
+            </label>
+            <select
+              id="guide-nav-mobile"
+              class="w-full bg-secondary-stone/20 border border-secondary-stone/30 rounded-lg px-4 py-2 text-text-light"
+            >
+              {guidePages.map((page) => (
+                <option value={page.href} selected={currentPage === page.id}>
+                  {page.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Main Content -->
+          <article class="prose prose-invert max-w-none">
+            <slot />
+          </article>
+        </div>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<script>
+  const select = document.getElementById('guide-nav-mobile') as HTMLSelectElement;
+  select?.addEventListener('change', () => {
+    window.location.href = select.value;
+  });
+</script>

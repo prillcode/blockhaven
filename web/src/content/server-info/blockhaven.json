@@ -1,6 +1,6 @@
 {
   "name": "BlockHaven",
-  "tagline": "A family-friendly, cross-platform Minecraft server",
+  "tagline": "A new, family-focused, Minecraft server for all ages!",
   "javaAddress": "play.bhsmp.com",
   "javaPort": 25565,
   "bedrockAddress": "play.bhsmp.com",
@@ -37,10 +37,10 @@
       "icon": "coins"
     },
     {
-      "id": "invite-only",
-      "title": "Invite Only",
-      "description": "A private server for family and friends. Request access to join our welcoming community.",
-      "icon": "lock"
+      "id": "just-launched",
+      "title": "Just Launched",
+      "description": "Get in from the start! New frontiers to explore and become a founding settler of our growing community.",
+      "icon": "rocket"
     }
   ]
 }
