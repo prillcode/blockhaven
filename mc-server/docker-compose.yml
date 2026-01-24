@@ -2,7 +2,7 @@ services:
   minecraft:
     image: itzg/minecraft-server:latest
     container_name: blockhaven-mc
-    restart: unless-stopped
+    restart: always
     tty: true
     stdin_open: true
 
