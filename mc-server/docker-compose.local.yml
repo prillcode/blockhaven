@@ -74,6 +74,13 @@ services:
       - ./plugins/downloaded_installers:/plugins-local:ro
       - ./extras:/extras:ro
       - ./extras/server-icon.png:/data/server-icon.png:ro
+      # Plugin configs from repo (version-controlled)
+      - ./plugins/configs:/plugin-configs:ro
+      - ./scripts/copy-plugin-configs.sh:/copy-plugin-configs.sh:ro
+
+    # Run config copy script before starting the server
+    command: >-
+      sh -c "/copy-plugin-configs.sh && /start"
 
     healthcheck:
       test: mc-health
