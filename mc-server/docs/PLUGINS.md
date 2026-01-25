@@ -229,6 +229,60 @@ docker-compose up -d
 
 ---
 
+## Plugin Config Management
+
+Plugin configs are tracked in the repository under `plugins/configs/`. This allows version control for custom configuration changes.
+
+### Directory Structure
+```
+plugins/configs/
+├── EssentialsX/
+│   └── config.yml
+├── Jobs/
+│   └── config.yml
+├── LuckPerms/
+│   └── config.yml
+└── <PluginName>/
+    └── <any-yaml-file>.yml
+```
+
+### How It Works
+1. **On Container Startup:** The `copy-plugin-configs.sh` script runs before the server starts
+2. **Copies Config Files:** Files from `plugins/configs/<PluginName>/` are copied to `/data/plugins/<PluginName>/`
+3. **Overwrites Existing:** Repo configs override server configs (version control wins)
+
+### Adding a New Plugin Config
+
+1. Create a directory matching the plugin's folder name in `/data/plugins/`:
+   ```bash
+   mkdir -p plugins/configs/EssentialsX
+   ```
+
+2. Copy the config from the running server or S3 backup:
+   ```bash
+   # From running server
+   docker cp blockhaven-mc:/data/plugins/Essentials/config.yml plugins/configs/EssentialsX/
+
+   # Or extract from S3 backup
+   aws s3 cp s3://your-bucket/backups/latest.tar.gz - | tar -xzf - --strip-components=2 plugins/Essentials/config.yml
+   ```
+
+3. Commit the config to version control:
+   ```bash
+   git add plugins/configs/EssentialsX/config.yml
+   git commit -m "feat: track EssentialsX config"
+   ```
+
+4. On next container restart, the config will be applied automatically.
+
+### Important Notes
+- Plugin directory names must match exactly (case-sensitive)
+- All YAML files in the subdirectory are copied, not just `config.yml`
+- Changes made in-game will be overwritten on next container restart
+- To preserve in-game changes, copy them back to the repo before restarting
+
+---
+
 ## Troubleshooting
 
 ### Plugin Not Loading
