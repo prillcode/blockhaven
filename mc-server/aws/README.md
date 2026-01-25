@@ -63,6 +63,7 @@ aws/
 ├── deploy.sh              # Deploy/update/delete the stack
 ├── start-server.sh        # Start the EC2 instance
 ├── stop-server.sh         # Backup and stop instance
+├── server-backup-only.sh  # Backup without stopping instance
 ├── status.sh              # Check server status
 ├── .env.aws.example       # Configuration template
 └── README.md              # This file
@@ -148,8 +149,17 @@ ssh ec2-user@<ip> 'docker exec blockhaven-mc rcon-cli "list"'
 Backups happen automatically when you run `./stop-server.sh`.
 
 ```bash
-# Manual backup (while running)
-ssh ec2-user@<ip> '/data/mc-server/backup-to-s3.sh'
+# Backup without stopping the EC2 instance (stops container temporarily, then restarts)
+./server-backup-only.sh
+
+# Backup a specific container
+./server-backup-only.sh --container my-mc-server
+
+# Hot backup (container keeps running - may have inconsistent data)
+./server-backup-only.sh --no-stop
+
+# Skip confirmation prompt
+./server-backup-only.sh --force
 
 # List backups
 aws s3 ls s3://blockhaven-mc-backups/ --profile bgrweb
