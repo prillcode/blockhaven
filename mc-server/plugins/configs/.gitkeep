@@ -1,7 +1,0 @@
-# Plugin configs directory
-# Add subdirectories for each plugin, e.g.:
-#   configs/EssentialsX/config.yml
-#   configs/Jobs/config.yml
-#   configs/LuckPerms/config.yml
-#
-# These will be copied to /data/plugins/<PluginName>/ on container startup

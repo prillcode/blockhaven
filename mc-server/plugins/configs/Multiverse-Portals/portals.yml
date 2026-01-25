@@ -1,0 +1,144 @@
+portals:
+  PortalToCreativePlots:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: spawn:-135.0,64.0,197.0:-132.0,67.0,197.0
+    action-type: multiverse-destination
+    action: w:creative_flat
+    check-destination-safety: true
+    version: 1.2
+  PortalToCreativeHills:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: spawn:-142.0,64.0,197.0:-139.0,67.0,197.0
+    action-type: multiverse-destination
+    action: w:creative_terrain
+    check-destination-safety: true
+    version: 1.2
+  PortalToSMPPlains:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: spawn:-149.0,64.0,204.0:-149.0,66.0,207.0
+    action-type: multiverse-destination
+    action: w:survival_easy
+    check-destination-safety: true
+    version: 1.2
+  PortalSMPEasyBackToHub:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: survival_easy:98.0,64.0,88.0:101.0,67.0,88.0
+    action-type: multiverse-destination
+    action: w:spawn
+    check-destination-safety: true
+    version: 1.2
+  PortalCPlotsToHub:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: creative_flat:94.0,-60.0,79.0:94.0,-57.0,83.0
+    action-type: multiverse-destination
+    action: w:spawn
+    check-destination-safety: true
+    version: 1.2
+  PortalSMPHillsToHub:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: creative_terrain:-52.0,86.0,13.0:-52.0,89.0,16.0
+    action-type: multiverse-destination
+    action: w:spawn
+    check-destination-safety: true
+    version: 1.2
+  PortalToSMPRavine:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: spawn:-147.0,63.0,212.0:-147.0,66.0,215.0
+    action-type: multiverse-destination
+    action: w:survival_normal
+    check-destination-safety: true
+    version: 1.2
+  PortalSMPRavineToHub:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: survival_normal:249.0,69.0,436.0:249.0,72.0,439.0
+    action-type: multiverse-destination
+    action: w:spawn
+    check-destination-safety: true
+    version: 1.2
+  PortalSMPPlainsToHub:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: survival_easy:98.0,64.0,88.0:101.0,67.0,88.0
+    action-type: multiverse-destination
+    action: w:spawn
+    check-destination-safety: true
+    version: 1.2
+  SMPPlainsToHubPortal:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: survival_easy:98.0,64.0,88.0:101.0,67.0,88.0
+    action-type: multiverse-destination
+    action: w:spawn
+    check-destination-safety: true
+    version: 1.2
+  PortalSMPCliffsToHub:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: survival_hard:-194.0,67.0,46.0:-194.0,71.0,49.0
+    action-type: multiverse-destination
+    action: w:spawn
+    check-destination-safety: true
+    version: 1.2
+  PortalHubToSMPRavine:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: spawn:-142.0,63.0,218.0:-139.0,67.0,218.0
+    action-type: multiverse-destination
+    action: w:survival_normal
+    check-destination-safety: true
+    version: 1.2
+  PortalToSMPCliffs:
+    currency: air
+    price: 0.0
+    safe-teleport: true
+    teleport-non-players: false
+    owner: PrLLager207
+    location: spawn:-142.0,63.0,218.0:-139.0,67.0,218.0
+    action-type: multiverse-destination
+    action: w:survival_hard
+    check-destination-safety: true
+    version: 1.2

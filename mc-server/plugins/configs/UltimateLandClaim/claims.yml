@@ -1,0 +1,30 @@
+claims:
+  747d8cee-ecf8-4a3b-b1c0-602f9a094c96:
+    minX: -304
+    minZ: 767
+    maxX: -287
+    maxZ: 794
+    world: survival_normal
+    owner: bedd3b36-7ed4-461e-987b-983afc5352c6
+    createdTime: 1769215503065
+    trusted:
+      687d3a22-0c63-4237-8cae-5e1086a87535: MANAGER
+      00000000-0000-0000-0009-01faf000cfea: MANAGER
+  1c27fc9a-7511-4c2b-82e4-3d0594374071:
+    minX: -451
+    minZ: -181
+    maxX: -442
+    maxZ: -171
+    world: creative_terrain
+    owner: 00000000-0000-0000-0009-0000055c1b0b
+    createdTime: 1769308897289
+    trusted: {}
+  8798161c-f7fd-400f-b1ad-ffe0c2dbe70c:
+    minX: -180
+    minZ: 0
+    maxX: -165
+    maxZ: 20
+    world: survival_hard
+    owner: bedd3b36-7ed4-461e-987b-983afc5352c6
+    createdTime: 1769293033598
+    trusted: {}

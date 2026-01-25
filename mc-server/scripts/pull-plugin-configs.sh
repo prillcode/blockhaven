@@ -35,11 +35,13 @@ done
 
 # Copy configs from container to temp dir on remote
 echo "[2/3] Extracting configs from container on remote server..."
-ssh "$SSH_HOST" bash -s "$CONTAINER_NAME" "$REMOTE_TMP" "${PLUGINS[*]}" << 'REMOTE_SCRIPT'
+PLUGINS_CSV=$(IFS=,; echo "${PLUGINS[*]}")
+ssh "$SSH_HOST" bash -s "$CONTAINER_NAME" "$REMOTE_TMP" "$PLUGINS_CSV" << 'REMOTE_SCRIPT'
 CONTAINER_NAME="$1"
 REMOTE_TMP="$2"
-PLUGINS_STR="$3"
-read -ra PLUGINS <<< "$PLUGINS_STR"
+PLUGINS_CSV="$3"
+
+IFS=',' read -ra PLUGINS <<< "$PLUGINS_CSV"
 
 rm -rf "$REMOTE_TMP"
 mkdir -p "$REMOTE_TMP"
@@ -55,7 +57,20 @@ REMOTE_SCRIPT
 
 # Rsync configs down to local
 echo "[3/3] Syncing configs to local repo..."
-rsync -av --include='*.yml' --include='*/' --exclude='*' \
+rsync -av \
+    --exclude='userdata/' \
+    --exclude='userdata-*/' \
+    --exclude='playerdata/' \
+    --exclude='data/' \
+    --exclude='cache/' \
+    --exclude='*.db' \
+    --exclude='*.sqlite' \
+    --include='*/' \
+    --include='*.yml' \
+    --include='*.yaml' \
+    --include='*.conf' \
+    --exclude='*' \
+    --prune-empty-dirs \
     "$SSH_HOST:$REMOTE_TMP/" "$LOCAL_CONFIGS_DIR/"
 
 # Cleanup remote temp

@@ -1,0 +1,142 @@
+# ╔════════════════════════════════════════════════════════════════╗
+# ║           UltimateLandClaim Configuration File                 ║
+# ║                      Version 1.0.0                             ║
+# ╚════════════════════════════════════════════════════════════════╝
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                    CLAIM MODE SELECTION                        │
+# └────────────────────────────────────────────────────────────────┘
+# This is the CORE setting that determines how claiming works!
+#
+# Options:
+#   CHUNK - Towny/Factions style (16x16 grid-based claiming)
+#           → Right-click with Golden Shovel claims entire chunk instantly
+#           → Fixed cost of 256 claim blocks per chunk
+#           → Claims snap to chunk boundaries
+#
+#   FREE  - GriefPrevention style (custom rectangular areas)
+#           → Right-click with Golden Shovel twice to select corners
+#           → Cost calculated by area (width × length)
+#           → No grid restrictions
+#
+# You can safely switch modes - all claims are stored as bounding boxes!
+
+claim-mode: FREE
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                    ECONOMY SETTINGS                            │
+# └────────────────────────────────────────────────────────────────┘
+# Configure how players earn and use claim blocks
+
+economy:
+  # How many claim blocks new players start with
+  starting-claim-blocks: 500
+
+  # How many claim blocks players earn per minute of playtime
+  # Set to 0 to disable automatic accrual
+  claim-blocks-per-minute: 5
+
+  # Maximum claim blocks a player can accumulate
+  # Prevents infinite claiming through long playtime
+  max-claim-blocks: 10000
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                     CLAIM SETTINGS                             │
+# └────────────────────────────────────────────────────────────────┘
+
+claims:
+  # [FREE MODE ONLY] Minimum claim size in blocks (width × length)
+  # Prevents tiny 1x1 grief claims
+  min-claim-size: 25
+
+  # [FREE MODE ONLY] Maximum claim size in blocks
+  # Prevents massive land hogging
+  max-claim-size: 10000
+
+  # [CHUNK MODE ONLY] Cost per chunk claim
+  # Default: 256 (16×16 chunk size)
+  # You can adjust this to make chunks cheaper/more expensive
+  chunk-claim-cost: 256
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                   PROTECTION SETTINGS                          │
+# └────────────────────────────────────────────────────────────────┘
+# Configure what is protected inside claims
+
+protection:
+  # Allow PvP inside claims?
+  # true  = Players can damage each other in claims
+  # false = PvP is disabled in all claims
+  allow-pvp: false
+
+  # Allow explosions (creepers, TNT, etc.) to damage claims?
+  # true  = Explosions can destroy blocks in claims
+  # false = Claims are explosion-proof
+  allow-explosions: false
+
+  # Prevent mobs from damaging players in their own claims?
+  # true  = Owner is safe from mobs in their claim
+  # false = Mobs can damage players normally
+  prevent-mob-damage: false
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                WORLDGUARD INTEGRATION                          │
+# └────────────────────────────────────────────────────────────────┘
+# Requires WorldGuard plugin to be installed
+
+worldguard:
+  # Enable WorldGuard integration?
+  # If disabled, WorldGuard regions will be ignored
+  enabled: true
+
+  # Prevent players from creating claims inside WorldGuard regions?
+  # Useful for protecting spawn, arenas, etc.
+  prevent-claiming-in-regions: true
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                  VISUALIZATION SETTINGS                        │
+# └────────────────────────────────────────────────────────────────┘
+# Configure the particle effects shown when holding a stick
+
+visualization:
+  # Maximum distance (in blocks) particles will render
+  # Higher values = more particles = more lag
+  particle-distance: 50
+
+  # How often particles refresh (in ticks)
+  # 20 ticks = 1 second
+  # Lower = smoother but more resource intensive
+  refresh-rate-ticks: 20
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                    ADVANCED SETTINGS                           │
+# └────────────────────────────────────────────────────────────────┘
+
+advanced:
+  # Auto-save interval (in minutes)
+  # How often to save claims and player data to disk
+  auto-save-interval: 5
+
+  # Enable debug mode?
+  # Prints detailed information to console (for troubleshooting)
+  debug: false
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                      TRUST LEVELS                              │
+# └────────────────────────────────────────────────────────────────┘
+# These are informational - trust levels are hardcoded in the plugin
+#
+# ACCESS    - Use buttons, levers, doors, pressure plates
+# CONTAINER - ACCESS + open chests, furnaces, hoppers, etc.
+# BUILD     - CONTAINER + break/place blocks
+# MANAGER   - BUILD + trust/untrust other players
+#
+# Each level includes all permissions from lower levels!
+
+# ┌────────────────────────────────────────────────────────────────┐
+# │                    CLAIMING TOOLS                              │
+# └────────────────────────────────────────────────────────────────┘
+# These are informational - tools are hardcoded in the plugin
+#
+# Golden Shovel - Main claiming tool (mode-dependent behavior)
+# Stick         - Visualization tool (shows claim boundaries)
