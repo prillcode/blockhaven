@@ -12,28 +12,39 @@ import { authConfig } from "./auth";
  * @returns Session object or null if not authenticated
  */
 export async function getSession(request: Request) {
-  const sessionUrl = new URL("/api/auth/session", request.url);
-  const sessionRequest = new Request(sessionUrl, {
-    headers: request.headers,
-  });
-
-  const response = await Auth(sessionRequest, authConfig);
-  const session = await response.json();
-
-  // Auth.js returns {} for no session, not null
-  if (!session || Object.keys(session).length === 0) {
+  // If AUTH_SECRET is not configured, auth is disabled
+  if (!import.meta.env.AUTH_SECRET) {
     return null;
   }
 
-  return session as {
-    user: {
-      name?: string;
-      email?: string;
-      image?: string;
-      githubUsername?: string;
+  try {
+    const sessionUrl = new URL("/api/auth/session", request.url);
+    const sessionRequest = new Request(sessionUrl, {
+      headers: request.headers,
+    });
+
+    const response = await Auth(sessionRequest, authConfig);
+    const session = await response.json();
+
+    // Auth.js returns {} for no session, not null
+    if (!session || Object.keys(session).length === 0) {
+      return null;
+    }
+
+    return session as {
+      user: {
+        name?: string;
+        email?: string;
+        image?: string;
+        githubUsername?: string;
+      };
+      expires: string;
     };
-    expires: string;
-  };
+  } catch (error) {
+    // Auth.js throws when not properly configured - treat as no session
+    console.warn("[auth] Session check failed:", error instanceof Error ? error.message : error);
+    return null;
+  }
 }
 
 /**
