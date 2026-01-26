@@ -216,3 +216,37 @@ body {
 .prose.max-w-none {
   max-width: none;
 }
+
+/* ===================================
+   Mobile Responsiveness & Touch
+   =================================== */
+
+/* Touch-friendly minimum sizes */
+.btn, button, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Prevent iOS zoom on input focus */
+input, select, textarea {
+  font-size: 16px;
+}
+
+/* Mobile-friendly spacing */
+@media (max-width: 640px) {
+  .dashboard-grid {
+    gap: 1rem;
+  }
+
+  /* Stack controls vertically */
+  .controls-row {
+    flex-direction: column;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .dashboard-footer {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

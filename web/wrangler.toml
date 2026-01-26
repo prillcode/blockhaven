@@ -13,9 +13,31 @@ pages_build_output_dir = "./dist"
 MC_SERVER_IP = "play.bhsmp.com"
 MC_SERVER_PORT = "25565"
 
+# KV namespace for rate limiting
+# Create with: wrangler kv:namespace create BLOCKHAVEN_RATE_LIMITS
+# Then update the id below with the returned namespace ID
+[[kv_namespaces]]
+binding = "BLOCKHAVEN_RATE_LIMITS"
+id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # Replace with actual KV ID from `wrangler kv:namespace create`
+
+# KV namespace for audit logging
+# Create with: wrangler kv:namespace create BLOCKHAVEN_AUDIT
+# Then update the id below with the returned namespace ID
+[[kv_namespaces]]
+binding = "BLOCKHAVEN_AUDIT"
+id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # Replace with actual KV ID from `wrangler kv:namespace create`
+
 # Production environment overrides
 [env.production]
-# Add production-specific settings here
+# KV namespace for production rate limiting
+[[env.production.kv_namespaces]]
+binding = "BLOCKHAVEN_RATE_LIMITS"
+id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # Replace with production KV ID
+
+# KV namespace for production audit logging
+[[env.production.kv_namespaces]]
+binding = "BLOCKHAVEN_AUDIT"
+id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # Replace with production KV ID
 
 # Preview environment (for PR previews)
 [env.preview]

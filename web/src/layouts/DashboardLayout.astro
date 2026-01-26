@@ -1,0 +1,88 @@
+---
+// src/layouts/DashboardLayout.astro
+// Layout component for all admin dashboard pages
+//
+// Provides consistent header with user info, logout button,
+// and main content area for dashboard features.
+
+interface Props {
+  title: string;
+  user: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    githubUsername?: string;
+  };
+}
+
+const { title, user } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="icon" type="image/png" href="/server-icon.png">
+</head>
+<body class="bg-bg-dark text-text-light min-h-screen">
+  <!-- Header -->
+  <header class="bg-secondary-stone/20 border-b border-secondary-stone/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo & Title -->
+        <div class="flex items-center gap-3">
+          <a href="/dashboard" class="flex items-center gap-3">
+            <img
+              src="/server-icon.png"
+              alt="BlockHaven"
+              class="w-8 h-8 rounded"
+            />
+            <span class="font-semibold text-primary-gold hidden sm:block">
+              BlockHaven Admin
+            </span>
+          </a>
+        </div>
+
+        <!-- User Info & Logout -->
+        <div class="flex items-center gap-4">
+          <!-- User Info -->
+          <div class="flex items-center gap-3">
+            {user.image && (
+              <img
+                src={user.image}
+                alt={user.name || "User avatar"}
+                class="w-8 h-8 rounded-full border border-secondary-stone/50"
+              />
+            )}
+            <span class="text-sm text-text-light hidden sm:block">
+              {user.githubUsername || user.name || "Admin"}
+            </span>
+          </div>
+
+          <!-- Logout Button -->
+          <form action="/api/auth/signout" method="POST">
+            <button
+              type="submit"
+              class="px-4 py-2 text-sm text-text-muted hover:text-accent-redstone transition-colors"
+            >
+              Logout
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <slot />
+  </main>
+</body>
+</html>
+
+<style is:global>
+  /* Import Tailwind */
+  @import "../styles/global.css";
+</style>

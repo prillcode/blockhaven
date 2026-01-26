@@ -128,13 +128,22 @@ Use classes like `bg-primary-grass`, `text-accent-diamond`, `border-secondary-st
 
 Content for pages (rules, features, etc.) will be auto-generated from markdown files in `/mc-server/docs/` using Astro Content Collections.
 
-### Future: Admin Dashboard (Phase 2)
+## Admin Dashboard
 
-The `/dashboard` route is a placeholder for future admin features:
-- GitHub OAuth authentication
-- AWS SDK integration for EC2 server management
-- Server start/stop controls
-- Player whitelist management
+The admin dashboard at `/dashboard` provides server management for authorized users.
+
+### Features
+
+- **GitHub OAuth authentication** - Secure login via GitHub
+- **Server status** - Real-time EC2 and Minecraft status
+- **Server controls** - Start/stop with one click
+- **Cost estimation** - Track monthly AWS costs
+- **Logs viewer** - View Minecraft server logs
+- **Quick actions** - Whitelist management and commands
+
+### Setup
+
+See [docs/ADMIN-SETUP.md](./docs/ADMIN-SETUP.md) for complete setup instructions.
 
 ## Environment Variables
 
