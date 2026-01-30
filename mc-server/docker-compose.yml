@@ -29,7 +29,7 @@ services:
       MAX_PLAYERS: 50
       DIFFICULTY: normal
       MODE: survival
-      PVP: "false"
+      PVP: "true"
       ONLINE_MODE: "true"
       ENFORCE_SECURE_PROFILE: "true"
       SPAWN_PROTECTION: 16
