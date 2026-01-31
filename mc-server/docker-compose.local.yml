@@ -9,7 +9,7 @@
 services:
   minecraft:
     image: itzg/minecraft-server:latest
-    container_name: blockhaven-local
+    container_name: blockhaven-mc
     restart: unless-stopped
     tty: true
     stdin_open: true
@@ -38,12 +38,12 @@ services:
       MAX_PLAYERS: 20
       DIFFICULTY: normal
       MODE: survival
-      PVP: "false"
+      PVP: "true"
       ONLINE_MODE: "true"
       ENFORCE_SECURE_PROFILE: "true"
       SPAWN_PROTECTION: 16
-      VIEW_DISTANCE: 12
-      SIMULATION_DISTANCE: 10
+      VIEW_DISTANCE: 10
+      SIMULATION_DISTANCE: 8
       MAX_WORLD_SIZE: 10000
 
       # Ops
@@ -64,23 +64,19 @@ services:
       PLUGINS: |
         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
         https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
-        https://hangar.papermc.io/api/v1/projects/ViaVersion/versions/5.7.0/PAPER/download
+        https://hangar.papermc.io/api/v1/projects/ViaVersion/versions/5.7.1/PAPER/download
 
       # Timezone
       TZ: "America/New_York"
 
     volumes:
-      - blockhaven-local-data:/data
+      - blockhaven-mc-data:/data
       - ./plugins/downloaded_installers:/plugins-local:ro
       - ./extras:/extras:ro
       - ./extras/server-icon.png:/data/server-icon.png:ro
       # Plugin configs from repo (version-controlled)
       - ./plugins/configs:/plugin-configs:ro
-      - ./scripts/copy-plugin-configs.sh:/copy-plugin-configs.sh:ro
-
-    # Run config copy script before starting the server
-    command: >-
-      sh -c "/copy-plugin-configs.sh && /start"
+      - ./scripts/copy-plugin-configs.sh:/config/init.d/copy-plugin-configs.sh:ro
 
     healthcheck:
       test: mc-health
@@ -89,6 +85,9 @@ services:
       retries: 3
       start_period: 120s
 
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
 volumes:
-  blockhaven-local-data:
+  blockhaven-mc-data:
     driver: local

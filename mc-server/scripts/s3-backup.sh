@@ -18,7 +18,7 @@
 set -e
 
 # Configuration
-CONTAINER_NAME="${MC_CONTAINER_NAME:-blockhaven-local}"
+CONTAINER_NAME="${MC_CONTAINER_NAME:-blockhaven-mc}"
 S3_BUCKET="${S3_BUCKET:-blockhaven-mc-backups}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="${SCRIPT_DIR}/../backups"
@@ -222,7 +222,7 @@ create_backup() {
     mkdir -p "$TEMP_DIR/plugins"
     for plugin in Multiverse-Core Multiverse-NetherPortals Multiverse-Portals \
                   Multiverse-Inventories EssentialsX LuckPerms Vault \
-                  UltimateLandClaim Jobs; do
+                  UltimateLandClaim Jobs Geyser-Spigot floodgate; do
         docker cp "$CONTAINER_NAME:/data/plugins/$plugin" "$TEMP_DIR/plugins/" 2>/dev/null || true
     done
 

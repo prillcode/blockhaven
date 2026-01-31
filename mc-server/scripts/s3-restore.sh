@@ -18,7 +18,7 @@
 set -e
 
 # Configuration
-CONTAINER_NAME="${MC_CONTAINER_NAME:-blockhaven-local}"
+CONTAINER_NAME="${MC_CONTAINER_NAME:-blockhaven-mc}"
 S3_BUCKET="${S3_BUCKET:-blockhaven-mc-backups}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RESTORE_DIR="${SCRIPT_DIR}/../restore-temp"

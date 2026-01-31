@@ -203,6 +203,7 @@ ssh -i "$KEY_FILE" -o StrictHostKeyChecking=no ubuntu@"$PUBLIC_IP" << REMOTESCRI
         creative_flat* creative_terrain* \
         plugins/Multiverse-* plugins/EssentialsX plugins/LuckPerms \
         plugins/Vault plugins/UltimateLandClaim plugins/Jobs \
+        plugins/Geyser-Spigot plugins/floodgate \
         server.properties bukkit.yml spigot.yml 2>/dev/null || true
 
     echo "[INFO] Uploading to S3..."
