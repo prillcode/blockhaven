@@ -221,7 +221,7 @@ create_backup() {
     # Copy important plugin configurations
     mkdir -p "$TEMP_DIR/plugins"
     for plugin in Multiverse-Core Multiverse-NetherPortals Multiverse-Portals \
-                  Multiverse-Inventories EssentialsX LuckPerms Vault \
+                  Multiverse-Inventories Essentials LuckPerms Vault \
                   UltimateLandClaim Jobs Geyser-Spigot floodgate; do
         docker cp "$CONTAINER_NAME:/data/plugins/$plugin" "$TEMP_DIR/plugins/" 2>/dev/null || true
     done
