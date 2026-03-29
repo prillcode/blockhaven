@@ -20,21 +20,30 @@ import Button from '../components/Button.astro';
     </div>
   </section>
 
-  <!-- Coming Soon Section -->
+  <!-- GitHub Sponsors Section -->
   <section class="py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto">
       <div class="bg-primary-gold/10 border border-primary-gold/30 rounded-xl p-8 text-center">
-        <span class="text-5xl mb-4 block">🚧</span>
+        <span class="text-5xl mb-4 block">♥</span>
         <h2 class="text-2xl font-bold text-text-light mb-4">
-          Coming Soon!
+          Sponsor on GitHub
         </h2>
-        <p class="text-text-muted mb-6">
-          We're working on setting up a way for our community to support BlockHaven.
-          Check back soon for ways to contribute and earn exclusive cosmetic perks!
+        <p class="text-text-muted mb-6 max-w-lg mx-auto">
+          BlockHaven Launcher is free and open source. Your sponsorship helps cover server costs,
+          ongoing development, and keeps the project growing.
         </p>
-        <Button href="/" variant="secondary">
-          Return Home
-        </Button>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button
+            href="https://github.com/sponsors/prillcode"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ♥ Sponsor on GitHub
+          </Button>
+          <Button href="/launcher" variant="secondary">
+            Download the Launcher
+          </Button>
+        </div>
       </div>
     </div>
   </section>

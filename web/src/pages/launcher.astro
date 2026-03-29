@@ -1,0 +1,169 @@
+---
+/**
+ * Launcher page — download and feature overview for BlockHaven Launcher
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+
+const features = [
+  {
+    icon: '🎮',
+    title: 'Multi-Instance Management',
+    description: 'Run multiple Minecraft setups side by side — server profiles, singleplayer worlds, or imported installs from other launchers.',
+  },
+  {
+    icon: '🧩',
+    title: 'Modrinth Mod Browser',
+    description: 'Search, install, and manage mods directly from Modrinth. Supports Fabric and Quilt with automatic dependency resolution.',
+  },
+  {
+    icon: '✨',
+    title: 'Shader Pack Management',
+    description: 'Browse and install shader packs from Modrinth or load local .zip files. Works with Iris Shaders.',
+  },
+  {
+    icon: '▶',
+    title: 'One-Click Play',
+    description: 'Sidebar Play button launches your selected instance instantly — with optional auto-connect to your server.',
+  },
+  {
+    icon: '🔐',
+    title: 'Microsoft & Offline Auth',
+    description: 'Full Microsoft account authentication via device-code flow. Offline mode supported for LAN and private servers.',
+  },
+  {
+    icon: '📓',
+    title: 'Session Notes',
+    description: 'Keep per-instance notes, session logs, and screenshot galleries right inside the launcher.',
+  },
+];
+---
+
+<BaseLayout title="BlockHaven Launcher — Free Minecraft Launcher" description="A free, open-source Minecraft launcher with multi-instance management, Modrinth mod browsing, and auto-connect to your servers.">
+
+  <!-- Hero -->
+  <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-primary-gold/5 to-transparent"></div>
+    <div class="max-w-5xl mx-auto relative text-center">
+      <div class="inline-flex items-center gap-2 bg-primary-gold/10 border border-primary-gold/30 rounded-full px-4 py-1.5 text-sm text-primary-gold font-medium mb-6">
+        <span>🎉</span> Free &amp; Open Source
+      </div>
+      <h1 class="text-5xl sm:text-6xl font-bold text-primary-gold mb-4">
+        BlockHaven Launcher
+      </h1>
+      <p class="text-xl text-text-muted max-w-2xl mx-auto mb-8">
+        A clean, fast Minecraft launcher with multi-instance support, built-in mod management, and one-click server connect. Windows, macOS, and Linux.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button
+          href="https://github.com/prillcode/bh-minecraft-launcher/releases/latest"
+          size="lg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ⬇ Download Latest
+        </Button>
+        <Button
+          href="https://github.com/prillcode/bh-minecraft-launcher"
+          variant="secondary"
+          size="lg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on GitHub
+        </Button>
+      </div>
+      <p class="text-text-muted text-sm mt-4">
+        Available for Windows · macOS · Linux
+      </p>
+    </div>
+  </section>
+
+  <!-- Screenshot -->
+  <section class="px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <div class="rounded-xl overflow-hidden border border-secondary-stone/20 shadow-2xl">
+        <img
+          src="/launcher-screenshot.png"
+          alt="BlockHaven Launcher showing the Instances tab with multiple game profiles"
+          class="w-full h-auto"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold text-text-light mb-4">Everything you need</h2>
+        <p class="text-text-muted max-w-xl mx-auto">Built for players who want more control without the complexity.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {features.map((f) => (
+          <div class="bg-secondary-stone/10 rounded-xl p-6">
+            <div class="text-3xl mb-3">{f.icon}</div>
+            <h3 class="text-text-light font-semibold mb-2">{f.title}</h3>
+            <p class="text-text-muted text-sm">{f.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-text-light mb-4">Download</h2>
+      <p class="text-text-muted mb-8">
+        Grab the latest release for your platform from GitHub Releases. No installer required on Linux — just run the AppImage or install the .deb package.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div class="bg-secondary-stone/10 rounded-xl p-5 text-center">
+          <div class="text-3xl mb-2">🪟</div>
+          <p class="text-text-light font-semibold">Windows</p>
+          <p class="text-text-muted text-sm mt-1">.exe installer</p>
+        </div>
+        <div class="bg-secondary-stone/10 rounded-xl p-5 text-center">
+          <div class="text-3xl mb-2">🍎</div>
+          <p class="text-text-light font-semibold">macOS</p>
+          <p class="text-text-muted text-sm mt-1">.dmg disk image</p>
+        </div>
+        <div class="bg-secondary-stone/10 rounded-xl p-5 text-center">
+          <div class="text-3xl mb-2">🐧</div>
+          <p class="text-text-light font-semibold">Linux</p>
+          <p class="text-text-muted text-sm mt-1">.deb · .AppImage</p>
+        </div>
+      </div>
+      <Button
+        href="https://github.com/prillcode/bh-minecraft-launcher/releases/latest"
+        size="lg"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ⬇ Download Latest Release
+      </Button>
+    </div>
+  </section>
+
+  <!-- Sponsor -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="text-4xl mb-4">♥</div>
+      <h2 class="text-3xl font-bold text-text-light mb-4">Support the Project</h2>
+      <p class="text-text-muted max-w-xl mx-auto mb-8">
+        BlockHaven Launcher is free and open source. If it saves you time or makes your Minecraft experience better, consider sponsoring development on GitHub.
+      </p>
+      <Button
+        href="https://github.com/sponsors/prillcode"
+        variant="secondary"
+        size="lg"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ♥ Sponsor on GitHub
+      </Button>
+    </div>
+  </section>
+
+</BaseLayout>

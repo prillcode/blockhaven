@@ -19,7 +19,7 @@ const survivalWorlds = allWorlds
   .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 ---
 
-<BaseLayout title="Family-Friendly Cross-Platform Minecraft Server" description="Welcome to BlockHaven - A family-friendly, cross-platform Minecraft server">
+<BaseLayout title="BlockHaven — Minecraft Launcher &amp; Server" description="BlockHaven is a free Minecraft launcher and family-friendly server. Download the launcher and start playing today.">
   <!-- Hero Section -->
   <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-primary-gold/5 to-transparent"></div>
@@ -29,42 +29,67 @@ const survivalWorlds = allWorlds
           BlockHaven
         </h1>
         <p class="text-xl sm:text-2xl text-text-muted mb-8 max-w-2xl mx-auto">
-          {serverInfo?.data.tagline}
+          A free Minecraft launcher and family-friendly server — manage your game, your mods, and your worlds all in one place.
         </p>
-
-        <!-- Server Status Widget with Background -->
-        <div class="relative flex items-center justify-center mb-8">
-          <img
-            src="/blockhaven-icon-medium.png"
-            alt=""
-            class="w-[500px] sm:w-[600px] lg:w-[700px] h-auto pointer-events-none"
-          />
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-full max-w-sm bg-secondary-dark/85 backdrop-blur-sm rounded-xl p-4">
-              <ServerStatus />
-            </div>
-          </div>
-        </div>
-
-        <!-- CTA Button -->
-        <div class="flex items-center justify-center">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+          <Button
+            href="/launcher"
+            size="lg"
+          >
+            ⬇ Download Launcher
+          </Button>
           <Button href="/connect" variant="secondary" size="lg">
-            How to Connect
+            Join the Server
           </Button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Features Section -->
+  <!-- Launcher Preview Section -->
+  <section class="py-4 px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <div class="rounded-xl overflow-hidden border border-secondary-stone/20 shadow-2xl mb-8">
+        <img
+          src="/launcher-screenshot.png"
+          alt="BlockHaven Launcher"
+          class="w-full h-auto"
+        />
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+        <div class="p-4">
+          <div class="text-2xl mb-2">🎮</div>
+          <p class="text-text-light font-semibold">Multi-Instance</p>
+          <p class="text-text-muted text-sm mt-1">Server, singleplayer, and imported installs side by side</p>
+        </div>
+        <div class="p-4">
+          <div class="text-2xl mb-2">🧩</div>
+          <p class="text-text-light font-semibold">Mod Management</p>
+          <p class="text-text-muted text-sm mt-1">Browse and install mods from Modrinth with one click</p>
+        </div>
+        <div class="p-4">
+          <div class="text-2xl mb-2">▶</div>
+          <p class="text-text-light font-semibold">One-Click Play</p>
+          <p class="text-text-muted text-sm mt-1">Launch and auto-connect to your server instantly</p>
+        </div>
+      </div>
+      <div class="text-center mt-8">
+        <Button href="/launcher" variant="secondary">
+          See all features →
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Server Features Section -->
   <section class="py-16 px-4 sm:px-6 lg:px-8 bg-secondary-stone/5">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
         <h2 class="text-3xl sm:text-4xl font-bold text-text-light mb-4">
-          Why BlockHaven?
+          The BlockHaven Server
         </h2>
         <p class="text-text-muted max-w-2xl mx-auto">
-          A great Minecraft experience on any platform
+          A family-friendly, cross-platform Minecraft server — {serverInfo?.data.tagline?.toLowerCase()}
         </p>
       </div>
 
@@ -153,18 +178,19 @@ const survivalWorlds = allWorlds
   <section class="py-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
       <h2 class="text-3xl sm:text-4xl font-bold text-text-light mb-4">
-        Ready to Join?
+        Ready to Play?
       </h2>
       <p class="text-text-muted mb-8 max-w-2xl mx-auto">
-        BlockHaven just launched and we're accepting new players! Get in from the start,
-        explore new frontiers, and become a founding settler.
+        Download the BlockHaven Launcher and join the server in minutes. Free forever.
       </p>
-      <Button href="/guide#quick-start" size="lg">
-        Getting Started
-      </Button>
-      <p class="text-sm text-text-muted mt-4">
-        Console players refer to workarounds on <a href="/connect" class="text-primary-gold hover:text-primary-wheat underline transition-colors">how to Connect</a>
-      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href="/launcher" size="lg">
+          ⬇ Download Launcher
+        </Button>
+        <Button href="/guide#quick-start" variant="secondary" size="lg">
+          Getting Started Guide
+        </Button>
+      </div>
     </div>
   </section>
 </BaseLayout>

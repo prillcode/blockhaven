@@ -6,6 +6,8 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'accent' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
+  target?: string;
+  rel?: string;
   class?: string;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
@@ -15,6 +17,8 @@ const {
   variant = 'primary',
   size = 'md',
   href,
+  target,
+  rel,
   class: className = '',
   type = 'button',
   disabled = false,
@@ -41,7 +45,7 @@ const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} 
 ---
 
 {href ? (
-  <a href={href} class={classes}>
+  <a href={href} target={target} rel={rel} class={classes}>
     <slot />
   </a>
 ) : (

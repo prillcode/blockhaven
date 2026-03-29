@@ -6,9 +6,9 @@ const currentYear = new Date().getFullYear();
 
 const quickLinks = [
   { href: '/', label: 'Home' },
+  { href: '/launcher', label: 'Launcher' },
   { href: '/worlds', label: 'Worlds' },
   { href: '/rules', label: 'Rules' },
-  { href: '/plugins', label: 'Plugins' },
   { href: '/guide', label: 'Guide' },
   { href: '/connect', label: 'Connect' },
 ];
@@ -81,14 +81,24 @@ const quickLinks = [
       <div>
         <h3 class="text-text-light font-semibold mb-4">About</h3>
         <p class="text-text-muted text-sm mb-4">
-          BlockHaven just launched! Join our growing community and become a founding settler.
+          A free Minecraft launcher and family-friendly server. Open source, community driven.
         </p>
         <a
-          href="/guide#quick-start"
+          href="/launcher"
           class="inline-block bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
         >
-          Getting Started
+          ⬇ Download Launcher
         </a>
+        <div class="mt-3">
+          <a
+            href="https://github.com/sponsors/prillcode"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-text-muted hover:text-primary-gold text-sm transition-colors"
+          >
+            ♥ Sponsor on GitHub
+          </a>
+        </div>
         <div class="mt-4 flex items-center gap-2 text-text-muted text-xs">
           <span>Powered by</span>
           <a

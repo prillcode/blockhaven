@@ -10,9 +10,9 @@ const { currentPath = '/' } = Astro.props;
 
 const navLinks = [
   { href: '/', label: 'Home' },
+  { href: '/launcher', label: 'Launcher' },
   { href: '/worlds', label: 'Worlds' },
   { href: '/rules', label: 'Rules' },
-  { href: '/plugins', label: 'Plugins' },
   { href: '/guide', label: 'Guide' },
   { href: '/connect', label: 'Connect' },
 ];
@@ -43,10 +43,10 @@ const navLinks = [
           </a>
         ))}
         <a
-          href="/guide#quick-start"
+          href="/launcher"
           class="bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
         >
-          Getting Started
+          ⬇ Download
         </a>
       </div>
 
@@ -89,10 +89,10 @@ const navLinks = [
           </a>
         ))}
         <a
-          href="/guide#quick-start"
+          href="/launcher"
           class="mt-2 bg-primary-gold hover:bg-primary-wheat text-secondary-dark font-semibold px-4 py-2 rounded-lg text-sm text-center transition-colors"
         >
-          Getting Started
+          ⬇ Download
         </a>
       </div>
     </div>
